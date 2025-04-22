@@ -1,0 +1,32 @@
+.loaderContainer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: white;
+    text-align: center;
+}
+
+.loadingText {
+    font-size: 1.5rem;
+    font-weight: 600;
+    animation: glow 2s ease-in-out infinite;
+    background: linear-gradient(45deg, #36d7b7, #00e6e6, #36d7b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #36d7b7, 0 0 10px #36d7b7;
+    }
+    50% {
+        text-shadow: 0 0 20px #00e6e6, 0 0 30px #00e6e6;
+    }
+    100% {
+        text-shadow: 0 0 5px #36d7b7, 0 0 10px #36d7b7;
+    }
+}

@@ -48,7 +48,7 @@ const Login = () => {
       const progress = await res.json();
 
       if (res.ok) {
-      
+        alert(`✅ Ceritificates uploaded successfully`);
         if (progress.completed) {
           navigate('/user/dashboard');
         } else {

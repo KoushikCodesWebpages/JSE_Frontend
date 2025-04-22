@@ -66,7 +66,7 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
         console.error('❌ Failed to upload job titles:', errorData);
       } else {
         alert(`✅ Job Titles uploaded successfully`);
-        navigate('/user/certificates');
+        navigate('/user/dashboard');
       }
     } catch (error) {
       console.error('❌ Error while posting job titles:', error);

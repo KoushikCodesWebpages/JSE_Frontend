@@ -57,9 +57,9 @@ const Signup = () => {
       );
 
       if (response.status >= 200 && response.status < 300) {
-        console.log('Signup response:', response);
 
-        console.log('Signup successful:', response.data);
+
+        alert(`✅ Sign up successfull, Check your email!`);
         navigate('/user/login', {
           state: {
             email: formData.email,

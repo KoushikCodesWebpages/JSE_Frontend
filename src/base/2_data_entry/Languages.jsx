@@ -79,7 +79,7 @@ const Language = () => {
       }
 
       alert(`✅ Languages uploaded successfully`);
-      navigate('/user/dashboard');
+      navigate('/user/jobtitles');
     } catch (err) {
       console.error('Error uploading language:', err);
       alert('Failed to upload language data.');

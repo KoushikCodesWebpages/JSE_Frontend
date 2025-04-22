@@ -69,6 +69,7 @@ function Dashboard() {
   const totalExperienceInMonths = profileData?.totalExperienceInMonths || 0;
   const experienceFormatted = `${Math.floor(totalExperienceInMonths / 12)} yrs ${totalExperienceInMonths % 12} months`;
 
+  
   return (
     <div className="flex bg-gray-100">
 <Sidebar />

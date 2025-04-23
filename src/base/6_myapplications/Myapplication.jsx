@@ -3,7 +3,7 @@ import defaultJobImg from './image.svg';
 import axios from "axios";
 import Loader from "../loader/Loader.jsx";
 import Sidebar from "../sidebar/sidebar.jsx";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../navbar/Navbar.jsx";
 
 
 const MyApplication = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import '../../App.css'; // Importing global styles
+import '../../../App.css'; // Importing global styles
 
 const VerificationPage = () => {
   const [selectedOption, setSelectedOption] = useState('');

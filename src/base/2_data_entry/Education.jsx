@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import frame from "./../../assets/Frame.png";
+import joblogo from "./../../assets/joblogo.png";
 
 
 const Education = () => {
@@ -20,19 +22,19 @@ const Education = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
-  
+
     const token = sessionStorage.getItem('authToken');
     if (!token) {
       console.error('Error: No token found in session storage.');
       return;
     }
-  
+
     // Transforming the date inputs to ISO 8601 format
     const formatDateToISO = (date) => {
       const localDate = new Date(date);
       return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
     };
-  
+
     const updatedFormData = {
       degree: e.target.degree.value,
       institution: e.target.institution.value,
@@ -41,8 +43,8 @@ const Education = () => {
       endDate: formatDateToISO(e.target.endDate.value),     // Transforming to ISO 8601
       achievements: e.target.achievements.value
     };
-  
-  
+
+
     try {
       const response = await axios.post(apiUrl, updatedFormData, {
         headers: {
@@ -50,7 +52,7 @@ const Education = () => {
           'Content-Type': 'application/json'
         }
       });
-  
+
       alert(`✅ Education data uploaded successfully`);
       navigate('/user/certificates');
     } catch (error) {
@@ -60,128 +62,143 @@ const Education = () => {
       }
     }
   };
-  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex flex-1">
+    <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
+      <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
         {/* Left Panel */}
-        <div className="flex flex-1 justify-center items-center p-8 bg-white">
+        <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="w-full max-w-md">
             <form className="flex flex-col" onSubmit={handleNext}>
               {/* Degree Title */}
-              <div className="relative mb-5">
+              <div className="relative mb-3">
                 <input
                   type="text"
                   name="degree"
-                  placeholder="Degree Title"
+                  placeholder=" "
+                  onChange={handleChange}
                   defaultValue={formData.degree}
-                  className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                  className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.degree
                     ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                    : 'top-4 text-base peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
+                    Degree Title
                 </label>
               </div><br />
 
               {/* Institution Name */}
-              <div className="relative mb-5">
+              <div className="relative mb-3">
                 <input
                   type="text"
                   name="institution"
-                  placeholder="Institution Name"
+                  placeholder="  "
+                  onChange={handleChange}
                   defaultValue={formData.institution}
-                  className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                  className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500  text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.institution
                     ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                    : 'top-4 text-sm peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
-
+                    Institution Name
                 </label>
               </div><br />
 
               {/* Field of Study */}
-              <div className="relative mb-5">
+              <div className="relative mb-3">
                 <input
                   type="text"
                   name="fieldOfStudy"
-                  placeholder="Field of Study"
+                  placeholder=" "
+                  onChange={handleChange}
                   defaultValue={formData.fieldOfStudy}
-                  className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                  className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.fieldOfStudy
                     ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                    : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
+                    Field of Study
                 </label>
               </div><br />
 
               {/* Start and End Dates */}
-              <div className="flex gap-5 mb-5">
+              <div className="flex gap-5 mb-3">
                 <div className="relative flex-1">
                   <input
                     type="date"
                     name="startDate"
-                    placeholder="Start Date"
+                    placeholder=" "
+                    onChange={handleChange}
                     defaultValue={formData.startDate}
-                    className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                    className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
                     ${formData.startDate
                       ? '-top-2 text-sm bg-white px-1'
-                      : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                      : '-top-2 bg-white px-1 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                     }`}>
+                      Start Date
                   </label>
                 </div>
                 <div className="relative flex-1">
                   <input
                     type="date"
                     name="endDate"
-                    placeholder="End Date"
+                    placeholder=" "
+                    onChange={handleChange}
                     defaultValue={formData.endDate}
-                    className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                    className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
                     ${formData.endDate
                       ? '-top-2 text-sm bg-white px-1'
-                      : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                      : '-top-2 bg-white px-1 text-sm  peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                     }`}>
-                    
+                      End Date
                   </label>
                 </div>
               </div><br />
 
               {/* Achievements */}
-              <div className="relative mb-5">
+              <div className="relative mb-3">
                 <textarea
                   name="achievements"
-                  placeholder="Achievements"
+                  placeholder=" "
+                  onChange={handleChange}
                   defaultValue={formData.achievements}
-                  className="w-full p-4 border border-gray-300 rounded text-base min-h-[100px] peer"
+                  className="w-full p-4 border border-gray-300 text-gray-500 text-sm min-h-[100px] peer focus:outline-none focus:ring-1  focus:ring-[#2c6472]"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-base
                   ${formData.achievements
                     ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                    : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
+                    Achievements
                 </label>
               </div><br />
 
               {/* Buttons */}
               <div className="flex justify-center items-center gap-4">
                 <button type="button"
-                  className="px-6 py-3 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full hover:bg-gray-700 focus:outline-none"
+                  className="px-6 py-2 teal-button bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
                   onClick={() => navigate(-1)}>
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
+                  className="px-6 py-2 teal-button bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
                 >
                   Next
                 </button>
@@ -191,20 +208,24 @@ const Education = () => {
         </div>
 
         {/* Right Panel */}
-        <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-8 text-white">
-        <div className="flex justify-center items-center gap-2">
-            <img src="src/assets/joblogo.png" className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] m-0">JSE AI</h3>
+        <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
+          <div className="flex justify-center items-center gap-2">
+            <img src={joblogo} className="h-6 w-6" />
+            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
           </div>
-          <div className="text-center mt-8">
-            <h3 className="text-white font-medium mb-0">Education</h3>
+          <div className="text-center mt-4">
+            <h3 className="text-white ms-2 text-lg font-medium mb-4">Education</h3>
           </div>
-          <DotLottieReact
-            src="https://lottie.host/a5116b74-e6e0-4fef-abfb-d99d2b580033/msf2IWJRuh.lottie"
-            loop
-            autoplay
-            style={{ width: "350px", height: "350px" }}
-          />
+          <div className='relative mb-5 flex justify-center items-center ms-4'>
+            <img src={frame} alt="" className='relative object-cover ' />
+            <DotLottieReact
+              src="https://lottie.host/a5116b74-e6e0-4fef-abfb-d99d2b580033/msf2IWJRuh.lottie"
+              loop
+              autoplay
+              style={{ width: "350px", height: "350px" }}
+              className='absolute object-cover me-2 p-2'
+            />
+          </div>
         </div>
       </div>
     </div>

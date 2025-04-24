@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
+import arrow_down from "../../assets/down-arrow.svg";
 
 const Navbar = () => {
   const [firstName, setFirstName] = useState('User');
@@ -53,24 +54,21 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex justify-between items-center bg-white px-6 py-4 border-b border-gray-200">
-      <h1 className="text-xl font-bold text-gray-800"><br/>{getPageTitle()}</h1>
-      <div className="flex items-center space-x-9 relative">
+    <header className="sticky top-0 z-10 flex justify-between items-center bg-white h-16 w-full border-b px-6 border-gray-200">
+      <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
+      <div className="flex items-center space-x-3 relative">
         <img
           src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
           alt="Profile"
-          className="w-10 h-10 rounded-full"
+          className="w-9 h-9 rounded-full"
         />
         <span className="text-gray-800 font-bold">{firstName}</span>
-        <Menu
-          className="w-6 h-6 text-gray-600 cursor-pointer"
-          onClick={() => setMenuOpen(!menuOpen)}
-        />
+        <img src={arrow_down} alt="" onClick={() => setMenuOpen(!menuOpen)}/>
         {menuOpen && (
-          <div className="absolute top-12 right-0 bg-white border rounded shadow-md p-2 z-20">
+          <div className="absolute top-12 -right-2 bg-white border rounded shadow-md p-1 z-20">
             <button
               onClick={handleLogout}
-              className="text-red-600 hover:text-red-800 font-medium px-4 py-2"
+              className="text-red-600 hover:text-red-800 font-medium px-3 py-1"
             >
               Logout
             </button>

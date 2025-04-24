@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import frame from "./../../assets/Frame.png";
+import joblogo from "./../../assets/joblogo.png";
 
 
 const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
@@ -79,16 +81,16 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   const fields = [
     { label: 'Full Name', name: 'firstName', type: 'text' },
     { label: 'Last Name', name: 'secondName', type: 'text' },
-    { label: 'Date Of Birth', name: 'dob', type: 'date' },
+    { label: ' ', name: 'dob', type: 'date' },
     { label: 'Current address', name: 'address', type: 'text' },
     { label: 'Linkedin Profile', name: 'linkedinProfile', type: 'text' },
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <div style={{ display: 'flex', flex: 1 }}>
-        {/* Left Panel */}
-        <div className="flex flex-1 justify-center items-center p-8 bg-white">
+    <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
+      <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
+      {/* Left Panel */}
+        <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="max-w-lg w-full">
             <form className="grid gap-y-6" onSubmit={handleNext}>
               {fields.map((field) => (
@@ -98,9 +100,9 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
                     name={field.name}
                     value={formData[field.name]}
                     onChange={handleChange}
-                    className={`w-full h-full px-4 py-3 border ${
+                    className={`w-full h-full px-4 py-4 border text-gray-500 ${
                       errors[field.name] ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md text-base focus:outline-none focus:ring-2 focus:ring-indigo-500`}
+                    } rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
                     onFocus={(e) => {
                       const label = e.target.nextSibling;
                       label.classList.add('-top-2.5', 'text-sm', 'bg-white', 'px-1');
@@ -124,17 +126,17 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
               ))}
 
               {/* Button Section */}
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-center gap-5 mt-4">
                 <button
                   type="button"
-                  className="px-6 py-3 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full hover:bg-gray-700 focus:outline-none"
+                  className="teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
                   onClick={() => navigate(-1)}
                 >
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#2c6472] text-white w-[100px] rounded-full focus:outline-none"
+                  className="teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
                 >
                   Next
                 </button>
@@ -144,25 +146,29 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
         </div>
 
         {/* Right Panel */}
-        <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-8 text-white">
+        <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
           <div className="flex justify-center items-center gap-2">
-            <img src="src/assets/joblogo.png" className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] m-0">JSE AI</h3>
+            <img src={joblogo} className="h-6 w-6" />
+            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
           </div>
-          <div className="text-center mt-8">
-            <h3 className="text-white font-medium mb-0">Personal Info</h3>
+          <div className="text-center mt-4">
+            <h3 className="text-white ms-4 text-lg font-medium mb-4">Personal Info</h3>
           </div>
+          <div className='relative mb-5 flex justify-center items-center ms-4'>
+                      <img src={frame} alt="" className='relative object-cover ' />
           <DotLottieReact
             src="https://lottie.host/72d38dc2-d827-4840-aa4b-e45bd40fcc7a/bpxhRARUmj.lottie"
             loop
             autoplay
-            style={{ width: '350px', height: '350px' }}
+            style={{ width: '250px', height: '250px' }}
+            className='absolute object-cover me-2 p-2'
           />
+          </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="bg-white text-center py-4 text-sm">
+      {/* <div className="bg-white text-center py-4 text-sm">
         {footerLinks.map((link, index) => (
           <React.Fragment key={index}>
             <Link to={link.path} className="text-[#2c6472] hover:underline font-semibold mx-2">
@@ -171,7 +177,7 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
             {index < footerLinks.length - 1 && <span>|</span>}
           </React.Fragment>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

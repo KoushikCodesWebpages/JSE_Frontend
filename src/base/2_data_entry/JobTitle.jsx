@@ -95,7 +95,7 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
                     name={field.name}
                     value={formData[field.name]}
                     onChange={handleChange}
-                    className={`w-full h-full px-4 py-3 border ${
+                    className={`w-full h-full px-4 py-3 border text-gray-500 ${
                       errors[field.name] ? 'border-red-500' : 'border-gray-300'
                     } rounded-md text-base focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                     onFocus={(e) => {

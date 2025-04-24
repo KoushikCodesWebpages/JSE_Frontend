@@ -10,56 +10,120 @@ import {
   Bookmark,
   Settings as SettingsIcon,
 } from "lucide-react";
+import logo from '../../assets/joblogo.png'
+
+import dashboard_icon from '../../assets/dashboard-icon.svg'
+import dashboard_active_icon from '../../assets/dashboard-active-icon.svg'
+
+import job_listing_icon from '../../assets/job-listing-icon.svg'
+import job_listing_active_icon from '../../assets/job-listing-active-icon.svg'
+
+import selected_application_icon from '../../assets/selected-application-icon.svg'
+import selected_application_active_icon from '../../assets/selected-application-active-icon.svg'
+
+import my_application_icon from '../../assets/my-application-icon.svg'
+import my_application_active_icon from '../../assets/my-application-active-icon.svg'
+
+import application_tracker_icon from '../../assets/application-tracker-icon.svg'
+import application_tracker_active_icon from '../../assets/application-tracker-active-icon.svg'
+
+import saved_jobs_icon from '../../assets/saved-jobs-icon.svg'
+import saved_jobs_active_icon from '../../assets/saved-jobs-active-icon.svg'
 
 const Sidebar = () => {
   const { pathname } = useLocation();
 
   const menuItems = [
-    { to: "/user/dashboard", icon: <Home className="w-5 h-5 text-[#2c6472]" />, label: "Dashboard" },
-    { to: "/user/job-listings", icon: <Briefcase className="w-5 h-5 text-[#2c6472]" />, label: "Job Listings" },
-    { to: "/user/selected-applications", icon: <FileText className="w-5 h-5 text-[#2c6472]" />, label: "Selected Application" },
-    { to: "/user/my-applications", icon: <Layers className="w-5 h-5 text-[#2c6472]" />, label: "My Application" },
-    { to: "/user/application-tracker", icon: <LineChart className="w-5 h-5 text-[#2c6472]" />, label: "Application Tracker" },
-    { to: "/user/saved-jobs", icon: <Bookmark className="w-5 h-5 text-[#2c6472]" />, label: "Saved Jobs" },
+    {
+      to: "/user/dashboard",
+      defaultIcon: dashboard_icon,
+      activeIcon: dashboard_active_icon,
+      label: "Dashboard"
+    },
+    {
+      to: "/user/job-listings",
+      defaultIcon: job_listing_icon,
+      activeIcon: job_listing_active_icon,
+      label: "Job Listings"
+    },
+    {
+      to: "/user/selected-applications",
+      defaultIcon: selected_application_icon,
+      activeIcon: selected_application_active_icon,
+      label: "Selected Application"
+    },
+    {
+      to: "/user/my-applications",
+      defaultIcon: my_application_icon,
+      activeIcon: my_application_active_icon,
+      label: "My Application"
+    },
+    {
+      to: "/user/application-tracker",
+      defaultIcon: application_tracker_icon,
+      activeIcon: application_tracker_active_icon,
+      label: "Application Tracker"
+    },
+    {
+      to: "/user/saved-jobs",
+      defaultIcon: saved_jobs_icon,
+      activeIcon: saved_jobs_active_icon,
+      label: "Saved Jobs"
+    }
   ];
+  
 
   return (
-    <aside className="w-61 h-screen bg-white border-r flex flex-col"><br/>
-      <div className="flex justify-center items-center py-6">
-        <span className="text-2xl font-bold text-stone-600]">JSE AI</span>
+    <aside className="sticky top-0 w-[264px] h-screen bg-white border-r flex flex-col"><br/>
+      <div className="flex justify-center items-center mt-[-7px] mr-5">
+        <img className="w-8 h-8" src={logo} alt="" />
+        <span className="text-[18px] font-bold text-stone-600]">JobFusion</span>
       </div><br/><br/>
 
+      <hr className="transform -translate-y-[34px] border-gray-200"/>
+
       <div className="flex-1">
-        <ul className="space-y-4 text-lg text-gray-400">
+        <ul className="space-y-2 pl-2 text-lg text-gray-400">
           {menuItems.map((item, index) => (
-            <Link to={item.to} key={index}>
-              <li
-                className={`flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-100 hover:text-[#2c6472] transition ${
-                  pathname === item.to
-                    ? "bg-gray-100 text-[#2c6472]"
-                    : "hover:bg-gray-100 hover:text-[#2c6472]"
+            <li key={index}>
+              <Link
+                to={item.to}
+                className={`flex items-center gap-4 px-4 py-2 transition rounded-md ${
+                  pathname === item.to ? "text-[#2c6472]" : ""
                 }`}
               >
-                {item.icon}
-                <span>{item.label}</span>
-              </li><br/>
-            </Link>
+                <img
+                  src={pathname === item.to ? item.activeIcon : item.defaultIcon}
+                  alt={item.label}
+                  className="w-5 h-5"
+                />
+                <span className="text-[14px] font-semibold">{item.label}</span>
+              </Link>
+            </li>
           ))}
         </ul>
       </div>
 
-      <div className="px-6">
-        <Link to="/user/settings">
-          <div
-            className={`flex items-center text-lg gap-3 px-4 py-2 rounded-md hover:bg-gray-100 hover:text-black transition ${
-              pathname === "/user/settings" ? "text-black" : "text-[#2c6472]"
-            }`}
-          >
-            <SettingsIcon className="w-4 h-4" />
-            <span>Settings</span>
-          </div>
-        </Link>
-      </div><br/>
+      <div>
+        <ul className="space-y-2 pl-2 text-lg text-gray-400">
+          <li>
+            <Link
+              to="/user/settings"
+              className={`flex items-center gap-4 px-4 py-2 rounded-md transition ${
+                pathname === "/user/settings" ? "text-[#2c6472] bg-gray-100" : "text-gray-400"
+              }`}
+            >
+              <SettingsIcon
+                className={`w-5 h-5 ${
+                  pathname === "/user/settings" ? "text-[#2c6472]" : "text-[rgba(0, 0, 0, 0.25)]"
+                }`}
+              />
+              <span className="text-[15px] font-semibold text-[rgba(0, 0, 0, 0.25)]">Settings</span>
+            </Link>
+          </li>
+        </ul>
+      </div><br />
+
     </aside>
   );
 };

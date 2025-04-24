@@ -4,6 +4,10 @@ import Navbar from "../navbar/Navbar.jsx";
 import Sidebar from "../sidebar/sidebar.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader.jsx";
+import generate_cover_icon from "../../assets/generate-cover.svg"
+import jobs_available_icon from "../../assets/jobs-available.svg"
+import selectable_jobs_icon from '../../assets/selectable-jobs.svg'
+import total_experience_icon from '../../assets/total-experience.svg'
 
 
 function Dashboard() {
@@ -38,7 +42,7 @@ function Dashboard() {
           setLoading(false);
         })
         .catch((err) => {
-          const errorMessage = err.response?.data?.message || "⚠️ Failed to load profile data.";
+          const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
           alert(errorMessage);
           setError(errorMessage);
           setLoading(false);
@@ -61,8 +65,9 @@ function Dashboard() {
   const fullName = `${profileData?.firstName || "Steve"} ${profileData?.secondName || ""}`.trim();
   const preferredJobTitle = profileData?.preferredJobTitle || "UI/UX Designer";
   const profileCompletion = profileData?.profileCompletion || 85;
-  const skills = profileData?.skills || ["Figma", "Adobe XD", "Photoshop"];
-  const languages = profileData?.languages || ["English", "Tamil"];
+  const skill = profileData?.skills || ["Figma", "Adobe XD", "Photoshop"];
+  const skills = ["Figma", "Adobe XD", "Photoshop", "Flutter", "Full Stack"];
+  const languages = profileData?.languages || ["English", "Tamil", "Hindi", "Malyalam", "Urudu"];
   const certificates = profileData?.certificates?.length > 0
     ? profileData.certificates
     : ["Accenture UX design course", "TCS Basics Python"];
@@ -71,163 +76,195 @@ function Dashboard() {
 
   return (
     <div className="flex bg-gray-100">
-<Sidebar />
-      {/* Main Content */}
-      <div className="flex flex-col w-[1300px] min-h-screen bg-gray-40"> {/* Added 'ml-4' for spacing */}
-        {/* Navbar */}
+
+      <Sidebar />
+
+      <div className="flex flex-col w-full min-h-screen bg-gray-40"> {/* Added 'ml-4' for spacing */}
+
         <Navbar/>
-        <br />
 
-          {/* Welcome */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-gray-800">Welcome back, {fullName}!</h2>
-            <p className="text-gray-500">Let's find your next opportunity.</p>
-          </div><br />
+          <div className="p-5">
 
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-            <div className="lg:col-span-1">
-              
-              <div className="border rounded-xl p-6 bg-white space-y-6">
-                {/* Profile Header Section */}
-                <div className="flex items-center justify-between">
-                  {/* Image + Name/Title */}
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
-                      alt={fullName}
-                      className="w-16 h-16 rounded-full"
-                    />
-                    <div>
-                      <h3 className="text-lg font-semibold">{fullName}</h3>
-                      <p className="text-sm text-gray-500">{preferredJobTitle}</p>
-                    </div>
-                  </div>
+            {/* Welcome */}
+            <div>
+              <h2 className="text-[16px] font-semibold text-gray-800">"Welcome back, {fullName}! <br />
+              &nbsp;  Let's find your next opportunity."</h2>
+              {/* <p className="text-gray-500">Let's find your next opportunity.</p> */}
+            </div><br />
 
-                  {/* Profile Completion Circle */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative w-14 h-14">
-                      <svg className="absolute top-0 left-0 w-full h-full">
-                        <circle
-                          cx="28"
-                          cy="28"
-                          r="24"
-                          stroke="#E5E7EB"
-                          strokeWidth="4"
-                          fill="none"
-                        />
-                        <circle
-                          cx="28"
-                          cy="28"
-                          r="24"
-                          stroke="#0f172a"
-                          strokeWidth="4"
-                          fill="none"
-                          strokeDasharray="150"
-                          strokeDashoffset={150 - (150 * profileCompletion) / 100}
-                          strokeLinecap="round"
-                          transform="rotate(-90 28 28)"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
-                        {profileCompletion}%
+            {/* Grid Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+
+              <div className="lg:col-span-2">
+                
+                <div className="border rounded-xl p-5 bg-white space-y-3">
+                  {/* Profile Header Section */}
+                  <div className="flex items-center justify-between">
+                    {/* Image + Name/Title */}
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
+                        alt={fullName}
+                        className="w-14 h-14 rounded-full"
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="text-[15px] font-bold">{fullName}</h3>
+                        <p className="text-sm text-gray-500">{preferredJobTitle}</p>
                       </div>
                     </div>
-                    <span className="text-xs font-medium text-gray-600 mt-1">Profile Complete</span>
+
+                    {/* Profile Completion Circle */}
+                    <div className="flex flex-col items-center">
+                      <div className="relative w-14 h-14">
+                        <svg className="absolute top-0 left-0 w-full h-full">
+                          <circle
+                            cx="28"
+                            cy="28"
+                            r="24"
+                            stroke="#E5E7EB"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <circle
+                            cx="28"
+                            cy="28"
+                            r="24"
+                            stroke="#2c6472"
+                            strokeWidth="4"
+                            fill="none"
+                            strokeDasharray="150"
+                            strokeDashoffset={150 - (150 * profileCompletion) / 100}
+                            strokeLinecap="round"
+                            transform="rotate(-90 28 28)"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                          {profileCompletion}%
+                        </div>
+                      </div>
+                      <span className="text-xs font-medium text-gray-600">Profile Complete</span>
+                    </div>
                   </div>
-                </div><br />
 
-                {/* Update Button */}
-                <div className="flex justify-center">
-                  <button className="bg-black text-white h-[50px] w-[190px] px-6 py-2 rounded-full font-medium hover:bg-gray-800 transition">
-                    Update Profile
-                  </button>
-                </div><br />
-
-                {/* Skills Section */}
-                <div className="bg-gray-100 p-4 min-h-[100px] max-h-[300px] items-center justify-center rounded-lg">
-                  <h4 className="font-bold text-gray-700 mb-2 ">Skills</h4><br />
-                  <div className="flex flex-wrap gap-2 items-center justify-center">
-                    {skills.map((skill, i) => (
-                      <span
-                        key={i}
-                        className="bg-pink-200 min-w-[100px] min-h-[41px] max-h-[300px] text-black justify-center text-bold font-medium px-4 py-1 text-center rounded-xl"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                  {/* Update Button */}
+                  <div className="flex justify-center">
+                    <button className="bg-black text-[12px] text-white m-2 h-[35px] w-[160px] px-5 py-2 rounded-full font-medium hover:bg-gray-800 transition">
+                      Update Profile
+                    </button>
                   </div>
-                </div><br />
 
-                {/* Languages Section */}
-                <div className="bg-gray-100 p-4 min-h-[100px] max-h-[300px] rounded-lg">
-                  <h4 className="font-bold text-gray-700 mb-2">Languages</h4><br />
-                  <div className="flex flex-wrap gap-2">
-                    {languages.map((lang, i) => (
-                      <span
-                        key={i}
-                        className="bg-pink-200 w-[97px] h-[29px] text-black text-center justify-center text-bold font-medium px-4 py-1 rounded-full"
-                      >
-                        {lang}
-                      </span>
-                    ))}
+                  {/* Skills Section */}
+                  <div className="bg-gray-100 min-h-[100px] max-h-[300px] rounded-lg hide-horizontal-scrollbar">
+                    <h4 className="font-semibold text-gray-700 transform translate-x-4 translate-y-3">Skills</h4><br />
+                    <div className="flex flex-nowrap overflow-auto gap-2 items-center pl-5">
+                      {skills.map((skill, i) => (
+                        <span
+                          key={i}
+                          className="whitespace-nowrap bg-pink-200 w-fit h-fit text-black justify-center text-[14px] font-semibold px-4 py-2 text-center rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div><br />
 
-                {/* Certifications Section */}
-                <div className="bg-gray-100 p-4 min-h-[100px] max-h-[300px] rounded-lg">
-                  <h4 className="font-bold text-gray-700 mb-2">Certifications</h4><br />
-                  <ul className="list-disc list-inside text-sm text-gray-600">
-                    {certificates.map((cert, i) => (
-                      <li key={i}>{cert}</li>
-                    ))}
-                  </ul>
-                </div><br />
+                  {/* Languages Section */}
+                  <div className="bg-gray-100 min-h-[100px] max-h-[300px] rounded-lg">
+                    <h4 className="font-semibold text-gray-700 transform translate-x-4 translate-y-3">Languages</h4><br />
+                    <div className="flex flex-nowrap overflow-auto no-scrollbar gap-2 pl-5">
+                      {languages.map((lang, i) => (
+                        <span
+                          key={i}
+                          className="whitespace-nowrap bg-pink-200 w-fit h-fit text-black text-center justify-center text-[14px] font-semibold px-4 py-2 rounded-full"
+                        >
+                          {lang}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-                {/* Experience Section */}
-                <div className="bg-gray-100 p-4 h-[90px] rounded-lg">
-                  <h4 className="font-bold text-gray-700 mb-2">Experience</h4><br />
-                  <p className="text-sm text-gray-700 flex items-center">
-                    <i className="fa fa-briefcase mr-2"></i> {experienceFormatted}
-                  </p>
-                </div><br />
-              </div>
-            </div>
+                  {/* Certifications Section */}
+                  <div className="bg-gray-100 p-4 min-h-[100px] max-h-[300px] rounded-lg">
+                    <h4 className="font-semibold text-gray-700 -mb-3">Certifications</h4><br />
+                    <ul className="list-disc list-inside text-sm text-gray-600">
+                      {certificates.map((cert, i) => (
+                        <li key={i}>{cert}</li>
+                      ))}
+                    </ul>
+                  </div>
 
-
-            {/* Right column: stats & jobs */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-pink-100 h-[100px] w-[400px] text-stone-700 p-4 rounded-xl text-center"><br/>
-                  <h3 className="text-3xl font-bold">{profileData?.dailyGeneratableCoverletter ?? 0}</h3>
-                  <p className="text-sm">Daily Generatable Cover Letters</p>
-                </div><br/>
-                <div className="bg-blue-100 h-[100px] w-[400px] text- Stone-700 p-4 rounded-xl text-center justify-center"><br/>
-                  <h3 className="text-3xl font-bold ">{profileData?.totalJobsAvailable ?? 0}</h3>
-                  <p className="text-sm">Total Jobs Available</p>
-                </div><br/>
-                <div className="bg-green-100 h-[100px] w-[400px] text- Stone-70 p-4 rounded-xl text-center"><br/>
-                  <h3 className="text-3xl font-bold">{profileData?.dailySelectableJobsCount ?? 0}</h3>
-                  <p className="text-sm">Daily Selectable Jobs</p>
-                </div><br/>
-                <div className="bg-purple-100 h-[100px] w-[400px] text- Stone-70 p-4 rounded-xl text-center"><br/>
-                  <h3 className="text-3xl font-bold">{experienceFormatted}</h3>
-                  <p className="text-sm">Total Experience</p>
+                  {/* Experience Section */}
+                  <div className="flex flex-col gap-3 bg-gray-100 p-4 h-[90px] rounded-lg">
+                    <h4 className="font-semibold text-gray-700">Experience</h4>
+                    <p className="text-sm text-gray-700 flex items-center">
+                      <i className="fa fa-briefcase"></i> {experienceFormatted}
+                    </p>
+                  </div>
                 </div>
-              </div><br/>
-
-              {/* Recommended Jobs */}
-              <div className="bg-white p-6 rounded-xl shadow"><br/>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-800">Recommended Jobs for you</h3>
-                  <a href="#" className="text-sm text-indigo-600 hover:underline">Show all</a>
-                </div><br/><br/>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-100 p-6 w-[900px] rounded-xl text-center text-gray-500 font-medium">NO<br />JOBS</div><br/>
-                  <div className="bg-gray-100 p-6 w-[900px] rounded-xl text-center text-gray-500 font-medium">NO<br />JOBS</div>
-                </div><br/>
               </div>
+
+
+              {/* Right column: stats & jobs */}
+              <div className="lg:col-span-3 space-y-7">
+                {/* Stats */}
+                <div className="flex justify-center">
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+
+                    <div className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                      <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
+                        <h3 className="text-3xl font-bold">{profileData?.dailyGeneratableCoverletter ?? 0}</h3>
+                        <p className="text-[13px] font-bold">Daily Generatable Cover Letters</p>
+                      </div>
+                      <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
+                        <img width="22px" height="22px" className="p-1" src={generate_cover_icon} alt="" />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                      <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
+                        <h3 className="text-3xl font-bold ">{profileData?.totalJobsAvailable ?? 0}</h3>
+                        <p className="text-[13px] font-bold">Total Jobs Available</p>
+                      </div>
+                      <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
+                        <img width="22px" height="22px" className="p-1" src={jobs_available_icon} alt="" />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-gradient-to-br from-[#88D3C6] to-[#A6F1C7] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                      <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
+                        <h3 className="text-3xl font-bold">{profileData?.dailySelectableJobsCount ?? 0}</h3>
+                        <p className="text-[13px] font-bold">Daily Selectable Jobs</p>
+                      </div>  
+                      <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
+                        <img width="22px" height="22px" className="p-1" src={selectable_jobs_icon} alt="" />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-gradient-to-br from-[#FAD0C5] to-[#FED0FC] h-[120px] w-[250px] text-black p-4 rounded-xl  ">
+                      <div className="absolute top-12 flex flex-col justify-start items-start gap-3">
+                        <h3 className="text-xl font-bold">{experienceFormatted}</h3>
+                        <p className="text-[13px] font-bold">Total Experience</p>
+                      </div>  
+                      <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
+                        <img width="22px" height="22px" className="p-1" src={total_experience_icon} alt="" />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>  
+
+                {/* Recommended Jobs */}
+                <div className="bg-white rounded-xl p-5 pb-0 shadow">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-base font-semibold text-gray-700">Recommended Jobs for you</h3>
+                    <a href="#" className="text-sm font-semibold text-indigo-800 hover:underline">Show all</a>
+                  </div>
+                  <div className="flex flex-col justify-center items-center mt-6">
+                    <div className="bg-gray-100 p-5 w-full rounded-xl text-center text-gray-500 font-medium">No Jobs</div>                  </div><br/>
+                </div>
+
+              </div>
+
             </div>
           </div>
       </div>

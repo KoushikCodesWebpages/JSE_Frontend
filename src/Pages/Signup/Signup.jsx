@@ -126,7 +126,6 @@ const Signup = () => {
                 type="tel"
                 name="phoneNumber"
                 placeholder=" "
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
                 value={formData.phoneNumber}
                 onChange={handleChange}

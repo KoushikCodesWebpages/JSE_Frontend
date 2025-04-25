@@ -50,10 +50,8 @@ const Savedjob = () => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
 
-      <div className="flex flex-col w-[1300px] min-h-screen bg-gray-40">
-        <Navbar/>
+      <div className="flex flex-col w-full min-h-screen bg-gray-40">
         {/* Top Header */}
         
 

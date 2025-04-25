@@ -71,7 +71,7 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
         console.error('❌ Error uploading data:', errorData);
       } else {
         console.log('✅ Form data uploaded successfully:', formData);
-        navigate('/user/professional-summary');
+        navigate('/user/onboarding/professional-summary');
       }
     } catch (error) {
       console.error('❌ Network error:', error);
@@ -89,7 +89,7 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
       <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
-      {/* Left Panel */}
+        {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="max-w-lg w-full">
             <form className="grid gap-y-6" onSubmit={handleNext}>
@@ -100,9 +100,8 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
                     name={field.name}
                     value={formData[field.name]}
                     onChange={handleChange}
-                    className={`w-full h-full px-4 py-4 border text-gray-500 ${
-                      errors[field.name] ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
+                    className={`w-full h-full px-4 py-4 border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
+                      } rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
                     onFocus={(e) => {
                       const label = e.target.nextSibling;
                       label.classList.add('-top-2.5', 'text-sm', 'bg-white', 'px-1');
@@ -155,14 +154,14 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
             <h3 className="text-white ms-4 text-lg font-medium mb-4">Personal Info</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
-                      <img src={frame} alt="" className='relative object-cover ' />
-          <DotLottieReact
-            src="https://lottie.host/72d38dc2-d827-4840-aa4b-e45bd40fcc7a/bpxhRARUmj.lottie"
-            loop
-            autoplay
-            style={{ width: '250px', height: '250px' }}
-            className='absolute object-cover me-2 p-2'
-          />
+            <img src={frame} alt="" className='relative object-cover ' />
+            <DotLottieReact
+              src="https://lottie.host/72d38dc2-d827-4840-aa4b-e45bd40fcc7a/bpxhRARUmj.lottie"
+              loop
+              autoplay
+              style={{ width: '250px', height: '250px' }}
+              className='absolute object-cover me-2 p-2'
+            />
           </div>
         </div>
       </div>

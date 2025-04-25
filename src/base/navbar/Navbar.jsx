@@ -54,7 +54,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex justify-between items-center bg-white h-16 w-full border-b px-6 border-gray-200">
+    <header className="sticky top-0 z-10 flex justify-between items-center bg-white h-16 w-full border-t border-b px-6 border-gray-200">
       <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
       <div className="flex items-center space-x-3 relative">
         <img

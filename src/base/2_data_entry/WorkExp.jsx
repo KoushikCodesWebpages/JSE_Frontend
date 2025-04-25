@@ -91,7 +91,7 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
   const handleNext = async (e) => {
     e.preventDefault();
     setLoading(true);
-    navigate("/user/education");  // Only navigate, no data posting here
+    navigate("/user/onboarding/education");  // Only navigate, no data posting here
     setLoading(false);
   };
 

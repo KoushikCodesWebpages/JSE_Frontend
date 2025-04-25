@@ -54,7 +54,7 @@ const Education = () => {
       });
 
       alert(`✅ Education data uploaded successfully`);
-      navigate('/user/certificates');
+      navigate('/user/onboarding/certificates');
     } catch (error) {
       console.error('Error uploading data:', error);
       if (error.response) {

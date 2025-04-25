@@ -55,15 +55,15 @@ const Login = () => {
           navigate('/user/dashboard');
         } else {
           const stepToPath = {
-            personal_infos: '/user/personal-info',
-            professional_summaries: '/user/professional-summary',
-            work_experiences: '/user/work-experience',
-            educations: '/user/education',
-            certificates: '/user/certificates',
-            languages: '/user/languages',
-            preferred_job_titles: '/user/jobtitles'
+            personal_infos: '/user/onboarding/personal-info',
+            professional_summaries: '/user/onboarding/professional-summary',
+            work_experiences: '/user/onboarding/work-experience',
+            educations: '/user/onboarding/education',
+            certificates: '/user/onboarding/certificates',
+            languages: '/user/onboarding/languages',
+            preferred_job_titles: '/user/onboarding/jobtitles'
           };
-          const nextRoute = stepToPath[progress.next_step] || '/user/personal-info'; // fallback
+          const nextRoute = stepToPath[progress.next_step] || '/user/onboarding/personal-info'; // fallback
           navigate(nextRoute);
         }
 

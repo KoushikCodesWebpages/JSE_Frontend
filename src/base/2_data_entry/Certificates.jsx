@@ -66,7 +66,7 @@ const Certificate = () => {
       }
 
       alert(`✅ Ceritificates uploaded successfully`);
-      navigate("/user/languages");
+      navigate("/user/onboarding/languages");
     } catch (error) {
       console.error("Error uploading certificate:", error);
       alert("Failed to upload certificate.");

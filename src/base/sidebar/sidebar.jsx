@@ -74,7 +74,7 @@ const Sidebar = () => {
   
 
   return (
-    <aside className="sticky top-0 w-[264px] h-screen bg-white border-r flex flex-col"><br/>
+    <aside className="fixed top-0 w-[264px] h-screen bg-white border-r flex flex-col"><br/>
       <div className="flex justify-center items-center mt-[-7px] mr-5">
         <img className="w-8 h-8" src={logo} alt="" />
         <span className="text-[18px] font-bold text-stone-600]">JobFusion</span>

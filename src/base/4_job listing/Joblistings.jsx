@@ -80,10 +80,8 @@ function App() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
 
       <div className="flex flex-col w-[1300px] min-h-screen bg-gray-40">
-        <Navbar/>
 
         <main className="flex-1 p-9 overflow-y-auto bg-gray-100"><br/>
           <div className="flex flex-wrap gap-3 mb-5">

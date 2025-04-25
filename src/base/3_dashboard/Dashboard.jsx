@@ -28,7 +28,7 @@ function Dashboard() {
 
     const storedProfile = sessionStorage.getItem("profileData");
 
-    if (storedProfile) {
+    if (storedProfile && storedProfile !== "undefined") {
       setProfileData(JSON.parse(storedProfile));
       setLoading(false);
     } else {
@@ -49,6 +49,7 @@ function Dashboard() {
         });
     }
   }, [token]);
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -75,13 +76,13 @@ function Dashboard() {
   const experienceFormatted = `${Math.floor(totalExperienceInMonths / 12)} yrs ${totalExperienceInMonths % 12} months`;
 
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-gray-100 ps-2">
 
-      <Sidebar />
+      {/* <Sidebar /> */}
 
-      <div className="flex flex-col w-full min-h-screen bg-gray-40"> {/* Added 'ml-4' for spacing */}
+      <div className="flex flex-col w-full  min-h-screen bg-gray-40"> {/* Added 'ml-4' for spacing */}
 
-        <Navbar/>
+        {/* <Navbar/> */}
 
           <div className="p-5">
 

@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 import Login from './Pages/Login/Login.jsx';
 import Signup from './Pages/Signup/Signup.jsx';
-import Dashboard from './base/3_dashboard/Dashboard.jsx';
-import Joblisting from "./base/4_job listing/Joblistings.jsx";
-import Selectedapplication from "./base/5_selectedjobs/Selectedapplications.jsx";
-import Myapplication from "./base/6_myapplications/Myapplication.jsx";
-import Applicationtracker from "./base/7_app_tracker/Applicationtracker.jsx";
-import Savedjob from "./base/8_savedjobs/Savedjob.jsx";
-import Setting from "./base/9_settings/Settings.jsx";
+import Dashboard from './Pages/3_dashboard/Dashboard.jsx';
+import Joblisting from "./Pages/4_job listing/Joblistings.jsx";
+import Selectedapplication from "./Pages/5_selectedjobs/Selectedapplications.jsx";
+import Myapplication from "./Pages/6_myapplications/Myapplication.jsx";
+import Applicationtracker from "./Pages/7_app_tracker/Applicationtracker.jsx";
+import Savedjob from "./Pages/8_savedjobs/Savedjob.jsx";
+import Setting from "./Pages/9_settings/Settings.jsx";
 import VerificationPage from './base/1_auth/VerificationPage/VerificationPage.jsx';
 import Test1 from './Testing/Test1';
 import Navbar from "./base/navbar/Navbar.jsx";

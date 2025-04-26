@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Player } from '@lottiefiles/react-lottie-player';
+import animationData from "../../assets/Animation - 1745282599914.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import axios from 'axios';
 import google from "./../../assets/Google.png";
@@ -7,9 +9,8 @@ import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
 
 
-
-
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     phoneNumber: '',
@@ -50,6 +51,8 @@ const Signup = () => {
     };
 
     try {
+      setLoading(true);
+
       const response = await axios.post(
         'https://raasbackend-production.up.railway.app/signup',
         signupData, // Request body as the second argument
@@ -62,7 +65,6 @@ const Signup = () => {
 
       if (response.status >= 200 && response.status < 300) {
         console.log('Signup response:', response);
-
         console.log('Signup successful:', response.data);
         navigate('/user/login', {
           state: {
@@ -70,6 +72,11 @@ const Signup = () => {
             phoneNumber: formData.phoneNumber
           }
         });
+
+        setTimeout(() => {
+          navigate(nextRoute);
+          setLoading(false); // Turn off loading *after* navigating
+        }, 100); 
       } else {
         console.error('Signup failed');
         alert('Signup failed, please try again.');
@@ -166,6 +173,7 @@ const Signup = () => {
                 >
                   {/* {showPassword.password ? <FaEyeSlash size={18} /> : <FaEye size={18} />} */}
                 </span>
+                <p className='text-[10px] mt-1'>( password should contain atleast 8 characters )</p>
               </div>
 
               {/* Confirm Password */}
@@ -238,6 +246,18 @@ const Signup = () => {
           "Unlock your next opportunity — your dream job is just a click away."
         </p>
       </div>
+
+      {/* Fullscreen Overlay with Animation */}
+      {loading && (
+        <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 transition-opacity duration-1000">
+          <Player
+            autoplay
+            loop
+            src={animationData}
+            style={{ width: 150, height: 150 }}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../sidebar/sidebar.jsx";
+import Sidebar from "../../base/sidebar/sidebar.jsx";
 import { Lock, ShieldCheck, Mail, ChevronRight, Settings as SettingsIcon, Home, Briefcase, FileText, Layers, LineChart, Bookmark } from "lucide-react";
-import Navbar from "../navbar/Navbar.jsx";
+import Navbar from "../../base/navbar/Navbar.jsx";
 
 
 
@@ -35,12 +35,9 @@ const Settings = () => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
-      <Sidebar />
 
       {/* Main Content */}
       <main className="flex flex-col w-[1300px] min-h-screen bg-gray-40">
-        <Navbar/>
         
 <br/>
 
@@ -82,7 +79,7 @@ const Settings = () => {
           <Mail className="text-[#2c6472] w-5 h-5" />
         </div>
         <div>
-          <p className="font-semibold text-sm p-4  ">Contact</p>
+          <p className="font-semibold text-sm   ">Contact</p>
           <p className="text-xs text-gray-500">{user?.contact || "info@arshan.de"}</p>
         </div>
       </div>

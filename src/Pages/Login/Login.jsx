@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Player } from '@lottiefiles/react-lottie-player';
+import animationData from "../../assets/Animation - 1745282599914.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import google from "./../../assets/Google.png";
 import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +42,7 @@ const Login = () => {
   };
   const fetchEntryProgressAndRedirect = async (token) => {
     try {
+      setLoading(true);
       const res = await fetch('https://raasbackend-production.up.railway.app/user/entry-progress', {
         method: 'GET',
         headers: {
@@ -66,6 +70,11 @@ const Login = () => {
           const nextRoute = stepToPath[progress.next_step] || '/user/onboarding/personal-info'; // fallback
           navigate(nextRoute);
         }
+
+        setTimeout(() => {
+          navigate(nextRoute);
+          setLoading(false); // Turn off loading *after* navigating
+        }, 1000); // slight delay for smoother UX (optional)
 
       } else {
         console.error('Failed to get progress:', progress);
@@ -149,6 +158,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="teal-button w-half h-[44px] bg-[#2c6472] text-white py-2 mt-4 rounded-[10px] font-semibold hover:bg-[#24525f] transition"
+                disabled={loading}
               >
                 Login
               </button><br />
@@ -193,6 +203,17 @@ const Login = () => {
         <Link to="#" className="text-[#2c6472] hover:underline font-semibold mx-2">Terms of Use</Link>|
         <Link to="#" className="text-[#2c6472] hover:underline font-semibold mx-2">Privacy</Link>
       </div> */}
+
+      {loading && (
+        <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 transition-opacity duration-1000">
+          <Player
+            autoplay
+            loop
+            src={animationData}
+            style={{ width: 150, height: 150 }}
+          />
+        </div>
+      )}
     </div>
   );
 };

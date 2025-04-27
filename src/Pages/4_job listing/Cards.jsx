@@ -17,30 +17,42 @@ function Cards(props) {
   };
 
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
-
+  console.log(token);
   const axiosInstance = axios.create({
-    baseURL: "https://raasbackend-production.up.railway.app",
+    baseURL: "https://raasbackend-production.up.railway.app/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  // const onSelect = async () => {
-  //   try {
-  //     const response = await axiosInstance.post("/selected-jobs", props);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const onSelect = async () => {
+    try {
+      // First, trigger the fade-out effect and select the job
+      setIsSelected(true);
+      setIsFadingOut(true); // trigger fade-out animation
+      
+      // Wait for the fade-out effect to complete before hiding the card
+      setTimeout(() => {
+        setShowCard(false); // Hide the card after fade-out
+  
+        // Now send the API request after the fade-out completes
+        axiosInstance.post("/selected-jobs", props)
+          .then((response) => {
+            console.log("Job selected successfully:", response);
+            console.log("Posting job data:", props);
 
-  const onSelect = () => {
-    setIsSelected(true);
-    setIsFadingOut(true); // trigger fade out
-    setTimeout(() => {
-      setShowCard(false);
-    }, 2000); // wait for fade-out animation to complete (0.5s)
+          })
+          .catch((error) => {
+            console.error("Error selecting job:", error);
+          });
+  
+      }, 2000); // Wait for fade-out animation to complete (2s)
+  
+    } catch (error) {
+      console.error("Error in onSelect:", error);
+    }
   };
+  
   
   
   
@@ -138,7 +150,7 @@ function Cards(props) {
         <div className="flex p-6 w-1/2">
           <div className="flex flex-col gap-4 w-1/2">
             {props.skillData.map((item, index) => (
-              <div key={index} className="flex flex-col gap-2">
+              <div key={index} className="flex flex-col gap-1">
                 <p className="font-semibold text-base">{item.label}</p>
                 <p className="text-[#a09f9f] font-medium text-[14px]">
                   {item.value}
@@ -147,7 +159,7 @@ function Cards(props) {
             ))}
           </div>
           <div className="flex flex-col gap-5 items-center w-1/2">
-            <div className="relative w-28 h-28">
+            <div className="relative w-24 h-24">
               <svg
                 viewBox="0 0 100 100"
                 className="absolute top-0 left-0 w-full h-full"

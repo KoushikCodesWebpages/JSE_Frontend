@@ -24,80 +24,80 @@ const Savedjob = () => {
     fetchSelectedJobs();
   }, []);
 
-  const fetchSelectedJobs = async () => {
-    try {
-      const dummyData = {
-        selected_jobs: [
-          {
-            title: "Sponsorship Manager",
-            company: "Netflix",
-            posted_date: "2025-04-13",
-            location: "Berlin, Berlin, Germany",
-            description:
-              "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
-            skills: "React.js, Tailwind CSS, JavaScript",
-            user_skills: "campaign management, creative.",
-            min_salary: 600000,
-            max_salary: 800000,
-            match_score: 73,
-          },
-          {
-            title: "Backend Engineer",
-            company: "CodeWiz",
-            posted_date: "2025-04-18",
-            location: "Remote",
-            description:
-              "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
-            skills: "Node.js, MongoDB, Express",
-            user_skills: "Node.js, Express, MySQL",
-            min_salary: 600000,
-            max_salary: 900000,
-            match_score: 85,
-          },
-          {
-            title: "Full Stack Developer",
-            company: "DevHouse",
-            posted_date: "2025-04-15",
-            location: "Pune, India",
-            description:
-              "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
-            skills: "MongoDB, Express, React, Node",
-            user_skills: "MongoDB, Express, React",
-            min_salary: 700000,
-            max_salary: 1000000,
-            match_score: 92,
-          },
-        ],
-      };
-
-      setSelectedJobs(dummyData.selected_jobs);
-    } catch (error) {
-      console.error("Error setting dummy data:", error);
-      setSelectedJobs([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // const fetchSelectedJobs = async () => {
   //   try {
-  //     const response = await fetch('https://raasbackend-production.up.railway.app/selected-jobs', {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': Bearer ${token},
-  //       },
-  //     });
+  //     const dummyData = {
+  //       selected_jobs: [
+  //         {
+  //           title: "Sponsorship Manager",
+  //           company: "Netflix",
+  //           posted_date: "2025-04-13",
+  //           location: "Berlin, Berlin, Germany",
+  //           description:
+  //             "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
+  //           skills: "React.js, Tailwind CSS, JavaScript",
+  //           user_skills: "campaign management, creative.",
+  //           min_salary: 600000,
+  //           max_salary: 800000,
+  //           match_score: 73,
+  //         },
+  //         {
+  //           title: "Backend Engineer",
+  //           company: "CodeWiz",
+  //           posted_date: "2025-04-18",
+  //           location: "Remote",
+  //           description:
+  //             "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
+  //           skills: "Node.js, MongoDB, Express",
+  //           user_skills: "Node.js, Express, MySQL",
+  //           min_salary: 600000,
+  //           max_salary: 900000,
+  //           match_score: 85,
+  //         },
+  //         {
+  //           title: "Full Stack Developer",
+  //           company: "DevHouse",
+  //           posted_date: "2025-04-15",
+  //           location: "Pune, India",
+  //           description:
+  //             "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
+  //           skills: "MongoDB, Express, React, Node",
+  //           user_skills: "MongoDB, Express, React",
+  //           min_salary: 700000,
+  //           max_salary: 1000000,
+  //           match_score: 92,
+  //         },
+  //       ],
+  //     };
 
-  //     if (!response.ok) throw new Error('Failed to fetch selected jobs');
-  //     const data = await response.json();
-  //     setSelectedJobs(Array.isArray(data.selected_jobs) ? data.selected_jobs : []);
+  //     setSelectedJobs(dummyData.selected_jobs);
   //   } catch (error) {
-  //     console.error('Error fetching selected jobs:', error);
+  //     console.error("Error setting dummy data:", error);
   //     setSelectedJobs([]);
   //   } finally {
   //     setLoading(false);
   //   }
   // };
+
+  const fetchSelectedJobs = async () => {
+    try {
+      const response = await fetch('https://raasbackend-production.up.railway.app/api/selected-jobs', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch selected jobs');
+      const data = await response.json();
+      setSelectedJobs(Array.isArray(data.selected_jobs) ? data.selected_jobs : []);
+    } catch (error) {
+      console.error('Error fetching selected jobs:', error);
+      setSelectedJobs([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!token) {
     return (

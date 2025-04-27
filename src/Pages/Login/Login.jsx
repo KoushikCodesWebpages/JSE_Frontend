@@ -23,7 +23,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/login', {
+      const response = await fetch('https://raasbackend-production.up.railway.app/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -43,7 +43,7 @@ const Login = () => {
   const fetchEntryProgressAndRedirect = async (token) => {
     try {
       setLoading(true);
-      const res = await fetch('https://raasbackend-production.up.railway.app/user/entry-progress', {
+      const res = await fetch('https://raasbackend-production.up.railway.app/user/entry-progress/check', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

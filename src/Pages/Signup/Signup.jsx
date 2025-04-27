@@ -11,6 +11,7 @@ import frame from "./../../assets/Frame.png";
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
+  const [showVerificationPopup, setShowVerificationPopup] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     phoneNumber: '',
@@ -54,7 +55,7 @@ const Signup = () => {
       setLoading(true);
 
       const response = await axios.post(
-        'https://raasbackend-production.up.railway.app/signup',
+        'https://raasbackend-production.up.railway.app/auth/signup',
         signupData, // Request body as the second argument
         {
           headers: {
@@ -64,25 +65,29 @@ const Signup = () => {
       );
 
       if (response.status >= 200 && response.status < 300) {
-        console.log('Signup response:', response);
         console.log('Signup successful:', response.data);
-        navigate('/user/login', {
-          state: {
-            email: formData.email,
-            phoneNumber: formData.phoneNumber
-          }
-        });
+
+        setShowVerificationPopup(true); // Show popup first!
 
         setTimeout(() => {
-          navigate(nextRoute);
-          setLoading(false); // Turn off loading *after* navigating
-        }, 100); 
+          setShowVerificationPopup(false);
+          navigate('/user/login', {
+            state: {
+              email: formData.email,
+              phoneNumber: formData.phoneNumber
+            }
+          });
+          setLoading(false);
+        }, 2500); // Wait 2.5 seconds and THEN navigate
+
       } else {
         console.error('Signup failed');
+        setLoading(false);
         alert('Signup failed, please try again.');
       }
     } catch (error) {
       console.error('Error during signup:', error.response?.data || error.message);
+      setLoading(false);
       alert(error.response?.data?.message || 'Signup failed, please try again.');
     }
   };
@@ -247,9 +252,19 @@ const Signup = () => {
         </p>
       </div>
 
+      {showVerificationPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 text-center border-b-[#2c6472] border-b-8">
+            <h2 className="text-xl font-semibold mb-4 text-[#2c6472]">Check Your Email 📬</h2>
+            <p className="text-gray-700 ">We've sent you a verification link. Please verify before login!</p>
+          </div>
+        </div>
+       )} 
+
+
       {/* Fullscreen Overlay with Animation */}
       {loading && (
-        <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 transition-opacity duration-1000">
+        <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-40 transition-opacity duration-1000">
           <Player
             autoplay
             loop

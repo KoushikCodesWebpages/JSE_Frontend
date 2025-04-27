@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
-
-
+import frame from './../../assets/Frame.png';
+import joblogo from './../../assets/joblogo.png';
 
 const Certificate = () => {
   const navigate = useNavigate();
   const hasFetched = useRef(false);
   const [formData, setFormData] = useState({
-    certificateName: '',
-    certificateNumber: '',
+    certificate_name: '',
+    certificate_number: '',
   });
   const [certificateFile, setCertificateFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,12 +26,10 @@ const Certificate = () => {
     }
   };
 
-  const handleNext = async (e) => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
+  const handleAddCertificate = async (e) => {
     e.preventDefault();
 
-    if (!formData.certificateName || !formData.certificateNumber || !certificateFile) {
+    if (!formData.certificate_name || !formData.certificate_number || !certificateFile) {
       alert('Please fill all fields and upload a certificate file.');
       return;
     }
@@ -48,8 +44,8 @@ const Certificate = () => {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("CertificateName", formData.certificateName);
-      formDataToSend.append("CertificateNumber", formData.certificateNumber);
+      formDataToSend.append("CertificateName", formData.certificate_name);
+      formDataToSend.append("CertificateNumber", formData.certificate_number);
       formDataToSend.append("file", certificateFile); // ✅ Raw file here
 
       const response = await fetch("https://raasbackend-production.up.railway.app/certificates", {
@@ -65,8 +61,14 @@ const Certificate = () => {
         throw new Error(errorText || "Upload failed");
       }
 
-      alert(`✅ Ceritificates uploaded successfully`);
-      navigate("/user/onboarding/languages");
+      alert(`✅ Certificates uploaded successfully`);
+
+      setFormData({
+        certificate_name: '',
+        certificate_number: '',
+      });
+      setCertificateFile(null); 
+
     } catch (error) {
       console.error("Error uploading certificate:", error);
       alert("Failed to upload certificate.");
@@ -75,23 +77,30 @@ const Certificate = () => {
     }
   };
 
+  const handleNext = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    navigate("/user/onboarding/languages");  // Only navigate, no data posting here
+    setLoading(false);
+  };
+
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
       <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
         {/* Left Panel */}
         <div className="flex-1 flex justify-center items-center p-8 bg-white rounded-s-xl">
-          <form className="max-w-md w-full" onSubmit={handleNext}>
+          <form className="max-w-md w-full" onSubmit={handleAddCertificate}>
             <div className="relative mb-5">
               <input
                 type="text"
-                name="certificateName"
+                name="certificate_name"
                 placeholder=" "
-                value={formData.certificateName}
+                value={formData.certificate_name}
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
               <label className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.certificateName ? '-top-2 text-sm bg-white px-1' :
+                ${formData.certificate_name ? '-top-2 text-sm bg-white px-1' :
                   'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
                 Certificate/Course Name
               </label>
@@ -124,20 +133,19 @@ const Certificate = () => {
                   </p>
                 </label>
               </div>
-              {/* <p className='text-center m-2 text-gray-500 text-xs'>Atleast upload three Certificates</p> */}
             </div><br />
 
             <div className="relative mb-6">
               <input
                 type="text"
-                name="certificateNumber"
+                name="certificate_number"
                 placeholder=" "
-                value={formData.certificateNumber}
+                value={formData.certificate_number}
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
               <label className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.certificateNumber ? '-top-2 text-sm bg-white px-1' :
+                ${formData.certificate_number ? '-top-2 text-sm bg-white px-1' :
                   'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
                 Certificate Number
               </label>
@@ -152,11 +160,18 @@ const Certificate = () => {
                 Back
               </button>
 
-              <div className="flex-1" />
 
               <button
-                type="submit"
+                  type="submit"
+                  className=" px-6  py-2 bg-white text-[#2c6472] border border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200"
+                >
+                  +Add Certificates
+                </button>
+
+              <button
+                type="button"
                 className="teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full"
+                onClick={handleNext}
               >
                 {loading ? 'Saving...' : 'Next'}
               </button>
@@ -185,9 +200,6 @@ const Certificate = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-
     </div>
   );
 };

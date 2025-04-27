@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
 import joblogo from "./../../assets/joblogo.png";
@@ -14,9 +14,9 @@ const Education = () => {
   const [formData, setFormData] = useState({
     degree: '',
     institution: '',
-    fieldOfStudy: '',
-    startDate: '',
-    endDate: '',
+    field_of_study: '',
+    start_date: '',
+    end_date: '',
     achievements: ''
   });
 
@@ -32,15 +32,15 @@ const Education = () => {
     // Transforming the date inputs to ISO 8601 format
     const formatDateToISO = (date) => {
       const localDate = new Date(date);
-      return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
-    };
+      // Format to YYYY-MM-DD, or adjust to the format your backend expects
+      return localDate.toISOString().split('T')[0];    };
 
     const updatedFormData = {
       degree: e.target.degree.value,
       institution: e.target.institution.value,
-      fieldOfStudy: e.target.fieldOfStudy.value,
-      startDate: formatDateToISO(e.target.startDate.value), // Transforming to ISO 8601
-      endDate: formatDateToISO(e.target.endDate.value),     // Transforming to ISO 8601
+      field_of_study: e.target.field_of_study.value,
+      start_date: formatDateToISO(e.target.start_date.value), // Transforming to ISO 8601
+      end_date: formatDateToISO(e.target.end_date.value),     // Transforming to ISO 8601
       achievements: e.target.achievements.value
     };
 
@@ -118,14 +118,14 @@ const Education = () => {
               <div className="relative mb-3">
                 <input
                   type="text"
-                  name="fieldOfStudy"
+                  name="field_of_study"
                   placeholder=" "
                   onChange={handleChange}
-                  defaultValue={formData.fieldOfStudy}
+                  defaultValue={formData.field_of_study}
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-sm
-                  ${formData.fieldOfStudy
+                  ${formData.field_of_study
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
@@ -138,14 +138,14 @@ const Education = () => {
                 <div className="relative flex-1">
                   <input
                     type="date"
-                    name="startDate"
+                    name="start_date"
                     placeholder=" "
                     onChange={handleChange}
-                    defaultValue={formData.startDate}
+                    defaultValue={formData.start_date}
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
-                    ${formData.startDate
+                    ${formData.start_date
                       ? '-top-2 text-sm bg-white px-1'
                       : '-top-2 bg-white px-1 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                     }`}>
@@ -155,14 +155,14 @@ const Education = () => {
                 <div className="relative flex-1">
                   <input
                     type="date"
-                    name="endDate"
+                    name="end_date"
                     placeholder=" "
                     onChange={handleChange}
-                    defaultValue={formData.endDate}
+                    defaultValue={formData.end_date}
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
-                    ${formData.endDate
+                    ${formData.end_date
                       ? '-top-2 text-sm bg-white px-1'
                       : '-top-2 bg-white px-1 text-sm  peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                     }`}>

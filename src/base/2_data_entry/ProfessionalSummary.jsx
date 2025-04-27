@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
 import joblogo from "./../../assets/joblogo.png";
 
 
-const ProfessionalSummary = ({ logoSrc, lottieSrc, footerLinks }) => {
+const ProfessionalSummary = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     about: '',
     skills: [],
     newSkill: '',
-    annualIncome: ''
+    annual_income: ''
   });
 
   const handleChange = (e) => {
@@ -52,7 +52,7 @@ const ProfessionalSummary = ({ logoSrc, lottieSrc, footerLinks }) => {
     const payload = {
       about: formData.about,
       skills: formData.skills,
-      annualIncome: parseFloat(formData.annualIncome),
+      annual_income: parseFloat(formData.annual_income),
     };
 
     try {
@@ -164,14 +164,14 @@ const ProfessionalSummary = ({ logoSrc, lottieSrc, footerLinks }) => {
               <div className="relative mb-2">
                 <input
                   type="text"
-                  name="annualIncome"
+                  name="annual_income"
                   placeholder=" "
-                  value={formData.annualIncome}
+                  value={formData.annual_income}
                   onChange={handleChange}
                   className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500 text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
                    <label
-                  className={`absolute left-4 transition-all text-gray-500 text-sm ${formData.annualIncome
+                  className={`absolute left-4 transition-all text-gray-500 text-sm ${formData.annual_income
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-2.5 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                     }`}
@@ -222,21 +222,7 @@ const ProfessionalSummary = ({ logoSrc, lottieSrc, footerLinks }) => {
         </div>
       </div>
 
-      {/* Footer
-      <div className="bg-white text-center py-4 text-sm">
-        {footerLinks && footerLinks.length > 0 ? (
-          footerLinks.map((link, index) => (
-            <React.Fragment key={index}>
-              <a href={link.path} className="text-[#2c6472] hover:underline font-semibold mx-2">
-                {link.label}
-              </a>
-              {index < footerLinks.length - 1 && <span>|</span>}
-            </React.Fragment>
-          ))
-        ) : (
-          <p className="text-gray-500">No links available</p>
-        )}
-      </div> */}
+    
     </div>
   );
 };

@@ -125,96 +125,7 @@ const MyApplication = () => {
               coverLetterGenerated: false,
               viewLink: "#",
             },
-            {
-              jobTitle: "Full Stack Intern",
-              companyName: "StartUp Spark",
-              postedDate: "1 day ago",
-              location: "Chennai",
-              description: "Looking for a full stack intern to support product development.",
-              roleDescription: "Work across frontend and backend to deliver features.",
-              skillData: [
-                { label: "Required Skills", value: ["React", "Node", "MongoDB"] },
-                { label: "Your Skills", value: ["React", "Express"] },
-                { label: "Expected Salary", value: "10K - 15K/month" },
-              ],
-              matchValue: 89,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-            {
-              jobTitle: "Data Analyst",
-              companyName: "Insights AI",
-              postedDate: "3 days ago",
-              location: "Remote",
-              description: "Analyze data and provide actionable insights.",
-              roleDescription: "Use Python and SQL to extract patterns from data.",
-              skillData: [
-                { label: "Required Skills", value: ["Python", "Pandas", "SQL", "Excel"] },
-                { label: "Your Skills", value: ["Python", "Excel"] },
-                { label: "Expected Salary", value: "5 LPA - 8 LPA" },
-              ],
-              matchValue: 75,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-            {
-              jobTitle: "UI/UX Designer",
-              companyName: "PixelForge",
-              postedDate: "4 days ago",
-              location: "Mumbai",
-              description: "We're seeking a creative UI/UX designer with a passion for detail.",
-              roleDescription: "Design user flows, wireframes, and interactive prototypes.",
-              skillData: [
-                { label: "Required Skills", value: ["Figma", "Adobe XD", "UX Research"] },
-                { label: "Your Skills", value: ["Figma", "HTML", "CSS"] },
-                { label: "Expected Salary", value: "4 LPA - 6 LPA" },
-              ],
-              matchValue: 84,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-            {
-              jobTitle: "UI/UX Designer",
-              companyName: "PixelPerks",
-              postedDate: "5 days ago",
-              location: "Remote",
-              description: "Design experiences that delight users.",
-              roleDescription: "From wireframes to hi-fi prototypes, you'll do it all.",
-              skillData: [
-                { label: "Required Skills", value: ["Figma", "Adobe XD", "User Research"] },
-                { label: "Your Skills", value: ["Figma", "Canva"] },
-                { label: "Expected Salary", value: "3 LPA - 6 LPA" },
-              ],
-              matchValue: 79,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-            {
-              jobTitle: "DevOps Engineer",
-              companyName: "ScaleOps Pvt Ltd",
-              postedDate: "Today",
-              location: "Hyderabad",
-              description: "Automation and scalability is your game? We need you!",
-              roleDescription: "You'll manage CI/CD pipelines and cloud infra.",
-              skillData: [
-                { label: "Required Skills", value: ["AWS", "Docker", "Kubernetes", "CI/CD"] },
-                { label: "Your Skills", value: ["AWS", "Docker"] },
-                { label: "Expected Salary", value: "7 LPA - 11 LPA" },
-              ],
-              matchValue: 85,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            }
+
           ];
 
           setSelectedJobs(dummyJobs);
@@ -269,97 +180,6 @@ const MyApplication = () => {
             coverLetterGenerated: false,
             viewLink: "#",
           },
-          {
-            jobTitle: "Full Stack Developer",
-            companyName: "InnoTech Solutions",
-            postedDate: "3 days ago",
-            location: "Chennai",
-            description: "Join our team to work on end-to-end product development.",
-            roleDescription: "You'll be juggling frontend and backend with a smile.",
-            skillData: [
-              { label: "Required Skills", value: ["React", "Node.js", "GraphQL", "AWS"] },
-              { label: "Your Skills", value: ["React", "Node.js"] },
-              { label: "Expected Salary", value: "5.5 LPA - 9 LPA" },
-            ],
-            matchValue: 88,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-          {
-            jobTitle: "UI/UX Designer",
-            companyName: "PixelPerks",
-            postedDate: "5 days ago",
-            location: "Remote",
-            description: "Design experiences that delight users.",
-            roleDescription: "From wireframes to hi-fi prototypes, you'll do it all.",
-            skillData: [
-              { label: "Required Skills", value: ["Figma", "Adobe XD", "User Research"] },
-              { label: "Your Skills", value: ["Figma", "Canva"] },
-              { label: "Expected Salary", value: "3 LPA - 6 LPA" },
-            ],
-            matchValue: 79,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-          {
-            jobTitle: "DevOps Engineer",
-            companyName: "ScaleOps Pvt Ltd",
-            postedDate: "Today",
-            location: "Hyderabad",
-            description: "Automation and scalability is your game? We need you!",
-            roleDescription: "You'll manage CI/CD pipelines and cloud infra.",
-            skillData: [
-              { label: "Required Skills", value: ["AWS", "Docker", "Kubernetes", "CI/CD"] },
-              { label: "Your Skills", value: ["AWS", "Docker"] },
-              { label: "Expected Salary", value: "7 LPA - 11 LPA" },
-            ],
-            matchValue: 85,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-          {
-            jobTitle: "UI/UX Designer",
-            companyName: "PixelPerks",
-            postedDate: "5 days ago",
-            location: "Remote",
-            description: "Design experiences that delight users.",
-            roleDescription: "From wireframes to hi-fi prototypes, you'll do it all.",
-            skillData: [
-              { label: "Required Skills", value: ["Figma", "Adobe XD", "User Research"] },
-              { label: "Your Skills", value: ["Figma", "Canva"] },
-              { label: "Expected Salary", value: "3 LPA - 6 LPA" },
-            ],
-            matchValue: 79,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-          {
-            jobTitle: "DevOps Engineer",
-            companyName: "ScaleOps Pvt Ltd",
-            postedDate: "Today",
-            location: "Hyderabad",
-            description: "Automation and scalability is your game? We need you!",
-            roleDescription: "You'll manage CI/CD pipelines and cloud infra.",
-            skillData: [
-              { label: "Required Skills", value: ["AWS", "Docker", "Kubernetes", "CI/CD"] },
-              { label: "Your Skills", value: ["AWS", "Docker"] },
-              { label: "Expected Salary", value: "7 LPA - 11 LPA" },
-            ],
-            matchValue: 85,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-
         ];
 
         setSelectedJobs(dummyJobs);
@@ -393,12 +213,11 @@ const MyApplication = () => {
             <div className="h-[720px] overflow-x-hidden  overflow-y-auto scrollbar-custom">
               {selectedJobs.map((job, index) => (
                 <div
-                key={index}
-                onClick={() => setSelectedJob(job)}
-                className={`flex items-start h-40 bg-white justify-between border-y rounded-s-xl border-gray-400/20 px-4  py-5 hover:scale-[1.01] transition-transform ease-in-out duration-200 cursor-pointer ${
-                  selectedJob === job ? " border-l-8 border-teal-700 transition-transform ease-in-out duration-200" : ""
-                }`}
-              >              
+                  key={index}
+                  onClick={() => setSelectedJob(job)}
+                  className={`flex items-start h-40 bg-white justify-between border-y rounded-s-xl border-gray-400/20 px-4  py-5 hover:scale-[1.01] transition-transform ease-in-out duration-200 cursor-pointer ${selectedJob === job ? " border-l-8 border-teal-700 transition-transform ease-in-out duration-200" : ""
+                    }`}
+                >
                   <div className="flex items-start space-x-10 justify-center ">
                     <img src={defaultJobImg} alt="Job" className="w-20 h-20 my-auto ms-5  object-contain" />
                     <div className="space-y-2">
@@ -438,9 +257,41 @@ const MyApplication = () => {
                       </div>
                     </div>
                     <div className="flex  flex-col justify-start -mt-6 items-center"><br />
-                      <div className="w-16 h-16 rounded-full bg-[#2C6472]  flex items-center justify-center text-xl font-bold text-white">
-                        {selectedJob.matchValue}%
+                      <div className="relative w-16 h-16">
+                        <svg
+                          viewBox="0 0 100 100"
+                          className="absolute top-0 left-0 w-full h-full"
+                        >
+                          {/* Background circle */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            stroke="#E5E7EB"  // Light Gray Background
+                            strokeWidth="7"
+                            fill="none"
+                          />
+                          {/* Foreground circle (Progress) */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="45"
+                            stroke="#2C6472"  // Your nice teal color
+                            strokeWidth="7"
+                            fill="none"
+                            strokeDasharray="282"  // Circumference of the circle (2πr)
+                            strokeDashoffset={282 - (282 * selectedJob.matchValue) / 100}
+                            strokeLinecap="round"
+                            transform="rotate(-90 50 50)"  // Rotate to start from top
+                          />
+                        </svg>
+
+                        {/* Center text */}
+                        <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-800">
+                          {selectedJob.matchValue}%
+                        </div>
                       </div>
+
                       <span className="text-sm text-black mt-3 ">Profile Match</span>
                     </div><br />
                   </div><br />

@@ -46,7 +46,7 @@ const Language = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = async (e) => {
+  const handleAddCertificate = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     if (hasFetched.current) return;
@@ -80,7 +80,13 @@ const Language = () => {
       }
 
       alert(`✅ Languages uploaded successfully`);
-      navigate('/user/dashboard');
+
+      setFormData({
+        LanguageName: '',
+        ProficiencyLevel: ''
+      });
+      setCertificateFile(null);
+  
     } catch (err) {
       console.error('Error uploading language:', err);
       alert('Failed to upload language data.');
@@ -88,13 +94,24 @@ const Language = () => {
       setLoading(false);
     }
   };
+
+  const handleNext = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    navigate("/user/onboarding/jobtitles");  // Only navigate, no data posting here
+    setLoading(false);
+  };
+
+ 
+
+
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
       <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
         {/* Left Panel */}
         <div className="flex-1 flex justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="max-w-md w-full">
-            <form className="flex flex-col" onSubmit={handleNext}>
+            <form className="flex flex-col" onSubmit={handleAddCertificate}>
               {/* Language Input */}
               <div className="relative mb-1">
                 <input
@@ -176,16 +193,17 @@ const Language = () => {
                 </button>
 
                 <button
-                  type="button"
-                  // onClick={handleAddCertificate}
+                  type="submit"
+                  onClick={handleAddCertificate}
                   className="px-6 py-2 w-[180px] bg-white text-[#2c6472] border-2 border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200 ease-in-out"
                 >
                   +Add Certificates
                 </button>
 
                 <button
-                  type="submit"
+                  type="button"
                   className=" teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px]  rounded-full focus:outline-none"
+                  onClick={handleNext}
                 >
                   {loading ? 'Saving...' : 'Next'}
                 </button>

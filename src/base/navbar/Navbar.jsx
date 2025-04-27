@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu } from 'lucide-react';
 import arrow_down from "../../assets/down-arrow.svg";
 
 const Navbar = () => {
@@ -17,7 +16,7 @@ const Navbar = () => {
     }
 
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/personal-info', {
+      const response = await fetch('https://raasbackend-production.up.railway.app/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -26,7 +25,7 @@ const Navbar = () => {
       const data = await response.json(); 
 
       // Adjust depending on whether API returns array or object
-      const name = Array.isArray(data) ? data[0]?.firstName : data.firstName;
+      const name = Array.isArray(data) ? data[0]?.first_name : data.first_name;
       if (name) {
         setFirstName(name);
       } else {
@@ -54,7 +53,7 @@ const Navbar = () => {
   };
 
   return (
-    <header style={{ width: "calc(100% - 264px)" }} className="sticky top-0 z-10 flex justify-between items-center bg-white h-16 ml-auto border-t border-b px-6 border-gray-200">
+    <header style={{ width: "calc(100% - 264px)" }} className="fixed top-0 z-10 flex justify-between items-center bg-white h-16 ms-[264px]   border-t border-b px-6 border-gray-200">
       <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
       <div className="flex items-center space-x-3 relative">
         <img

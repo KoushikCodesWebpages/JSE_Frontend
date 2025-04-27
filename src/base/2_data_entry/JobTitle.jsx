@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
 import joblogo from "./../../assets/joblogo.png";
 
-const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
+const JobTitle = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    primaryTitle: '',
-    secondaryTitle: '',
-    tertiaryTitle: '',
+    primary_title: '',
+    secondary_title: '',
+    tertiary_title: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -29,14 +29,14 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.primaryTitle.trim()) {
-      newErrors.primaryTitle = 'Primary title is required';
+    if (!formData.primary_title) {
+      newErrors.primary_title = 'Primary title is required';
     }
-    if (!formData.secondaryTitle.trim()) {
-      newErrors.secondaryTitle = 'Secondary title is required';
+    if (!formData.secondary_title) {
+      newErrors.secondary_title = 'Secondary title is required';
     }
-    if (!formData.tertiaryTitle.trim()) {
-      newErrors.tertiaryTitle = 'Tertiary title is required';
+    if (!formData.tertiary_title) {
+      newErrors.tertiary_title = 'Tertiary title is required';
     }
 
     setErrors(newErrors);
@@ -68,7 +68,7 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
         console.error('❌ Failed to upload job titles:', errorData);
       } else {
         alert(`✅ Job Titles uploaded successfully`);
-        navigate('/user/onboarding/certificates');
+        navigate('/user/dashboard');
       }
     } catch (error) {
       console.error('❌ Error while posting job titles:', error);
@@ -76,44 +76,32 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   };
 
   const fields = [
-    { label: 'Primary Title', name: 'primaryTitle', type: 'text' },
-    { label: 'Secondary Title', name: 'secondaryTitle', type: 'text' },
-    { label: 'Tertiary Title', name: 'tertiaryTitle', type: 'text' },
+    { label: 'Primary Title', name: 'primary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
+    { label: 'Secondary Title', name: 'secondary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
+    { label: 'Tertiary Title', name: 'tertiary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
   ];
 
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
       <div className="flex flex-1 rounded-xl shadow-md shadow-slate-300">
-      {/* Left Panel */}
+        {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="max-w-lg w-full">
             <form className="grid gap-y-4" onSubmit={handleNext}>
               {fields.map((field) => (
-                <div key={field.name} className="relative h-15">
-                  <input
-                    type={field.type}
+                <div key={field.name} className="relative h-15 mb-5">
+                  <select
                     name={field.name}
                     value={formData[field.name]}
                     onChange={handleChange}
-                    className={`w-full h-full px-4 py-3 border text-gray-500 ${
-                      errors[field.name] ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md text-base focus:outline-none focus:ring-2 focus:ring-indigo-500`}
-                    onFocus={(e) => {
-                      const label = e.target.nextSibling;
-                      label.classList.add('-top-2.5', 'text-sm', 'bg-white', 'px-1');
-                      label.classList.remove('top-3', 'text-base');
-                    }}
-                    onBlur={(e) => {
-                      const label = e.target.nextSibling;
-                      if (!e.target.value) {
-                        label.classList.remove('-top-2.5', 'text-sm', 'bg-white', 'px-1');
-                        label.classList.add('top-3', 'text-base');
-                      }
-                    }}
-                  />
-                  <label className="absolute pointer-events-none left-4 top-3 text-gray-500 transition-all">
-                    {field.label}
-                  </label>
+                    className={`w-full h-full px-4 py-3  border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
+                      } rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
+                  >
+                    <option value="" disabled>Select {field.label}</option>
+                    {field.options.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>
                   )}
@@ -124,14 +112,14 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
               <div className="flex justify-between mt-4">
                 <button
                   type="button"
-                  className="teal-button px-6 py-3 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full  focus:outline-none"
+                  className="teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full  focus:outline-none"
                   onClick={() => navigate(-1)}
                 >
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="teal-button px-6 py-3 bg-[#2c6472] text-white w-[100px] rounded-full focus:outline-none"
+                  className="teal-button px-6 py-2 bg-[#2c6472] text-white w-[100px] h-[41px]  rounded-full focus:outline-none"
                 >
                   Next
                 </button>
@@ -149,43 +137,21 @@ const JobTitle = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
           <div className="text-center mt-4">
             <h3 className="text-white text-lg font-medium ms-4 mb-4">Job Preferences</h3>
           </div>
-           <div className='relative mb-5 flex justify-center items-center ms-4'>
-                      <img src={frame} alt="" className='relative object-cover ' />
-          <DotLottieReact
-            src={
-              lottieSrc ||
-              'https://lottie.host/a5116b74-e6e0-4fef-abfb-d99d2b580033/msf2IWJRuh.lottie'
-            }
-            loop
-            autoplay
-            style={{ width: '250px', height: '250px' }}
-            className='absolute object-cover me-2 p-2'
-          />
+          <div className='relative mb-5 flex justify-center items-center ms-4'>
+            <img src={frame} alt="" className='relative object-cover ' />
+            <DotLottieReact
+              src={
+                'https://lottie.host/a5116b74-e6e0-4fef-abfb-d99d2b580033/msf2IWJRuh.lottie'
+              }
+              loop
+              autoplay
+              style={{ width: '250px', height: '250px' }}
+              className='absolute object-cover me-2 p-2'
+            />
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      {/* <div className="bg-white text-center py-4 text-sm">
-        {footerLinks.map((link, index) => (
-          <React.Fragment key={index}>
-            <Link to={link.path} className="text-[#2c6472] hover:underline font-semibold mx-2">
-              {link.label}
-            </Link>
-            {index < footerLinks.length - 1 && <span>|</span>}
-          </React.Fragment>
-        ))}
-      </div>
-      {/* Footer Links */}
-      {/* <div className="p-4 text-center text-sm text-gray-600 bg-gray-100 w-full">
-        <Link to="#" className="text-[#2c6472] font-bold mx-2">Instructions</Link>
-        <span>|</span>
-        <Link to="#" className="text-[#2c6472] font-bold mx-2">License</Link>
-        <span>|</span>
-        <Link to="#" className="text-[#2c6472] font-bold mx-2">Terms of use</Link>
-        <span>|</span>
-        <Link to="#" className="text-[#2c6472] font-bold mx-2">Privacy</Link>
-      </div>  */}
     </div>
   );
 };

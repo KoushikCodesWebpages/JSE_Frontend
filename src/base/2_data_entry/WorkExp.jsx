@@ -6,18 +6,18 @@ import frame from "./../../assets/Frame.png";
 import joblogo from "./../../assets/joblogo.png";
 
 
-const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
+const WorkExp = () => {
   const navigate = useNavigate();
   const apiUrl = "https://raasbackend-production.up.railway.app/work-experience";
   const sessionKey = "token"; // Assuming this is the key used to store the token
 
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    companyName: "",
-    employerType: "",
-    startDate: "",
-    endDate: "",
-    keyResponsibilities: "",
+    job_title: "",
+    company_name: "",
+    employment_type: "",
+    start_date: "",
+    end_date: "",
+    key_responsibilities: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -25,12 +25,11 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
   const formatForDateTimeLocal = (isoString) => {
     if (!isoString) return "";
     const date = new Date(isoString);
-    const offset = date.getTimezoneOffset() * 60000;
-    return new Date(date - offset).toISOString().slice(0, 16);
+    return date.toISOString().split('T')[0];  // Get only the date part (YYYY-MM-DD)
   };
 
   const isFormValid = () => {
-    return formData.jobTitle && formData.companyName && formData.startDate && formData.endDate;
+    return formData.job_title && formData.company_name && formData.start_date && formData.end_date;
   };
 
 
@@ -46,14 +45,21 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
       return;
     }
 
-    const requestData = {
-      ...formData,
-      startDate: new Date(formData.startDate).toISOString(),
-      endDate: new Date(formData.endDate).toISOString(),
+    const formatDateForAPI = (dateString) => {
+      const date = new Date(dateString);
+      // Format to YYYY-MM-DD, or adjust to the format your backend expects
+      return date.toISOString().split('T')[0];
     };
 
+    const requestData = {
+      ...formData,
+      start_date: formatDateForAPI(formData.start_date),
+      end_date: formatDateForAPI(formData.end_date),
+    };
+
+    console.log("Sending request to API with data:", requestData); // Log data
+
     try {
-      console.log("Sending request to API with data:", requestData);
       const response = await axios.post(apiUrl, requestData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,10 +70,11 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
     } catch (error) {
       console.error("Error uploading data:", error);
       if (error.response) {
-        console.error("API Response:", error.response.data);
+        console.error("API Response:", error.response.data); // Log the actual response from API
       }
     }
   };
+
 
   const handleAddExperience = async (e) => {
     e.preventDefault();
@@ -78,16 +85,16 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
     setLoading(true);
     await sendData();
     setFormData({
-      jobTitle: "",
-      companyName: "",
-      employerType: "",
-      startDate: "",
-      endDate: "",
-      keyResponsibilities: "",
+      job_title: "",
+      company_name: "",
+      employment_type: "",
+      start_date: "",
+      end_date: "",
+      key_responsibilities: "",
     });
     setLoading(false);
   };
-  
+
   const handleNext = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -106,15 +113,15 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
               <div className="relative">
                 <input
                   type="text"
-                  name="jobTitle"
+                  name="job_title"
                   placeholder=" "
-                  value={formData.jobTitle}
+                  value={formData.job_title}
                   onChange={handleChange}
                   className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500 text-sm  focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
                 <label
                   className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.jobTitle ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
+                  ${formData.job_title ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
                   Job Title
                 </label>
@@ -126,15 +133,15 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
                 <div className="relative flex-1">
                   <input
                     type="text"
-                    name="companyName"
+                    name="company_name"
                     placeholder=" "
-                    value={formData.companyName}
+                    value={formData.company_name}
                     onChange={handleChange}
                     className="peer w-full p-4 border border-gray-300 h-[41px]  text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
                   <label
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.companyName ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
+                  ${formData.company_name ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
                     Company Name
                   </label>
@@ -143,15 +150,15 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
                 <div className="relative flex-1">
                   <input
                     type="text"
-                    name="employerType"
+                    name="employment_type"
                     placeholder=" "
-                    value={formData.employerType}
+                    value={formData.employment_type}
                     onChange={handleChange}
                     className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
                   <label
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.employerType ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
+                  ${formData.employment_type ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
                     Employer Type
                   </label>
@@ -162,16 +169,16 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
               <div className="flex gap-5">
                 <div className="flex-1 relative">
                   <input
-                    type="datetime-local"
-                    name="startDate"
-                    value={formatForDateTimeLocal(formData.startDate)}
+                    type="date"
+                    name="start_date"
+                    value={formatForDateTimeLocal(formData.start_date)}
                     onChange={handleChange}
                     className="peer w-full p-3 px-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                     placeholder=" "
                   />
                   <label
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                   *:   ${formData.startDate ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs peer-focus:-top-2 peer-focus:text-xs"}
+                   *:   ${formData.start_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs peer-focus:-top-2 peer-focus:text-xs"}
                    *: `}>
                     Start Date & Time
                   </label>
@@ -179,16 +186,16 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
 
                 <div className="flex-1 relative">
                   <input
-                    type="datetime-local"
-                    name="endDate"
-                    value={formatForDateTimeLocal(formData.endDate)}
+                    type="date"
+                    name="end_date"
+                    value={formatForDateTimeLocal(formData.end_date)}
                     onChange={handleChange}
                     className="peer w-full p-3 px-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                     placeholder=" "
                   />
                   <label
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                      ${formData.endDate ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs  peer-focus:-top-2 peer-focus:text-xs"}
+                      ${formData.end_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs  peer-focus:-top-2 peer-focus:text-xs"}
                     `}>
                     End Date & Time
                   </label>
@@ -199,15 +206,15 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
               {/* Key Responsibilities */}
               <div className="relative">
                 <textarea
-                  name="keyResponsibilities"
+                  name="key_responsibilities"
                   placeholder=" "
-                  value={formData.keyResponsibilities}
+                  value={formData.key_responsibilities}
                   onChange={handleChange}
                   className="peer w-full p-4 border border-gray-300 h-44 text-gray-500  text-sm min-h-[100px] focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
                 <label
                   className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.keyResponsibilities ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
+                  ${formData.key_responsibilities ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
                   Key Responsibilities
                 </label>
@@ -263,21 +270,11 @@ const WorkExp = ({ logoSrc, lottieSrc, footerLinks }) => {
         </div>
       </div>
 
-      {/* Footer */}
-      {/* <div className="bg-[#2c6472] text-center py-4 text-white">
-        {footerLinks &&
-          footerLinks.map((link, index) => (
-            <a href={link.href} key={index} className="text-white mx-4 hover:underline">
-              {link.text}
-            </a>
-          ))}
-      </div> */}
+
     </div>
   );
 };
 
-WorkExp.defaultProps = {
-  footerLinks: [],
-};
+
 
 export default WorkExp;

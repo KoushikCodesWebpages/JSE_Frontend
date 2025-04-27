@@ -43,7 +43,7 @@ const AppRoutes = () => {
                     <Navbar />
                     <div className='flex flex-row h-full'>
                         <Sidebar />
-                        <div style={{ width: "calc(100% - 264px)" }} className='ms-64 h-full bg-[#f5f5f5]'>
+                        <div style={{ width: "calc(100% - 264px)" }} className='ms-64 mt-16 h-full bg-[#f5f5f5]'>
                             <Routes>
                                 <Route path="/user/dashboard" element={<Dashboard />} />
                                 <Route path="/user/job-listings" element={<Joblisting />} />

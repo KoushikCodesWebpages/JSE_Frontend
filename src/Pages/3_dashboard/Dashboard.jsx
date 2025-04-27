@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../base/loader/Loader.jsx";
 import generate_cover_icon from "../../assets/generate-cover.svg"
 import jobs_available_icon from "../../assets/jobs-available.svg"
@@ -12,7 +12,6 @@ import comapnylogo from "../../assets/image.svg"
 function Dashboard() {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = sessionStorage.getItem("authToken");
@@ -36,8 +35,9 @@ function Dashboard() {
       axios
         .get("https://raasbackend-production.up.railway.app/profile", { headers })
         .then((res) => {
-          setProfileData(res.data.profile);
-          sessionStorage.setItem("profileData", JSON.stringify(res.data.profile));
+          console.log("Profile API Response:", res.data); // <-- ADD THIS LINE
+          setProfileData(res.data);
+          sessionStorage.setItem("profileData", JSON.stringify(res.data));
           setLoading(false);
         })
         .catch((err) => {
@@ -49,33 +49,26 @@ function Dashboard() {
     }
   }, [token]);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+  const recommendedData = [];
 
-  const handleLogout = () => {
-    console.log("User logged out");
-    navigate('/user/login');
-    // Add logout functionality here
-  };
+
 
   if (loading) return <Loader />;
   if (error) return <div className="text-red-500">{error}</div>;
 
-  const fullName = `${profileData?.firstName || "Steve"} ${profileData?.secondName || ""}`.trim();
-  const preferredJobTitle = profileData?.preferredJobTitle || "UI/UX Designer";
-  const profileCompletion = profileData?.profileCompletion || 85;
-  const skill = profileData?.skills || ["Figma", "Adobe XD", "Photoshop"];
-  const skills = ["Figma", "Adobe XD", "Photoshop", "Flutter", "Full Stack"];
+  const fullName = `${profileData?.first_name || "Steve"} ${profileData?.second_name || ""}`.trim();
+  const preferredJobTitle = profileData?.preferred_job_title || "UI/UX Designer";
+  const profileCompletion = profileData?.profile_completion || 85;
+  const skills = profileData?.skills || ["Figma", "Adobe XD", "Photoshop"];
   const languages = profileData?.languages || ["English", "Tamil", "Hindi", "Malyalam", "Urudu"];
   const certificates = profileData?.certificates?.length > 0
     ? profileData.certificates
     : ["Accenture UX design course", "TCS Basics Python"];
-  const totalExperienceInMonths = profileData?.totalExperienceInMonths || 0;
+  const totalExperienceInMonths = profileData?.total_experience_in_months || 0;
   const experienceFormatted = `${Math.floor(totalExperienceInMonths / 12)} yrs ${totalExperienceInMonths % 12} months`;
 
   return (
-    <div className="flex bg-gray-100 ps-2">
+    <div className="flex bg-gray-100 ps-2  ">
 
       {/* <Sidebar /> */}
 
@@ -259,43 +252,42 @@ function Dashboard() {
                   <h3 className="text-base font-semibold text-gray-700">Recommended Jobs for you</h3>
                   <a href="#" className="text-sm font-semibold text-indigo-800 hover:underline">Show all</a>
                 </div>
-                <div className=" flex  flex-col justify-center items-center mt-6">
-                  <div className="bg-gray-100 p-5 w-full hidden  rounded-xl text-center text-gray-500 font-medium">No Jobs</div>
-                 <div className="w-full h-[275px] flex flex-col overflow-auto hide-scrollbar px-3  gap-2 ">
-                  <div className="flex w-full h-[150px] justify-between   border-b border-gray-200">
-                    <div className="flex items-start py-5 space-x-10 justify-center ">
-                      <img src={comapnylogo} alt="Job" className="w-20 h-20 my-auto ms-5  object-contain" />
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-semibold text-[#2C6472]">Frontend Developer</h3>
-                        <p className="text-sm text-gray-600">TechNova Inc.</p>
-                        <p className="text-sm text-gray-500">Remote</p>
-                        <p className="text-sm text-gray-500">4 LPA - 7 LPA</p>
-                       
-                      </div>
+                <div className="flex flex-col justify-center items-center mt-6">
+                  {/* Check if there is any recommended data */}
+                  {recommendedData && recommendedData.length > 0 ? (
+                    <div className="w-full h-[275px] flex flex-col overflow-auto hide-scrollbar px-3 gap-2">
+                      {recommendedData.map((job, index) => (
+                        <div
+                          key={index}
+                          className="flex w-full h-[150px] justify-between border-b border-gray-200"
+                        >
+                          <div className="flex items-start py-5 space-x-10 justify-center">
+                            <img
+                              src={job.companyLogo} // dynamic logo
+                              alt="Job"
+                              className="w-20 h-20 my-auto ms-5 object-contain"
+                            />
+                            <div className="space-y-2">
+                              <h3 className="text-lg font-semibold text-[#2C6472]">
+                                {job.title}
+                              </h3>
+                              <p className="text-sm text-gray-600">{job.companyName}</p>
+                              <p className="text-sm text-gray-500">{job.location}</p>
+                              <p className="text-sm text-gray-500">{job.salary}</p>
+                            </div>
+                          </div>
+                          <div className="text-gray-500 p-5 me-5 font-medium text-xl">⋮</div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="text-gray-500 p-5 me-5 font-medium text-xl">⋮</div>
-                  </div>
-
-                  <div className="flex w-full h-[150px] justify-between   border-b border-gray-200">
-                    <div className="flex items-start py-5 space-x-10 justify-center ">
-                      <img src={comapnylogo} alt="Job" className="w-20 h-20 my-auto ms-5  object-contain" />
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-semibold text-[#2C6472]">Frontend Developer</h3>
-                        <p className="text-sm text-gray-600">TechNova Inc.</p>
-                        <p className="text-sm text-gray-500">Remote</p>
-                        <p className="text-sm text-gray-500">4 LPA - 7 LPA</p>
-                       
-                      </div>
+                  ) : (
+                    // Show this div if no recommended jobs
+                    <div className="bg-gray-100 p-5 w-full rounded-xl text-center text-gray-500 font-medium mb-5">
+                      No Jobs
                     </div>
-                    <div className="text-gray-500 p-5 me-5 font-medium text-xl">⋮</div>
-                  </div>
+                  )}
+                </div>
 
-                 
-
-                
-                  </div>
-
-                </div><br />
               </div>
 
             </div>

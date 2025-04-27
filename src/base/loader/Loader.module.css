@@ -12,6 +12,7 @@
     text-align: center;
     gap: 5rem;
     background: white;
+    opacity: 90%;
      z-index: 9999; /* Ensure it’s above all other content */
 }
 

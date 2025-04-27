@@ -5,15 +5,15 @@ import frame from "./../../assets/Frame.png";
 import joblogo from "./../../assets/joblogo.png";
 
 
-const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
+const PersonalInfo = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    secondName: '',
-    dob: '',
+    first_name: '',
+    second_name: '',
+    date_of_birth: '',
     address: '',
-    linkedinProfile: '',
+    linkedin_profile: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -32,18 +32,18 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
+    if (!formData.first_name.trim()) {
+      newErrors.first_name = 'First name is required';
     }
 
-    if (!formData.secondName.trim()) {
-      newErrors.secondName = 'Last name is required';
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.secondName)) {
-      newErrors.secondName = 'Last name is invalid';
+    if (!formData.second_name.trim()) {
+      newErrors.second_name = 'Last name is required';
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.second_name)) {
+      newErrors.second_name = 'Last name is invalid';
     }
 
-    if (!formData.dob) {
-      newErrors.dob = 'Date of birth is required';
+    if (!formData.date_of_birth) {
+      newErrors.date_of_birth = 'Date of birth is required';
     }
 
     setErrors(newErrors);
@@ -79,11 +79,11 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
   };
 
   const fields = [
-    { label: 'Full Name', name: 'firstName', type: 'text' },
-    { label: 'Last Name', name: 'secondName', type: 'text' },
-    { label: ' ', name: 'dob', type: 'date' },
+    { label: 'Full Name', name: 'first_name', type: 'text' },
+    { label: 'Last Name', name: 'second_name', type: 'text' },
+    { label: ' ', name: 'date_of_birth', type: 'date' },
     { label: 'Current address', name: 'address', type: 'text' },
-    { label: 'Linkedin Profile', name: 'linkedinProfile', type: 'text' },
+    { label: 'Linkedin Profile', name: 'linkedin_profile', type: 'text' },
   ];
 
   return (
@@ -98,9 +98,10 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
                   <input
                     type={field.type}
                     name={field.name}
-                    value={formData[field.name]}
+                    placeholder=' '
+                    value={formData[field.name] || " "}
                     onChange={handleChange}
-                    className={`w-full h-full px-4 py-4 border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
+                    className={` peer  w-full h-full px-4 py-4 border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
                       } rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
                     onFocus={(e) => {
                       const label = e.target.nextSibling;
@@ -115,9 +116,14 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
                       }
                     }}
                   />
-                  <label className="absolute pointer-events-none left-4 top-3 text-gray-500 transition-all">
-                    {field.label}
-                  </label>
+                  <label
+                  className={`absolute left-4 transition-all text-gray-500 text-sm ${formData[field.name]
+                    ? '-top-2 text-sm bg-white px-1'
+                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                    }`}
+                >
+                  {field.label}
+                </label>
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>
                   )}
@@ -166,17 +172,7 @@ const PersonalInfo = ({ logoSrc, lottieSrc, footerLinks = [] }) => {
         </div>
       </div>
 
-      {/* Footer */}
-      {/* <div className="bg-white text-center py-4 text-sm">
-        {footerLinks.map((link, index) => (
-          <React.Fragment key={index}>
-            <Link to={link.path} className="text-[#2c6472] hover:underline font-semibold mx-2">
-              {link.label}
-            </Link>
-            {index < footerLinks.length - 1 && <span>|</span>}
-          </React.Fragment>
-        ))}
-      </div> */}
+    
     </div>
   );
 };

@@ -76,10 +76,92 @@ const JobTitle = () => {
   };
 
   const fields = [
-    { label: 'Primary Title', name: 'primary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
-    { label: 'Secondary Title', name: 'secondary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
-    { label: 'Tertiary Title', name: 'tertiary_title', options: ["Software Engineer", "Backend Developer", "DevOps Engineer"] },
+    {
+      label: 'Primary Title',
+      name: 'primary_title',
+      options: [
+        "Software Engineer", 
+        "Backend Developer", 
+        "DevOps Engineer",
+        "Logistics Coordinator",
+        "Supply Chain Specialist",
+        "Procurement Specialist",
+        "Financial Analyst",
+        "Accounts Specialist",
+        "Management Accountant",
+        "Operations Manager",
+        "Project Coordinator",
+        "Supply Chain Analyst",
+        "Mechanical Design Engineer",
+        "Automation Engineer",
+        "Production Engineer",
+        "Logistics Chain Analyst",
+        "Supply Chain Consultant",
+        "Procurement Analyst",
+        "Sports Marketing Manager",
+        "Business Development Manager",
+        "Sponsorship Manager",
+        "Business Analyst"
+      ]
+    },
+    {
+      label: 'Secondary Title',
+      name: 'secondary_title',
+      options: [
+        "Software Engineer", 
+        "Backend Developer", 
+        "DevOps Engineer",
+        "Logistics Coordinator",
+        "Supply Chain Specialist",
+        "Procurement Specialist",
+        "Financial Analyst",
+        "Accounts Specialist",
+        "Management Accountant",
+        "Operations Manager",
+        "Project Coordinator",
+        "Supply Chain Analyst",
+        "Mechanical Design Engineer",
+        "Automation Engineer",
+        "Production Engineer",
+        "Logistics Chain Analyst",
+        "Supply Chain Consultant",
+        "Procurement Analyst",
+        "Sports Marketing Manager",
+        "Business Development Manager",
+        "Sponsorship Manager",
+        "Business Analyst"
+      ]
+    },
+    {
+      label: 'Tertiary Title',
+      name: 'tertiary_title',
+      options: [
+        "Software Engineer", 
+        "Backend Developer", 
+        "DevOps Engineer",
+        "Logistics Coordinator",
+        "Supply Chain Specialist",
+        "Procurement Specialist",
+        "Financial Analyst",
+        "Accounts Specialist",
+        "Management Accountant",
+        "Operations Manager",
+        "Project Coordinator",
+        "Supply Chain Analyst",
+        "Mechanical Design Engineer",
+        "Automation Engineer",
+        "Production Engineer",
+        "Logistics Chain Analyst",
+        "Supply Chain Consultant",
+        "Procurement Analyst",
+        "Sports Marketing Manager",
+        "Business Development Manager",
+        "Sponsorship Manager",
+        "Business Analyst"
+      ]
+    }
   ];
+  
 
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">

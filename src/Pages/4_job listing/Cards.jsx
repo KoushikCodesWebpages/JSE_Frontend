@@ -91,10 +91,10 @@ function Cards(props) {
 
         {/* Left Side - Job Info */}
         <div className="flex w-1/2 p-6 gap-6">
-          <div className="flex items-start object-cover" style={{ flexShrink: 0 }}>
-            <img className="object-cover" src={defaultJobImg} alt="Job" />
+          <div className="flex items-center object-cover" style={{ flexShrink: 0 }}>
+            <img className="object-cover w-20 h-20 " src={defaultJobImg} alt="Job" />
           </div>
-          <div className="flex flex-col justify-start gap-2">
+          <div className="flex flex-col justify-center gap-2">
             <h3 className="text-[#2C6472] font-bold text-[19px] leading-[100%]">
               {props.title}
             </h3>

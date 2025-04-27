@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import defaultJobImg from '../../assets/image.svg';
 import axios from "axios";
@@ -28,7 +29,7 @@ const MyApplication = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "https://raasbackend-production.up.railway.app/selected-jobs",
+          "https://raasbackend-production.up.railway.app/api/selected-jobs",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -68,7 +69,7 @@ const MyApplication = () => {
             },
             {
               label: "Expected Salary",
-              value: `${job.min_salary || "?"} - ${job.max_salary || "?"}`,
+              value: `${job.expected_salary?.min || "?"} - ${job.expected_salary?.max || "?"}`,
             },
           ],
           matchValue: job.match_score || Math.floor(Math.random() * 30) + 70,
@@ -77,113 +78,14 @@ const MyApplication = () => {
           coverLetterGenerated: job.cover_letter_generated,
           viewLink: job.view_link,
         }));
-
-        if (mappedJobs.length === 0) {
-          const dummyJobs = [
-            {
-              jobTitle: "Sponsorship Manager",
-              companyName: "Netflix",
-              postedDate: "2025-04-13",
-              location: "Berlin, Berlin, Germany",
-              description: "The mission of the Partner Marketing team is to drive awareness of the Netflix brand and capture subscriber acquisition through high quality partnerships and promotions. The role involves managing the creative development and delivery of multiple concurrent campaigns for Distribution partners across the DACH region, including creative ideation, approval across stakeholders, delivery & reformatting of assets. The ideal candidate will have a wealth of experience in delivering brilliant creative against a range of full funnel marketing objectives for established brands, with 8+ years campaign experience in a Brand Marketing role, a Creative role, or from Account Management at a creative agency. Strong operational excellence, communication, and adaptability skills are required, with fluency in English and German.",
-              roleDescription: "You'll be building sleek UIs and collaborating with backend devs.",
-              skillData: [
-                { label: "Required Skills", value: ["campaign management", "creative strategy", "agency management", "production budgeting", "contract negotiation", "cross-functional team coordination", "communication", "feedback", "adaptability", "entertainment industry knowledge", "German and English fluency"] },
-                {
-                  label: "Your Skills", value: ["Supply Chain Management",
-                    "Logistics Coordination",
-                    "Project Management",
-                    "Negotiation",
-                    "Vendor Relations"]
-                },
-                {
-                  label: "Expected Salary",
-                  value: "42000 - 43000"
-                }
-              ],
-              matchValue: 82,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-            {
-              jobTitle: "Backend Engineer",
-              companyName: "CodeVerse",
-              postedDate: "5 days ago",
-              location: "Bangalore",
-              description: "We need a Node.js expert to develop scalable backend services.",
-              roleDescription: "Build APIs, manage DBs, and ensure performance.",
-              skillData: [
-                { label: "Required Skills", value: ["Node.js", "Express", "MongoDB", "Docker"] },
-                { label: "Your Skills", value: ["Node.js", "MongoDB", "JWT"] },
-                { label: "Expected Salary", value: "6 LPA - 10 LPA" },
-              ],
-              matchValue: 77,
-              selected: false,
-              cvGenerated: false,
-              coverLetterGenerated: false,
-              viewLink: "#",
-            },
-
-          ];
-
-          setSelectedJobs(dummyJobs);
-          setSelectedJob(dummyJobs[0]);
-        }
-        else {
           setSelectedJobs(mappedJobs);
           setSelectedJob(mappedJobs[0]);
-        }
 
         setLoading(false);
       } catch (error) {
         const errMsg =
-          error.response?.data?.message || "⚠️ Failed to load applications.";
+          error.response?.data?.message || "⚠ Failed to load applications.";
         alert(errMsg);
-
-        // Fallback dummy job
-        const dummyJobs = [
-          {
-            jobTitle: "Frontend Developer",
-            companyName: "TechNova Inc.",
-            postedDate: "2 days ago",
-            location: "Remote",
-            description: "We are looking for a creative frontend dev to join our team.",
-            roleDescription: "You'll be building sleek UIs and collaborating with backend devs.",
-            skillData: [
-              { label: "Required Skills", value: ["React", "Tailwind", "Git", "REST APIs"] },
-              { label: "Your Skills", value: ["React", "HTML", "CSS"] },
-              { label: "Expected Salary", value: "4 LPA - 7 LPA" },
-            ],
-            matchValue: 82,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-          {
-            jobTitle: "Backend Engineer",
-            companyName: "CloudEdge Ltd.",
-            postedDate: "1 week ago",
-            location: "Bangalore",
-            description: "Seeking a backend ninja to craft solid APIs.",
-            roleDescription: "You'll be designing and maintaining server-side logic.",
-            skillData: [
-              { label: "Required Skills", value: ["Node.js", "MongoDB", "Express", "Docker"] },
-              { label: "Your Skills", value: ["Node.js", "MySQL"] },
-              { label: "Expected Salary", value: "6 LPA - 10 LPA" },
-            ],
-            matchValue: 75,
-            selected: false,
-            cvGenerated: false,
-            coverLetterGenerated: false,
-            viewLink: "#",
-          },
-        ];
-
-        setSelectedJobs(dummyJobs);
-        setSelectedJob(dummyJobs[0]);
         setError(errMsg);
         setLoading(false);
       }

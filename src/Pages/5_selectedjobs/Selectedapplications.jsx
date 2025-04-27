@@ -19,58 +19,14 @@ function SelectedApplications() {
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
 
   const axiosInstance = axios.create({
-    baseURL: "https://raasbackend-production.up.railway.app",
+    baseURL: "https://raasbackend-production.up.railway.app/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
+  
 
-    const dummyData = [
-      {
-        id: 1,
-        job_id: "job123",
-        title: "Frontend Developer",
-        company: "Tech Corp",
-        postedDate: "2 Days ago",
-        location: "Remote",
-        skillData: [
-          { label: "Required Skills", value: "React, CSS, HTML, React, CSS, HTML" },
-          { label: "Your Skills", value: "React, Tailwind CSS" },
-          { label: "Expected Salary", value: "₹8,00,000 - ₹12,00,000" },
-        ],
-        matchValue: 87,
-        selected: true,
-        cvGenerated: true,
-        coverLetterGenerated: false,
-        viewLink: "https://example.com/job/frontend-developer",
-      },
-      {
-        id: 2,
-        job_id: "job456",
-        title: "UI/UX Designer",
-        company: "Designly",
-        postedDate: "5 Days ago",
-        location: "Bangalore, India",
-        skillData: [
-          { label: "Required Skills", value: "Figma, Adobe XD" },
-          { label: "Your Skills", value: "Figma, Sketch" },
-          { label: "Expected Salary", value: "₹6,00,000 - ₹9,00,000" },
-        ],
-        matchValue: 91,
-        selected: true,
-        cvGenerated: false,
-        coverLetterGenerated: true,
-        viewLink: "https://example.com/job/ui-ux-designer",
-      },
-    ];
-
-    setSelectedJobs(dummyData);
-    setLoading(false);
-  }, []);
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -84,23 +40,24 @@ function SelectedApplications() {
         console.log(fetchedJobs);
 
         const mappedJobs = fetchedJobs.map((job) => ({
-          id: job.ID || job.id,
+          id: job.job_id, // use job_id directly
+          job_id: job.job_id, // keep for later functions
           title: job.title,
           company: job.company,
           postedDate: job.posted_date || "Not specified",
           location: job.location || "Location not specified",
           skillData: [
-            { label: "Required Skills", value: `${job.skills}` },
-            { label: "Your Skills", value: `${job.user_skills}` },
-            { label: "Expected Salary", value: `${job.min_salary} - ${job.max_salary}` },
+            { label: "Required Skills", value: job.skills || "Not specified" },
+            { label: "Your Skills", value: Array.isArray(job.user_skills) ? job.user_skills.join(", ") : job.user_skills },
+            { label: "Expected Salary", value: job.expected_salary ? `₹${job.expected_salary.min} - ₹${job.expected_salary.max}` : "Not specified" },
           ],
           matchValue: job.match_score,
           selected: job.selected,
           cvGenerated: job.cv_generated,
           coverLetterGenerated: job.cover_letter_generated,
-          viewLink: job.view_link,
-          job_id : job.job_id
+          viewLink: job.view_link === true ? null : job.view_link, // if true, treat as null for now
         }));
+        
 
         setSelectedJobs(mappedJobs);
       } catch (error) {
@@ -183,20 +140,34 @@ function SelectedApplications() {
 
   const handleGetJobURL = async (job_id) => {
     try {
-      const response = await axiosInstance.post("/provide-link", {
-        job_id: job_id,
-      });
-      const jobLink = response.data[0].job_link;
-
-      if (jobLink) {
+      const token = sessionStorage.getItem("authToken") || "your-fallback-token";
+      console.log("Token I'm sending 👉", token);
+  
+      const response = await axios.post(
+        "https://raasbackend-production.up.railway.app/provide-link",
+        { job_id: job_id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log("🔥 Full Response:", response.data); // Always good to check bro!
+  
+      // SAFE checking 🔥
+      if (response.data?.job_link) {
+        const jobLink = response.data.job_link;
         window.open(jobLink, "_blank"); // Open in new tab
       } else {
-        console.error("No link found in response.");
+        console.error("🚨 No valid job link found in the response:", response.data);
       }
     } catch (error) {
-      console.error(error);
+      console.error("❌ AxiosError:", error);
     }
   };
+  
+  
 
   const [menuOpenId, setMenuOpenId] = useState(null);
 
@@ -263,7 +234,7 @@ function SelectedApplications() {
                 <div className="flex p-6 gap-6 w-1/2">
                   {/* <div className="pr-5 bg-gray-200 items-center justify-center rounded-md text-lg font-bold text-center">{job.company}</div> */}
                   <div className="pr-3">
-                    <img src={defaultJobImg} alt="Job" />
+                    <img src={defaultJobImg} className="w-16 h-16 object-cover" alt="Job" />
                   </div>
 
                   <div className="flex flex-col gap-2">

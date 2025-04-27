@@ -122,7 +122,7 @@ function App() {
     description: job.description,
     skillData: [
       { label: "Required Skills", value: `${job.skills}` },
-      { label: "Your Skills", value: `${job.userSkills}` },
+      { label: "Your Skills", value: `${job.user_skills}` },
       {
         label: "Expected Salary",
         value: `${job.expected_salary?.min} - ${job.expected_salary?.max}`,
@@ -132,11 +132,11 @@ function App() {
   }));
 
   return (
-    <div className="flex flex-col bg-gray-40">
+    <div className="flex flex-col bg-gray-40 ms-2">
       <main className="flex-1 overflow-y-auto bg-gray-100">
         <div className="flex flex-wrap gap-3 p-5">
           {/* Job title buttons with dynamic active state */}
-          {["Software Engineer", "DevOps Engineer", "Backend Developer"].map((title) => (
+          {/* {["Software Engineer", "DevOps Engineer", "Backend Developer"].map((title) => (
             <button
               key={title}
               className={`px-2 py-1.5 font-medium text-[13px] rounded ${selectedJobTitle === title ? 'bg-[#2C6472] text-white' : 'bg-[#e4e2e2] text-black'} hover:scale-105`}
@@ -144,16 +144,16 @@ function App() {
             >
               {title}
             </button>
-          ))}
+          ))} */}
           
           {/* Filter Button */}
-          <button
+          {/* <button
             onClick={toggleDropdown}
             className="flex items-center gap-x-2 px-2 py-1.5 bg-white font-medium text-[13px] rounded text-black hover:scale-105 shadow-md"
           >
             <img src={filter_icon} alt="" />
             Filter
-          </button>
+          </button> */}
           
           <Link to={'/user/selected-applications'} className="ml-auto">
             <button className="flex items-center gap-x-2 px-2 py-1.5 bg-transparent font-medium text-[13px] rounded text-[#2C6472] border border-[#2C6472] hover:scale-105">
@@ -163,7 +163,7 @@ function App() {
           </Link>
         </div>
 
-        {dropdownVisible && (
+        {/* {dropdownVisible && (
           <div className="absolute bg-white p-4 rounded shadow-md z-30">
             <h3 className="font-semibold text-lg">Filter Options</h3>
             <div className="mt-2">
@@ -197,7 +197,7 @@ function App() {
               />
             </div>
           </div>
-        )}
+        )} */}
 
         {jobs.length === 0 ? (
           <div

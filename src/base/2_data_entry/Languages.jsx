@@ -134,7 +134,7 @@ const Language = () => {
 
               {/* Certificate Upload */}
               <div className="">
-                <p className="mb-2 text-sm text-gray-600">Completion Certificate</p>
+                <p className="mb-2 text-sm text-gray-600">Completion Certificate (optional) </p>
                 <div className="border-2 border-gray-300  p-6 text-center bg-gray-100">
                   <input
                     type="file"
@@ -197,7 +197,7 @@ const Language = () => {
                   onClick={handleAddCertificate}
                   className="px-6 py-2 w-[180px] bg-white text-[#2c6472] border-2 border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200 ease-in-out"
                 >
-                  +Add Certificates
+                  +Add languages
                 </button>
 
                 <button

@@ -128,7 +128,7 @@ function App() {
         value: `${job.expected_salary?.min} - ${job.expected_salary?.max}`,
       },
     ],
-    matchValue: Math.floor(Math.random() * 30) + 70,
+    matchValue: job.match_score,
   }));
 
   return (

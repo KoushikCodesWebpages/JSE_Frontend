@@ -35,7 +35,6 @@ function Dashboard() {
       axios
         .get("https://raasbackend-production.up.railway.app/profile", { headers })
         .then((res) => {
-          console.log("Profile API Response:", res.data); // <-- ADD THIS LINE
           setProfileData(res.data);
           sessionStorage.setItem("profileData", JSON.stringify(res.data));
           setLoading(false);
@@ -70,11 +69,9 @@ function Dashboard() {
   return (
     <div className="flex bg-gray-100 ps-2  ">
 
-      {/* <Sidebar /> */}
 
       <div className="flex flex-col w-full  min-h-screen bg-gray-40"> {/* Added 'ml-4' for spacing */}
 
-        {/* <Navbar/> */}
 
         <div className="p-5">
 
@@ -205,7 +202,7 @@ function Dashboard() {
 
                   <div className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
-                      <h3 className="text-3xl font-bold">{profileData?.dailyGeneratableCoverletter ?? 0}</h3>
+                      <h3 className="text-3xl font-bold">{profileData?.daily_generatable_coverletter ?? 0}</h3>
                       <p className="text-[13px] font-bold">Daily Generatable Cover Letters</p>
                     </div>
                     <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
@@ -215,7 +212,7 @@ function Dashboard() {
 
                   <div className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
-                      <h3 className="text-3xl font-bold ">{profileData?.totalJobsAvailable ?? 0}</h3>
+                      <h3 className="text-3xl font-bold ">{profileData?.total_jobs_available ?? 0}</h3>
                       <p className="text-[13px] font-bold">Total Jobs Available</p>
                     </div>
                     <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">
@@ -225,7 +222,7 @@ function Dashboard() {
 
                   <div className="relative bg-gradient-to-br from-[#88D3C6] to-[#A6F1C7] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
-                      <h3 className="text-3xl font-bold">{profileData?.dailySelectableJobsCount ?? 0}</h3>
+                      <h3 className="text-3xl font-bold">{profileData?.daily_selectable_jobs_count ?? 0}</h3>
                       <p className="text-[13px] font-bold">Daily Selectable Jobs</p>
                     </div>
                     <div className="absolute rounded-full top-3 right-3 p-2 bg-gray-500/30 backdrop-blur-sm">

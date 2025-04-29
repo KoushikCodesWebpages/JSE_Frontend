@@ -233,11 +233,11 @@ function SelectedApplications() {
                   </div>
                 <div className="flex p-6 gap-6 w-1/2">
                   {/* <div className="pr-5 bg-gray-200 items-center justify-center rounded-md text-lg font-bold text-center">{job.company}</div> */}
-                  <div className="pr-3">
+                  {/* <div className="pr-3">
                     <img src={defaultJobImg} className="w-16 h-16 object-cover" alt="Job" />
-                  </div>
+                  </div> */}
 
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 ">
                     <h3 className="text-[#2C6472] font-bold text-[19px] leading-[100%]">
                       {job.title}
                     </h3>

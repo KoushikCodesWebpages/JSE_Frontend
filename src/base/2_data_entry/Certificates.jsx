@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from './../../assets/Frame.png';
 import joblogo from './../../assets/joblogo.png';
@@ -44,8 +44,8 @@ const Certificate = () => {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("CertificateName", formData.certificate_name);
-      formDataToSend.append("CertificateNumber", formData.certificate_number);
+      formDataToSend.append("certificate_name", formData.certificate_name);
+      formDataToSend.append("certificate_number", formData.certificate_number);
       formDataToSend.append("file", certificateFile); // ✅ Raw file here
 
       const response = await fetch("https://raasbackend-production.up.railway.app/certificates", {

@@ -20,7 +20,7 @@ const Education = () => {
     achievements: ''
   });
 
-  const handleNext = async (e) => {
+  const handleAddEducation = async (e) => {
     e.preventDefault();
 
     const token = sessionStorage.getItem('authToken');
@@ -54,7 +54,15 @@ const Education = () => {
       });
 
       alert(`✅ Education data uploaded successfully`);
-      navigate('/user/onboarding/certificates');
+
+      setFormData({
+        degree: '',
+        institution: '',
+        field_of_study: '',
+        start_date: '',
+        end_date: '',
+        achievements: ''
+      });
     } catch (error) {
       console.error('Error uploading data:', error);
       if (error.response) {
@@ -68,6 +76,11 @@ const Education = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleNext = async (e) => {
+    e.preventDefault();
+    navigate('/user/onboarding/certificates');
+  };
+
 
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
@@ -75,7 +88,7 @@ const Education = () => {
         {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="w-full max-w-md">
-            <form className="flex flex-col" onSubmit={handleNext}>
+            <form className="flex flex-col" onSubmit={handleAddEducation}>
               {/* Degree Title */}
               <div className="relative mb-3">
                 <input
@@ -83,7 +96,7 @@ const Education = () => {
                   name="degree"
                   placeholder=" "
                   onChange={handleChange}
-                  defaultValue={formData.degree}
+                  value={formData.degree}
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-sm
@@ -102,7 +115,7 @@ const Education = () => {
                   name="institution"
                   placeholder="  "
                   onChange={handleChange}
-                  defaultValue={formData.institution}
+                  value={formData.institution}
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500  text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-sm
@@ -121,7 +134,7 @@ const Education = () => {
                   name="field_of_study"
                   placeholder=" "
                   onChange={handleChange}
-                  defaultValue={formData.field_of_study}
+                  value={formData.field_of_study}
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-sm
@@ -141,7 +154,7 @@ const Education = () => {
                     name="start_date"
                     placeholder=" "
                     onChange={handleChange}
-                    defaultValue={formData.start_date}
+                    value={formData.start_date}
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
@@ -158,7 +171,7 @@ const Education = () => {
                     name="end_date"
                     placeholder=" "
                     onChange={handleChange}
-                    defaultValue={formData.end_date}
+                    value={formData.end_date}
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
                   <label className={`absolute left-4 transition-all text-gray-500 text-base
@@ -177,7 +190,7 @@ const Education = () => {
                   name="achievements"
                   placeholder=" "
                   onChange={handleChange}
-                  defaultValue={formData.achievements}
+                  value={formData.achievements}
                   className="w-full p-4 border border-gray-300 text-gray-500 text-sm min-h-[100px] peer focus:outline-none focus:ring-1  focus:ring-[#2c6472]"
                 />
                 <label className={`absolute left-4 transition-all text-gray-500 text-base
@@ -198,6 +211,13 @@ const Education = () => {
                 </button>
                 <button
                   type="submit"
+                  className=" px-6 py-2 bg-white text-[#2c6472] border border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200"
+                >
+                  +Add Education
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
                   className="px-6 py-2 teal-button bg-[#2c6472] text-white w-[100px] h-[41px] rounded-full focus:outline-none"
                 >
                   Next

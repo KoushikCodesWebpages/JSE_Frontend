@@ -39,22 +39,13 @@ function App() {
             params: { ...filters, title: selectedJobTitle, offset: customOffset, limit: pagination.per_page }, // Send filters with the request
           }
         );
-        console.log("Full response data:", response.data);
-
-        console.log("Pagination from backend:", response.data.pagination);
-        console.log("offset:", offset);
-        console.log("pagination.total:", pagination.total);
-        console.log("pagination.per_page:", pagination.per_page);
-
-        console.log("Jobs from backend:", response.data.jobs);
+  
         const fetchedJobs = response.data.jobs || []; // Ensure jobs is always an array
         const fetchedPagination = response.data.pagination || {}; // Ensure pagination is always an object
         setJobs(fetchedJobs);
         setPagination(fetchedPagination); // Set pagination data
         sessionStorage.setItem("jobsData", JSON.stringify(fetchedJobs));
         setOffset(customOffset); // Update offset state
-        console.log("Fetched Pagination:", fetchedPagination);
-        console.log("Offset:", customOffset);
 
       } else {
         console.error("No token found. Please log in.");

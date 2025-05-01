@@ -32,21 +32,28 @@ const Savedjob = () => {
       return;
     }
     fetchSelectedJobs();
-  }, []);
-
-
+  }, [token]);
+  
   const fetchSelectedJobs = async () => {
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/api/selected-jobs', {
+      const response = await fetch('https://raasbackend-production.up.railway.app/saved-jobs', {
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
       });
-
+  
       if (!response.ok) throw new Error('Failed to fetch selected jobs');
+      
       const data = await response.json();
-      setSelectedJobs(Array.isArray(data.selected_jobs) ? data.selected_jobs : []);
+      console.log('Fetched data:', data); // Log response data
+  
+      // Ensure that the data contains 'selected_jobs' and it is an array
+      if (Array.isArray(data.jobs)) {
+        setSelectedJobs(data.jobs);
+      } else {
+        console.error('Invalid data format:', data);
+        setSelectedJobs([]);
+      }
     } catch (error) {
       console.error('Error fetching selected jobs:', error);
       setSelectedJobs([]);
@@ -54,7 +61,7 @@ const Savedjob = () => {
       setLoading(false);
     }
   };
-
+  
   if (!token) {
     return (
       <div className="p-6 text-red-500 text-center">

@@ -54,6 +54,7 @@ function Cards(props) {
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
   const axiosInstance = axios.create({
     baseURL: "https://raasbackend-production.up.railway.app/api",
+    
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -63,23 +64,32 @@ function Cards(props) {
     try {
       setIsSaved(true);
       setIsFadingOut(true);
-
-      setTimeout(() => {
+  
+      // Delay the card disappearance & API call by 2 seconds
+      setTimeout(async () => {
         setShowCard(false);
-
-        axiosInstance.post("/selected-jobs", props)
-          .then((response) => {
-            console.log("Job saved successfully:", response.data);
-          })
-          .catch((error) => {
-            console.error("Error Saving job:", error);
-          });
-      }, 2000); // 
+  
+        try {
+          const response = await axios.post(
+            "https://raasbackend-production.up.railway.app/saved-jobs",
+            { job_id: props.job_id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Job saved successfully:", response.data);
+        } catch (error) {
+          console.error("Error saving job:", error);
+        }
+      }, 2000);
+  
     } catch (error) {
-      console.error("Error in isSave:", error);
+      console.error("Error in onSave:", error);
     }
   };
-
+  
   const onSelect = async () => {
     try {
       setIsSelected(true);
@@ -94,7 +104,6 @@ function Cards(props) {
           matchValue: props.match_score,
         };
 
-        console.log("Job selected:", props);
 
         axiosInstance.post("/selected-jobs", jobPayload)
           .then((response) => {

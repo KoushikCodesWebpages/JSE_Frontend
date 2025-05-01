@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import defaultJobImg from "../../assets/default-job.svg";
 import Location_Icon from "../../assets/location-icon.svg";
 import { MoreVertical } from "lucide-react";
 import axios from "axios";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Cards(props) {
   const [menuOpen, setMenuOpen] = useState(false); // ✅ moved here
@@ -11,11 +13,43 @@ function Cards(props) {
   const [isSaved, setIsSaved] = useState(false);
   const [showCard, setShowCard] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [showMoreSkills, setShowMoreSkills] = useState(false);
+  const [animatedScore, setAnimatedScore] = useState(0);
 
+  useEffect(() => {
+    let start = 0;
+    const end = props.match_score;
+    const duration = 500; // 1 second
+    const frameRate = 10; // ms per frame
+    const increment = (end / duration) * frameRate;
+  
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        start = end;
+        clearInterval(timer);
+      }
+      setAnimatedScore(Math.floor(start));
+    }, frameRate);
+  
+    return () => clearInterval(timer); // cleanup
+  }, [props.match_score]);
+
+  const toggleSkills = () => setShowMoreSkills((prev) => !prev);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-in-out', // add this for smoothness
+    });
+
+    AOS.refresh(); // This is key when rendering conditionally
+  }, []);
 
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
   const axiosInstance = axios.create({
@@ -36,7 +70,6 @@ function Cards(props) {
         axiosInstance.post("/selected-jobs", props)
           .then((response) => {
             console.log("Job saved successfully:", response.data);
-            const responslogo = response;
           })
           .catch((error) => {
             console.error("Error Saving job:", error);
@@ -49,30 +82,23 @@ function Cards(props) {
 
   const onSelect = async () => {
     try {
-      // First, trigger the fade-out effect and select the job
       setIsSelected(true);
       setIsFadingOut(true); // trigger fade-out animation
 
-      // Wait for the fade-out effect to complete before hiding the card
       setTimeout(() => {
         setShowCard(false); // Hide the card after fade-out
 
         const jobPayload = {
           ...props,
-          match_score: props.match_score,   // keeping the same
-          matchValue: props.match_score,     // keeping same
+          match_score: props.match_score,
+          matchValue: props.match_score,
         };
 
         console.log("Job selected:", props);
 
-
-        // Now send the API request after the fade-out completes
         axiosInstance.post("/selected-jobs", jobPayload)
           .then((response) => {
-            // const responslogo = response;
             console.log("Job saved successfully:", response.data);
-
-
           })
           .catch((error) => {
             console.error("Error selecting job:", error);
@@ -85,17 +111,12 @@ function Cards(props) {
     }
   };
 
-
-
-
-
   return (
     <div className="flex flex-wrap">
       {showCard &&
-        (<div
+        (<div 
           className={`relative w-full flex border border-gray-200 bg-white rounded-xl font-[Montserrat] transition-opacity duration-1000 ${isFadingOut ? "opacity-0" : "opacity-100"
-            }`}
-        >
+          }`}        >
           <div className="relative w-full flex border border-gray-200 bg-white rounded-xl font-[Montserrat]">
             {/* Top-right 3-dots menu */}
             <div className="absolute top-4 right-4">
@@ -109,8 +130,8 @@ function Cards(props) {
               </button>
 
               {menuOpen && (
-                <div className="absolute top-8 right-0 bg-white border rounded-md shadow-lg p-2 z-10">
-                  <button onClick={onSave} className="block w-full text-left px-4 py-2 hover:bg-[#2C6472] hover:text-white">
+                <div className="absolute top-8 right-0 bg-white border shadow-lg p-1 z-10">
+                  <button onClick={onSave} className="block w-full text-sm text-left px-2 py-1  hover:bg-[#2C6472] hover:text-white duration-300 ease-in-out">
                     Save
                   </button>
                 </div>
@@ -119,9 +140,6 @@ function Cards(props) {
 
             {/* Left Side - Job Info */}
             <div className="flex w-1/2 p-6 gap-6">
-              <div className="flex items-center object-cover" style={{ flexShrink: 0 }}>
-                <img className="object-cover w-20 h-20 " src={defaultJobImg} alt="Job" />
-              </div>
               <div className="flex flex-col justify-center gap-2">
                 <h3 className="text-[#2C6472] font-bold text-[19px] leading-[100%]">
                   {props.title}
@@ -133,7 +151,6 @@ function Cards(props) {
                       {props.postedDate}
                     </span>
                   </p>
-                  {/* <p className="text-base">{postedDate}</p> */}
                 </div>
                 <div className="flex items-center gap-2">
                   <img src={Location_Icon} alt="Location" />
@@ -148,14 +165,14 @@ function Cards(props) {
                       &nbsp;
                       <button
                         onClick={() => setExpanded(false)}
-                        className="text-[#2C6472] font-semibold text-sm underline"
+                        className="text-[#2C6472] font-semibold text-sm underline text-justify"
                       >
                         show less
                       </button>
                     </>
-                  ) : props.description.split(" ").length > 40 ? (
+                  ) : props.description.split(" ").length > 50 ? (
                     <>
-                      {props.description.split(" ").slice(0, 40).join(" ")}
+                      {props.description.split(" ").slice(0, 50).join(" ")}
                       ... &nbsp;
                       <button
                         onClick={() => setExpanded(true)}
@@ -178,14 +195,33 @@ function Cards(props) {
             <div className="flex p-6 w-1/2">
               <div className="flex flex-col gap-4 w-1/2">
                 {props.skillData.map((item, index) => (
-                  <div key={index} className="flex flex-col gap-1">
-                    <p className="font-semibold text-base">{item.label}</p>
-                    <p className="text-[#a09f9f] font-medium text-[14px]">
-                      {item.value}
-                    </p>
+                  <div key={index} className=" ">
+                    <h3 className="font-semibold text-lg mb-1">{item.label}</h3>
+                    {item.label === "Required Skills" ? (
+                      <>
+                        <p className="text-gray-700 leading-relaxed">
+                          {showMoreSkills
+                            ? item.value
+                            : item.value.split(",").slice(0, 3).join(", ") +
+                            (item.value.split(",").length > 3 ? "..." : "")}
+                        </p>
+                        {item.value.split(",").length > 4 && (
+                          <button
+                            onClick={toggleSkills}
+                            className="text-[#2C6472] font-semibold text-sm underline"
+                          >
+                            {showMoreSkills ? "Show Less" : "more"}
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <p className="text-gray-700">{item.value}</p>
+                    )}
+
                   </div>
                 ))}
               </div>
+
               <div className="flex flex-col gap-5 items-center w-1/2">
                 <div className="relative w-24 h-24">
                   <svg
@@ -208,13 +244,13 @@ function Cards(props) {
                       strokeWidth="7"
                       fill="none"
                       strokeDasharray="282"
-                      strokeDashoffset={282 - (282 * props.match_score) / 100}
+                      strokeDashoffset={282 - (282 * animatedScore) / 100}                                
                       strokeLinecap="round"
                       transform="rotate(-90 50 50)"
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-800">
-                    {props.matchValue}%
+                  {animatedScore}%
                   </div>
                 </div>
 

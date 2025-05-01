@@ -16,81 +16,70 @@ function App() {
     salaryMax: "",
     location: ""
   });
+  const [offset, setOffset] = useState(0);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    per_page: 10,
+    total: 0,
+    next: null,
+    prev: null
+  });
 
-  useEffect(() => {
-    // Dummy job data for UI testing
-    const dummyJobs = [
-      {
-        title: "Frontend Developer",
-        company: "Techify Inc",
-        location: "Bangalore, India",
-        description: "The mission of the Partner Marketing team...",
-        skills: "Figma, Adobe XD, Prototyping",
-        userSkills: "React, HTML, Tailwind CSS",
-        expected_salary: { min: "8 LPA", max: "12 LPA" },
-        match_score: 56,
-      },
-      {
-        title: "UI/UX Designer",
-        company: "Creative Minds",
-        location: "Remote",
-        description: "The mission of the Partner Marketing team...",
-        skills: "Figma, Adobe XD, Prototyping",
-        userSkills: "Figma, Sketch",
-        expected_salary: { min: "5 LPA", max: "9 LPA" },
-        match_score: 73,
-      },
-      {
-        title: "Full Stack Developer",
-        company: "CodeCrafters",
-        location: "Hyderabad, India",
-        description: "The mission of the Partner Marketing team...",
-        skills: "React, Node.js, MongoDB",
-        userSkills: "React, Node.js, Express",
-        expected_salary: { min: "10 LPA", max: "15 LPA" },
-        match_score: 45,
-      },
-    ];
+  const fetchJobs = async (customOffset = offset) => {
+    setLoading(true);
+    try {
+      const token = sessionStorage.getItem("authToken");
+      if (token) {
+        const response = await axios.get(
+          "https://raasbackend-production.up.railway.app/api/jobs",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: { ...filters, title: selectedJobTitle, offset: customOffset, limit: pagination.per_page }, // Send filters with the request
+          }
+        );
+        console.log("Full response data:", response.data);
 
-    setJobs(dummyJobs);
+        console.log("Pagination from backend:", response.data.pagination);
+        console.log("offset:", offset);
+        console.log("pagination.total:", pagination.total);
+        console.log("pagination.per_page:", pagination.per_page);
+
+        console.log("Jobs from backend:", response.data.jobs);
+        const fetchedJobs = response.data.jobs || []; // Ensure jobs is always an array
+        const fetchedPagination = response.data.pagination || {}; // Ensure pagination is always an object
+        setJobs(fetchedJobs);
+        setPagination(fetchedPagination); // Set pagination data
+        sessionStorage.setItem("jobsData", JSON.stringify(fetchedJobs));
+        setOffset(customOffset); // Update offset state
+        console.log("Fetched Pagination:", fetchedPagination);
+        console.log("Offset:", customOffset);
+
+      } else {
+        console.error("No token found. Please log in.");
+      }
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
     setLoading(false);
-  }, []);
+  };
+
+
 
   useEffect(() => {
     const storedJobs = sessionStorage.getItem("jobsData");
+    const storedPagination = sessionStorage.getItem("paginationData");
 
-    if (storedJobs) {
+    if (storedJobs && storedPagination) {
       setJobs(JSON.parse(storedJobs));
+      setPagination(JSON.parse(storedPagination));
       setLoading(false);
     } else {
-      const fetchJobs = async () => {
-        setLoading(true);
-        try {
-          const token = sessionStorage.getItem("authToken");
-          if (token) {
-            const response = await axios.get(
-              "https://raasbackend-production.up.railway.app/api/jobs",
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-                params: { ...filters, title: selectedJobTitle }, // Send filters with the request
-              }
-            );
-            const fetchedJobs = response.data.jobs || []; // Ensure jobs is always an array
-            setJobs(fetchedJobs);
-            sessionStorage.setItem("jobsData", JSON.stringify(fetchedJobs));
-          } else {
-            console.error("No token found. Please log in.");
-          }
-        } catch (error) {
-          console.error("Error fetching jobs:", error);
-        }
-        setLoading(false);
-      };
-
-      fetchJobs();
+      fetchJobs(0);
     }
+
+
   }, [filters, selectedJobTitle]); // Fetch data when filters or selectedJobTitle change
 
   const toggleDropdown = () => {
@@ -145,7 +134,7 @@ function App() {
               {title}
             </button>
           ))} */}
-          
+
           {/* Filter Button */}
           {/* <button
             onClick={toggleDropdown}
@@ -154,7 +143,7 @@ function App() {
             <img src={filter_icon} alt="" />
             Filter
           </button> */}
-          
+
           <Link to={'/user/selected-applications'} className="ml-auto">
             <button className="flex items-center gap-x-2 px-2 py-1.5 bg-transparent font-medium text-[13px] rounded text-[#2C6472] border border-[#2C6472] hover:scale-105">
               Go to Selected Application
@@ -199,6 +188,7 @@ function App() {
           </div>
         )} */}
 
+
         {jobs.length === 0 ? (
           <div
             style={{
@@ -209,7 +199,7 @@ function App() {
             }}
             className="text-center"
           >
-            <h2 className="text-lg font-semibold text-gray-700">
+            <h2 className="text-lg font-semibold mb-2 text-gray-700">
               No jobs available.
             </h2>
             <p className="text-gray-500">
@@ -220,7 +210,7 @@ function App() {
           <>
             <hr />
             <div className="p-5 pt-4">
-              <h2 className="text-sm font-semibold">Showing {jobs.length} Jobs</h2>
+              <h2 className="text-sm font-semibold">Showing {pagination.total} Jobs</h2>
               <p className="text-sm text-gray-400 mt-1">Based on your preferences</p>
               <div className="flex flex-col justify-around gap-2 pt-5">
                 {jobData.map((job, index) => (
@@ -230,6 +220,30 @@ function App() {
             </div>
           </>
         )}
+
+        {jobs.length > 0 && (
+          <div className="flex justify-center items-center gap-4 mt-8 mb-10">
+            <button
+              disabled={offset === 0}
+              onClick={() => fetchJobs(offset - pagination.per_page)}
+              className={`px-3 py-1 rounded text-sm ${offset === 0 ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-[#2C6472] text-white'}`}
+            >
+              Prev
+            </button>
+            <span className="text-sm text-gray-600">
+              Page {Math.floor(offset / pagination.per_page) + 1} of {Math.ceil(pagination.total / pagination.per_page)}
+            </span>
+            <button
+              disabled={(offset + pagination.per_page) >= pagination.total}
+              onClick={() => fetchJobs(offset + pagination.per_page)}
+              className={`px-3 py-1 rounded text-sm ${(offset + pagination.per_page) >= pagination.total ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-[#2C6472] text-white'}`}
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+
       </main>
     </div>
   );

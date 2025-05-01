@@ -26,7 +26,7 @@ const Landing = ({ footerLinks = [] }) => {
         {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white">
           <div className="max-w-lg w-full text-center">
-            <h1 className="text-4xl font-bold text-[#2c6472] ">Welcome to JSE</h1><br />
+            <h1 className="text-4xl font-bold text-[#2c6472] ">Welcome to JSE AI</h1><br />
             <p className="text-gray-600 mb-7 text-lg">
               Your personalized job search assistant. Create your profile, track your applications, and land your dream job.
             </p><br />
@@ -53,7 +53,7 @@ const Landing = ({ footerLinks = [] }) => {
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white">
           <div className="flex justify-center items-center gap-2">
             <img src={joblogo} className="h-7 w-7 "  />
-            <h3 className="text-[#ff9a67] text-2xl m-0">JSE</h3>
+            <h3 className="text-[#ff9a67] text-2xl m-0">JSE AI</h3>
           </div>
           <div className="text-center mt-4 ml-4">
             <h3 className="text-white text-xl font-medium mb-5">Welcome</h3>

@@ -5,6 +5,7 @@ import arrow_down from "../../assets/down-arrow.svg";
 const Navbar = () => {
   const [firstName, setFirstName] = useState('User');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,9 +23,7 @@ const Navbar = () => {
         },
       });
 
-      const data = await response.json(); 
-
-      // Adjust depending on whether API returns array or object
+      const data = await response.json();
       const name = Array.isArray(data) ? data[0]?.first_name : data.first_name;
       if (name) {
         setFirstName(name);
@@ -42,7 +41,13 @@ const Navbar = () => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate('/user/login');
+    setMenuOpen(false);
+    setShowLogoutPopup(true); // show popup
+
+    setTimeout(() => {
+      setShowLogoutPopup(false); // hide popup
+      navigate('/user/login');
+    }, 2500); // 2.5s delay
   };
 
   const getPageTitle = () => {
@@ -53,28 +58,43 @@ const Navbar = () => {
   };
 
   return (
-    <header style={{ width: "calc(100% - 264px)" }} className="fixed top-0 z-10 flex justify-between items-center bg-white h-16 ms-[264px]   border-t border-b px-6 border-gray-200">
-      <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
-      <div className="flex items-center space-x-3 relative">
-        <img
-          src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
-          alt="Profile"
-          className="w-9 h-9 rounded-full"
-        />
-        <span className="text-gray-800 font-bold">{firstName}</span>
-        <img src={arrow_down} alt="" onClick={() => setMenuOpen(!menuOpen)}/>
-        {menuOpen && (
-          <div className="absolute top-12 -right-2 bg-white border rounded shadow-md p-1 z-20">
-            <button
-              onClick={handleLogout}
-              className="text-red-600 hover:text-red-800 font-medium px-3 py-1"
-            >
-              Logout
-            </button>
+    <>
+      <header style={{ width: "calc(100% - 264px)" }} className="fixed top-0 z-10 flex justify-between items-center bg-white h-16 ms-[264px] border-t border-b px-6 border-gray-200">
+        <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
+        <div className="flex items-center space-x-3 relative">
+          <img
+            src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
+            alt="Profile"
+            className="w-9 h-9 rounded-full"
+          />
+          <span className="text-gray-800 font-bold">{firstName}</span>
+          <img src={arrow_down} alt="" onClick={() => setMenuOpen(!menuOpen)} className='w-8 h-8 mt-1 p-2 rounded-full hover:bg-[#407684] transform duration-200 ease-linear'/>
+          {menuOpen && (
+            <div className="absolute top-12 -right-2 bg-white border rounded shadow-md p-1 z-20">
+              <button
+                onClick={handleLogout}
+                className="text-red-800 hover:bg-red-600 hover:text-white transform duration-200 ease-linear font-medium px-3 py-1"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* 🌟 Logout popup */}
+      {showLogoutPopup && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl px-10 py-8 w-[92%] max-w-md text-center border-b-8 border-[#2c6472]">
+            <h2 className="text-2xl font-bold text-[#2c6472] mb-4">Logged Out Successfully</h2>
+            <p className="text-gray-600 w-full ">
+              Thanks for visiting - we’ll see you again soon!👋
+            </p>
+            {/* <div className="w-10 h-1 bg-[#2c6472] mx-auto rounded-full animate-pulse"></div> */}
           </div>
-        )}
-      </div>
-    </header>
+        </div>
+      )}
+    </>
   );
 };
 

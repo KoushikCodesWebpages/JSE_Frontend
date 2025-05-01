@@ -91,7 +91,7 @@ const ApplicationTracker = () => {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="w-[1141px] h-[170px] mx-auto flex justify-between items-start bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition"
+                className="w-[1001px] h-[170px] mx-auto flex justify-between items-start bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition"
               >
                 {/* Job Info */}
                 <div className="flex items-start gap-4">

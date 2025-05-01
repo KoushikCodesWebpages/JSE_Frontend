@@ -120,8 +120,7 @@ const MyApplication = () => {
                   className={`flex items-start h-40 bg-white justify-between border-y rounded-s-xl border-gray-400/20 px-4  py-5 hover:scale-[1.01] transition-transform ease-in-out duration-200 cursor-pointer ${selectedJob === job ? " border-l-8 border-teal-700 transition-transform ease-in-out duration-200" : ""
                     }`}
                 >
-                  <div className="flex items-start space-x-10 justify-center ">
-                    <img src={defaultJobImg} alt="Job" className="w-20 h-20 my-auto ms-5  object-contain" />
+                  <div className="flex items-start space-x-10 justify-center ms-5 ">
                     <div className="space-y-2">
                       <h3 className="text-lg font-semibold text-[#2C6472]">{job.jobTitle}</h3>
                       <p className="text-sm text-gray-600">{job.companyName}</p>
@@ -150,8 +149,7 @@ const MyApplication = () => {
               {selectedJob && (
                 <>
                   <div className="flex justify-between  items-start"><br />
-                    <div className="flex gap-2 me-3 ">
-                      <img src={defaultJobImg} alt="Job" className="w-16 h-16 -ms-5   object-contain" />
+                    <div className="flex gap-4 me-3 ">
                       <div>
                         <p className="text-gray-600 font-semibold text-xl">{selectedJob.companyName}</p>
                         <h2 className="text-2xl font-semibold text-[#2C6472]">{selectedJob.jobTitle}</h2>

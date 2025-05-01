@@ -14,6 +14,8 @@ import VerificationPage from './base/1_auth/VerificationPage/VerificationPage.js
 import Test1 from './Testing/Test1';
 import Navbar from "./base/navbar/Navbar.jsx";
 import Sidebar from './base/sidebar/sidebar.jsx';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import "./App.css"
 import './index.css';
 import Landing from './base/Landing.jsx';
@@ -25,6 +27,8 @@ const AppRoutes = () => {
     // Define routes that are data-entry only
     const isDataEntryPage = location.pathname.startsWith('/user/onboarding') ||
         ['/', '/user/login', '/user/signup'].includes(location.pathname);
+
+     
 
 
     return (

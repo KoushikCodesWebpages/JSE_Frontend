@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MoreVertical } from "lucide-react";
 import Location_Icon from "../../assets/location-icon.svg";
-import defaultJobImg from "../../assets/default-job.svg";
 
 const Savedjob = () => {
   const [selectedJobs, setSelectedJobs] = useState([]);
@@ -10,6 +9,17 @@ const Savedjob = () => {
 
   const [activeMenuIndex, setActiveMenuIndex] = useState(null);
   const [expandedJobs, setExpandedJobs] = useState({});
+  const [expandedSkills, setExpandedSkills] = useState({});
+
+  const toggleSkillsExpansion = (index) => {
+    setExpandedSkills((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+
+
 
 
   const toggleMenu = (index) => {
@@ -84,7 +94,7 @@ const Savedjob = () => {
           </div>
         ) : (
           <div>
-            
+
           </div>
         )}
 
@@ -121,10 +131,8 @@ const Savedjob = () => {
 
               <div className="flex p-6 gap-6">
                 {/* Left Part: Image + Job Details */}
-                <div className="flex w-[50%] gap-4 items-start">
-                  <div className="w-20 h-20">
-                    <img src={defaultJobImg} alt="Job" />
-                  </div>
+                <div className="flex w-[50%] gap-4 items-start ms-2">
+
                   <div className="flex flex-col gap-1 w-full">
                     <h2 className="text-[#2C6472] font-bold text-[19px]">
                       {job.title}
@@ -163,7 +171,7 @@ const Savedjob = () => {
                         job.description.split(' ').length > 40 ? (
                           <>
                             {job.description.split(' ').slice(0, 40).join(' ')}
-                             ... &nbsp;
+                            ... &nbsp;
                             <button
                               onClick={() => setExpandedJobs({ ...expandedJobs, [index]: true })}
                               className="text-[#2C6472] font-semibold text-sm underline"
@@ -191,9 +199,31 @@ const Savedjob = () => {
                     <div className="flex flex-col gap-2">
                       <p className="font-semibold text-base">Required Skills</p>
                       <p className="text-[#a09f9f] font-medium text-[14px]">
-                        {Array.isArray(job.skills)
-                          ? job.skills.join(", ")
-                          : job.skills}
+                        {(() => {
+                          const skillsArray = Array.isArray(job.skills)
+                            ? job.skills
+                            : typeof job.skills === "string"
+                              ? job.skills.split(",").map((skill) => skill.trim())
+                              : [];
+
+                          return skillsArray.length > 0 ? (
+                            <>
+                              {expandedSkills[index]
+                                ? skillsArray.join(", ")
+                                : skillsArray.slice(0, 3).join(", ")}
+                              {skillsArray.length > 3 && (
+                                <button
+                                  onClick={() => toggleSkillsExpansion(index)}
+                                  className="text-[#2C6472] font-semibold text-sm underline ml-2"
+                                >
+                                  {expandedSkills[index] ? "show less" : "more"}
+                                </button>
+                              )}
+                            </>
+                          ) : (
+                            "-"
+                          );
+                        })()}
                       </p>
                     </div>
 

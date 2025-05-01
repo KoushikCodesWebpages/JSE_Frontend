@@ -107,6 +107,7 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="grid gap-y-3">
               <div className="relative">
                 <input
+                    id="email"
                   type="email"
                   name="email"
                   value={formData.email}
@@ -115,18 +116,19 @@ const Login = () => {
                   className="w-full h-[52px] px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   placeholder=" "
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label   htmlFor="email" className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.email
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                   }`}>
-                  email
+                  Email
                 </label>
               </div>
 
               {/* Password Input */}
               <div className="relative">
                 <input
+                id='password'
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
@@ -135,7 +137,7 @@ const Login = () => {
                   className="w-full h-[52px]  ps-4 pe-3 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer pr-10"
                   placeholder=" "
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label htmlFor='password' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.password
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'

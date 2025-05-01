@@ -8,7 +8,6 @@ import selectable_jobs_icon from '../../assets/selectable-jobs.svg'
 import total_experience_icon from '../../assets/total-experience.svg'
 import comapnylogo from "../../assets/image.svg"
 
-
 function Dashboard() {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,14 +54,14 @@ function Dashboard() {
   if (loading) return <Loader />;
   if (error) return <div className="text-red-500">{error}</div>;
 
-  const fullName = `${profileData?.first_name || "Steve"} ${profileData?.second_name || ""}`.trim();
-  const preferredJobTitle = profileData?.preferred_job_title || "UI/UX Designer";
+  const fullName = `${profileData?.first_name || " "} ${profileData?.second_name || ""}`.trim();
+  const preferredJobTitle = profileData?.preferred_job_title || " ";
   const profileCompletion = profileData?.profile_completion || 85;
-  const skills = profileData?.skills || ["Figma", "Adobe XD", "Photoshop"];
-  const languages = profileData?.languages || ["English", "Tamil", "Hindi", "Malyalam", "Urudu"];
+  const skills = profileData?.skills || [" "];
+  const languages = profileData?.languages || [" "];
   const certificates = profileData?.certificates?.length > 0
     ? profileData.certificates
-    : ["Accenture UX design course", "TCS Basics Python"];
+    : [" "];
   const totalExperienceInMonths = profileData?.total_experience_in_months || 0;
   const experienceFormatted = `${Math.floor(totalExperienceInMonths / 12)} yrs ${totalExperienceInMonths % 12} months`;
 

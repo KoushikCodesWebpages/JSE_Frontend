@@ -14,7 +14,6 @@ import VerificationPage from './base/1_auth/VerificationPage/VerificationPage.js
 import Test1 from './Testing/Test1';
 import Navbar from "./base/navbar/Navbar.jsx";
 import Sidebar from './base/sidebar/sidebar.jsx';
-import AOS from 'aos';
 import 'aos/dist/aos.css';
 import "./App.css"
 import './index.css';
@@ -29,7 +28,6 @@ const AppRoutes = () => {
         ['/', '/user/login', '/user/signup'].includes(location.pathname);
 
      
-
 
     return (
         <div className='App'>

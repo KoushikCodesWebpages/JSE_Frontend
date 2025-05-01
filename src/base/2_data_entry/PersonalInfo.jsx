@@ -79,7 +79,7 @@ const PersonalInfo = () => {
   };
 
   const fields = [
-    { label: 'Full Name', name: 'first_name', type: 'text' },
+    { label: 'First Name', name: 'first_name', type: 'text' },
     { label: 'Last Name', name: 'second_name', type: 'text' },
     { label: ' ', name: 'date_of_birth', type: 'date' },
     { label: 'Current address', name: 'address', type: 'text' },
@@ -96,9 +96,10 @@ const PersonalInfo = () => {
               {fields.map((field) => (
                 <div key={field.name} className="relative h-15">
                   <input
+                    id={field.name}
                     type={field.type}
                     name={field.name}
-                    placeholder=' '
+                    placeholder=" "
                     value={formData[field.name] || " "}
                     onChange={handleChange}
                     className={` peer  w-full h-full px-4 py-4 border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
@@ -116,14 +117,19 @@ const PersonalInfo = () => {
                       }
                     }}
                   />
-                  <label
-                  className={`absolute left-4 transition-all text-gray-500 text-sm ${formData[field.name]
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                    }`}
-                >
-                  {field.label}
-                </label>
+                  {field.name === 'date_of_birth' && !formData.date_of_birth && (
+                    <span className="absolute left-4 -top-2 bg-white px-1 text-sm text-gray-400 pointer-events-none">
+                      DOB
+                    </span>
+                  )}
+                  <label htmlFor={field.name}
+                    className={`absolute left-4 transition-all text-gray-500 text-sm ${formData[field.name]
+                      ? '-top-2 text-sm bg-white px-1'
+                      : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
+                      }`}
+                  >
+                    {field.label}
+                  </label>
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>
                   )}
@@ -172,7 +178,7 @@ const PersonalInfo = () => {
         </div>
       </div>
 
-    
+
     </div>
   );
 };

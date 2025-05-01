@@ -115,6 +115,7 @@ const Signup = () => {
             {/* email Field */}
             <div className="relative ">
               <input
+              id='email'
                 type="email"
                 name="email"
                 placeholder=" "
@@ -123,18 +124,19 @@ const Signup = () => {
                 onChange={handleChange}
                 required
               />
-              <label className={`absolute left-4 transition-all text-gray-500 text-base
+              <label htmlFor='email' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.email
                   ? '-top-2 text-sm bg-white px-1'
                   : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                 }`}>
-                email
+                Email
               </label>
             </div><br />
 
             {/* Phone Number Field */}
             <div className="relative ">
               <input
+              id='phoneNumber'
                 type="tel"
                 name="phoneNumber"
                 placeholder=" "
@@ -143,13 +145,17 @@ const Signup = () => {
                 onChange={handleChange}
                 required
               />
-              <label className={`absolute left-4 transition-all text-gray-500 text-base
+              <label htmlFor='phoneNumber' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.phoneNumber
                   ? '-top-2 text-sm bg-white px-1'
                   : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                 }`}>
                 Phone Number
               </label>
+              {formData.phoneNumber && (formData.phoneNumber.length < 10 || formData.phoneNumber.length > 11) && (
+  <p className="text-sm text-red-500 mt-1">Phone number must be 10 to 11 digits</p>
+)}
+
             </div><br />
 
             {/* Password Fields */}
@@ -157,6 +163,7 @@ const Signup = () => {
               {/* Create Password */}
               <div className="relative w-1/2">
                 <input
+                id='password'
                   type={showPassword.password ? "text" : "password"}
                   name="password"
                   placeholder=" "
@@ -165,7 +172,7 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label htmlFor='password' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.password
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -184,6 +191,7 @@ const Signup = () => {
               {/* Confirm Password */}
               <div className="relative w-1/2">
                 <input
+                id='confirmPassword'
                   type={showPassword.confirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   placeholder=" "
@@ -192,7 +200,7 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label htmlFor='confirmPassword' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.confirmPassword
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'

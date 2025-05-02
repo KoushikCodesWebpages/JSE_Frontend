@@ -33,7 +33,7 @@ const Login = () => {
         sessionStorage.setItem('authToken', data.token);
         fetchEntryProgressAndRedirect(data.token);
       } else {
-        alert(data.message || 'Login failed');
+        alert(data.message || 'invalid credentials');
       }
     } catch (err) {
       alert(err)
@@ -180,11 +180,11 @@ const Login = () => {
           <div className="flex items-center gap-2 mb-4">
             <img
               src={joblogo}
-              className="h-7 w-7"
+              className="h-6 w-6"
             />
-            <h3 className="text-orange-300 text-2xl font-bold">JSE AI</h3>
+            <h3 className="text-orange-300 text-xl">JSE AI</h3>
           </div>
-          <h3 className="text-center text-xl ms-4 font-medium mb-8">Welcome Back!</h3>
+          <h3 className="text-center text-xl ms-3 font-medium mb-8">Welcome Back!</h3>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
             <img src={frame} alt="" className='relative object-cover ' />
             <DotLottieReact

@@ -42,9 +42,17 @@ const Language = () => {
     if (!formData.ProficiencyLevel) {
       newErrors.ProficiencyLevel = 'Proficiency level is required';
     }
+  
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  
+    if (Object.keys(newErrors).length > 0) {
+      alert("Please fill all the fields before adding data");
+      return false;
+    }
+  
+    return true;
   };
+  
 
   const handleAddCertificate = async (e) => {
     e.preventDefault();
@@ -113,16 +121,20 @@ const Language = () => {
           <div className="max-w-md w-full">
             <form className="flex flex-col" onSubmit={handleAddCertificate}>
               {/* Language Input */}
-              <div className="relative mb-1">
+              <div className="relative ">
                 <input
+                id='LanguageName'
                   type="text"
                   name="LanguageName" // Fixed name attribute
                   placeholder=" "
                   value={formData.LanguageName}
                   onChange={handleChange}
+                  required
+
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500 text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
                 <label
+                htmlFor='LanguageName'
                   className={`absolute left-4 transition-all text-gray-500 text-sm ${formData.LanguageName
                       ? '-top-2 text-sm bg-white px-1'
                       : 'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'

@@ -112,6 +112,7 @@ const WorkExp = () => {
               {/* Job Title */}
               <div className="relative">
                 <input
+                id="job_title"
                   type="text"
                   name="job_title"
                   placeholder=" "
@@ -120,6 +121,7 @@ const WorkExp = () => {
                   className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500 text-sm  focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
                 <label
+                htmlFor="job_title"
                   className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                   ${formData.job_title ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
@@ -132,6 +134,7 @@ const WorkExp = () => {
               <div className="flex gap-5">
                 <div className="relative flex-1">
                   <input
+                  id="company_name"
                     type="text"
                     name="company_name"
                     placeholder=" "
@@ -140,6 +143,7 @@ const WorkExp = () => {
                     className="peer w-full p-4 border border-gray-300 h-[41px]  text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
                   <label
+                  htmlFor="company_name"
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                   ${formData.company_name ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
@@ -149,6 +153,7 @@ const WorkExp = () => {
 
                 <div className="relative flex-1">
                   <input
+                  id="employment_type"
                     type="text"
                     name="employment_type"
                     placeholder=" "
@@ -157,6 +162,7 @@ const WorkExp = () => {
                     className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
                   <label
+                  htmlFor="employment_type"
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                   ${formData.employment_type ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>
@@ -169,6 +175,7 @@ const WorkExp = () => {
               <div className="flex gap-5">
                 <div className="flex-1 relative">
                   <input
+                    id="start_date"
                     type="date"
                     name="start_date"
                     value={formatForDateTimeLocal(formData.start_date)}
@@ -177,6 +184,7 @@ const WorkExp = () => {
                     placeholder=" "
                   />
                   <label
+                    htmlFor="start_date"
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                    *:   ${formData.start_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs peer-focus:-top-2 peer-focus:text-xs"}
                    *: `}>
@@ -186,6 +194,7 @@ const WorkExp = () => {
 
                 <div className="flex-1 relative">
                   <input
+                  id="end_date"
                     type="date"
                     name="end_date"
                     value={formatForDateTimeLocal(formData.end_date)}
@@ -194,6 +203,7 @@ const WorkExp = () => {
                     placeholder=" "
                   />
                   <label
+                  htmlFor="end_date"
                     className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                       ${formData.end_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs  peer-focus:-top-2 peer-focus:text-xs"}
                     `}>
@@ -206,6 +216,7 @@ const WorkExp = () => {
               {/* Key Responsibilities */}
               <div className="relative">
                 <textarea
+                id="key_responsibilities"
                   name="key_responsibilities"
                   placeholder=" "
                   value={formData.key_responsibilities}
@@ -213,6 +224,7 @@ const WorkExp = () => {
                   className="peer w-full p-4 border border-gray-300 h-44 text-gray-500  text-sm min-h-[100px] focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
                 <label
+                htmlFor="key_responsibilities"
                   className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
                   ${formData.key_responsibilities ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
                   `}>

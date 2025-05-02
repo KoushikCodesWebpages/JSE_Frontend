@@ -85,7 +85,7 @@ const Navbar = () => {
       {/* 🌟 Logout popup */}
       {showLogoutPopup && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center animate-fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl px-10 py-8 w-[92%] max-w-md text-center border-b-8 border-[#2c6472]">
+          <div className="bg-white rounded shadow-2xl px-10 py-8 w-[92%] max-w-md text-center border-b-8 border-[#2c6472]">
             <h2 className="text-2xl font-bold text-[#2c6472] mb-4">Logged Out Successfully</h2>
             <p className="text-gray-600 w-full ">
               Thanks for visiting - we’ll see you again soon!👋

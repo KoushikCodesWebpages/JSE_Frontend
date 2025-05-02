@@ -104,7 +104,7 @@ const Signup = () => {
             <span className="text-base text-gray-700">Continue with Google</span>
           </button><br />
 
-          <div className="flex items-center my-4 ">
+          <div className="flex items-center  ">
             <div className="flex-grow h-px bg-gray-300" />
             <span className="mx-3 text-gray-400 text-sm">or</span>
             <div className="flex-grow h-px bg-gray-300" />
@@ -134,7 +134,7 @@ const Signup = () => {
             </div><br />
 
             {/* Phone Number Field */}
-            <div className="relative ">
+            <div className="relative  ">
               <input
               id='phoneNumber'
                 type="tel"
@@ -153,7 +153,7 @@ const Signup = () => {
                 Phone Number
               </label>
               {formData.phoneNumber && (formData.phoneNumber.length < 10 || formData.phoneNumber.length > 11) && (
-  <p className="text-sm text-red-500 mt-1">Phone number must be 10 to 11 digits</p>
+  <p className="text-[10px] text-red-500 mt-1">(Phone number must be 10 to 11 digits)</p>
 )}
 
             </div><br />
@@ -219,7 +219,7 @@ const Signup = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="teal-button w-full h-[50px] bg-[#2c6472] text-white py-3 mt-3 rounded-md"
+              className="teal-button w-full h-[50px] bg-[#2c6472] text-white py-3  rounded-md"
             >
               Sign Up
             </button>

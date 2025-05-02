@@ -15,6 +15,9 @@ function Cards(props) {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [showMoreSkills, setShowMoreSkills] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
+  const [showSavePopup, setShowSavePopup] = useState(false);
+  const [showSelectPopup, setShowSelectPopup] = useState(false);
+
 
   useEffect(() => {
     let start = 0;
@@ -22,7 +25,7 @@ function Cards(props) {
     const duration = 500; // 1 second
     const frameRate = 10; // ms per frame
     const increment = (end / duration) * frameRate;
-  
+
     const timer = setInterval(() => {
       start += increment;
       if (start >= end) {
@@ -31,7 +34,7 @@ function Cards(props) {
       }
       setAnimatedScore(Math.floor(start));
     }, frameRate);
-  
+
     return () => clearInterval(timer); // cleanup
   }, [props.match_score]);
 
@@ -54,7 +57,7 @@ function Cards(props) {
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
   const axiosInstance = axios.create({
     baseURL: "https://raasbackend-production.up.railway.app/api",
-    
+
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -64,11 +67,14 @@ function Cards(props) {
     try {
       setIsSaved(true);
       setIsFadingOut(true);
-  
+      setShowSavePopup(true);
+
       // Delay the card disappearance & API call by 2 seconds
       setTimeout(async () => {
         setShowCard(false);
-  
+
+
+
         try {
           const response = await axios.post(
             "https://raasbackend-production.up.railway.app/saved-jobs",
@@ -83,17 +89,21 @@ function Cards(props) {
         } catch (error) {
           console.error("Error saving job:", error);
         }
+
+        setTimeout(() => setShowSavePopup(false), 1500);
+
       }, 2000);
-  
+
     } catch (error) {
       console.error("Error in onSave:", error);
     }
   };
-  
+
   const onSelect = async () => {
     try {
       setIsSelected(true);
       setIsFadingOut(true); // trigger fade-out animation
+      setShowSelectPopup(true); // Show the select popup
 
       setTimeout(() => {
         setShowCard(false); // Hide the card after fade-out
@@ -113,6 +123,8 @@ function Cards(props) {
             console.error("Error selecting job:", error);
           });
 
+        setTimeout(() => setShowSelectPopup(false), 1500); // Hide the select popup after 1.5 seconds
+
       }, 2000); // Wait for fade-out animation to complete (2s)
 
     } catch (error) {
@@ -123,9 +135,9 @@ function Cards(props) {
   return (
     <div className="flex flex-wrap">
       {showCard &&
-        (<div 
+        (<div
           className={`relative w-full flex border border-gray-200 bg-white rounded-xl font-[Montserrat] transition-opacity duration-1000 ${isFadingOut ? "opacity-0" : "opacity-100"
-          }`}        >
+            }`}        >
           <div className="relative w-full flex border border-gray-200 bg-white rounded-xl font-[Montserrat]">
             {/* Top-right 3-dots menu */}
             <div className="absolute top-4 right-4">
@@ -253,13 +265,13 @@ function Cards(props) {
                       strokeWidth="7"
                       fill="none"
                       strokeDasharray="282"
-                      strokeDashoffset={282 - (282 * animatedScore) / 100}                                
+                      strokeDashoffset={282 - (282 * animatedScore) / 100}
                       strokeLinecap="round"
                       transform="rotate(-90 50 50)"
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-800">
-                  {animatedScore}%
+                    {animatedScore}%
                   </div>
                 </div>
 
@@ -277,6 +289,27 @@ function Cards(props) {
             </div>
           </div>
         </div>)}
+
+      {showSavePopup && (
+        <div className={`fixed bottom-6 right-6 z-50 px-4 py-3 bg-white border-b-4 border-[#2C6472] text-black rounded-md shadow-lg transform transition-all duration-500 ease-in-out animate-toast-in`}>
+          <div className="relative px-3 py-1">
+            <span>✅ Job saved successfully!</span>
+            <div className="absolute bottom-0 left-0 h-[3px] bg-white animate-progress w-full" />
+          </div>
+        </div>
+      )}
+
+      {showSelectPopup && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-white border-b-4 border-green-600 text-black rounded-md shadow-lg transform transition-all duration-500 ease-in-out animate-toast-in">
+          <div className="relative px-3 py-1">
+            <span>✅ Job selected successfully!</span>
+            <div className="absolute bottom-0 left-0 h-[3px] bg-white animate-progress w-full" />
+          </div>
+        </div>
+      )}
+
+
+
     </div>
   );
 }

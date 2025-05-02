@@ -90,8 +90,9 @@ const Certificate = () => {
         {/* Left Panel */}
         <div className="flex-1 flex justify-center items-center p-8 bg-white rounded-s-xl">
           <form className="max-w-md w-full" onSubmit={handleAddCertificate}>
-            <div className="relative mb-5">
+            <div className="relative mb-3">
               <input
+              id='certificate_name'
                 type="text"
                 name="certificate_name"
                 placeholder=" "
@@ -99,14 +100,14 @@ const Certificate = () => {
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
-              <label className={`absolute left-4 transition-all text-gray-500 text-base
+              <label htmlFor='certificate_name' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.certificate_name ? '-top-2 text-sm bg-white px-1' :
                   'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
                 Certificate/Course Name
               </label>
             </div><br />
 
-            <div className="mb-5">
+            <div className="mb-3">
               <p className="mb-2 text-sm text-gray-600">Completion Certificate</p>
               <div className="border-2 border-gray-300  p-6 text-center bg-gray-100">
                 <input
@@ -137,6 +138,7 @@ const Certificate = () => {
 
             <div className="relative mb-6">
               <input
+              id='certificate_number'
                 type="text"
                 name="certificate_number"
                 placeholder=" "
@@ -144,7 +146,7 @@ const Certificate = () => {
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
-              <label className={`absolute left-4 transition-all text-gray-500 text-base
+              <label htmlFor='certificate_number' className={`absolute left-4 transition-all text-gray-500 text-base
                 ${formData.certificate_number ? '-top-2 text-sm bg-white px-1' :
                   'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
                 Certificate Number

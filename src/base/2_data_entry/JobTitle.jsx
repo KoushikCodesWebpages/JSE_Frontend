@@ -32,12 +32,12 @@ const JobTitle = () => {
     if (!formData.primary_title) {
       newErrors.primary_title = 'Primary title is required';
     }
-    if (!formData.secondary_title) {
-      newErrors.secondary_title = 'Secondary title is required';
-    }
-    if (!formData.tertiary_title) {
-      newErrors.tertiary_title = 'Tertiary title is required';
-    }
+    // if (!formData.secondary_title) {
+    //   newErrors.secondary_title = 'Secondary title is required';
+    // }
+    // if (!formData.tertiary_title) {
+    //   newErrors.tertiary_title = 'Tertiary title is required';
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -80,8 +80,8 @@ const JobTitle = () => {
       label: 'Primary Title',
       name: 'primary_title',
       options: [
-        "Software Engineer", 
-        "Backend Developer", 
+        "Software Engineer",
+        "Backend Developer",
         "DevOps Engineer",
         "Logistics Coordinator",
         "Supply Chain Specialist",
@@ -108,8 +108,8 @@ const JobTitle = () => {
       label: 'Secondary Title',
       name: 'secondary_title',
       options: [
-        "Software Engineer", 
-        "Backend Developer", 
+        "Software Engineer",
+        "Backend Developer",
         "DevOps Engineer",
         "Logistics Coordinator",
         "Supply Chain Specialist",
@@ -136,8 +136,8 @@ const JobTitle = () => {
       label: 'Tertiary Title',
       name: 'tertiary_title',
       options: [
-        "Software Engineer", 
-        "Backend Developer", 
+        "Software Engineer",
+        "Backend Developer",
         "DevOps Engineer",
         "Logistics Coordinator",
         "Supply Chain Specialist",
@@ -161,7 +161,7 @@ const JobTitle = () => {
       ]
     }
   ];
-  
+
 
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
@@ -171,7 +171,7 @@ const JobTitle = () => {
           <div className="max-w-lg w-full">
             <form className="grid gap-y-4" onSubmit={handleNext}>
               {fields.map((field) => (
-                <div key={field.name} className="relative h-15 mb-5">
+                <div key={field.name} className="flex relative h-15 mb-5">
                   <select
                     name={field.name}
                     value={formData[field.name]}
@@ -184,6 +184,12 @@ const JobTitle = () => {
                       <option key={option} value={option}>{option}</option>
                     ))}
                   </select>
+                  <label className="block text-gray-700 font-medium mb-1 ms-1">
+                    {field.name === 'primary_title' && (
+                      <span className="text-red-500">*</span>
+                    )}
+                  </label>
+
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>
                   )}

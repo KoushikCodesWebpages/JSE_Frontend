@@ -83,23 +83,25 @@ const Education = () => {
 
 
   return (
-    <div className="flex flex-col h-[86vh]  w-[85%] mx-auto bg-red-700 border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
-      <div className="flex flex-1 h-[60%] rounded-xl shadow-md shadow-slate-300">
+    <div className="flex flex-col  h-[87vh]  w-[85%] mx-auto  border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">
+      <div className="flex flex-1 bg-slate-400 rounded-xl shadow-md shadow-slate-300">
         {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="w-full max-w-md">
             <form className="flex flex-col" onSubmit={handleAddEducation}>
               {/* Degree Title */}
-              <div className="relative mb-2">
+              <div className="relative ">
                 <input
+                id='degree'
                   type="text"
                   name="degree"
                   placeholder=" "
                   onChange={handleChange}
                   value={formData.degree}
+                  required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-sm
+                <label htmlFor='degree' className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.degree
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-base peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -109,16 +111,18 @@ const Education = () => {
               </div><br />
 
               {/* Institution Name */}
-              <div className="relative mb-2">
+              <div className="relative ">
                 <input
+                id='institution'
                   type="text"
                   name="institution"
                   placeholder="  "
                   onChange={handleChange}
                   value={formData.institution}
+                  required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500  text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-sm
+                <label htmlFor='institution' className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.institution
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-sm peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -128,16 +132,18 @@ const Education = () => {
               </div><br />
 
               {/* Field of Study */}
-              <div className="relative mb-2">
+              <div className="relative ">
                 <input
+                id='field_of_study'
                   type="text"
                   name="field_of_study"
                   placeholder=" "
                   onChange={handleChange}
                   value={formData.field_of_study}
+                  required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-sm
+                <label htmlFor='field_of_study' className={`absolute left-4 transition-all text-gray-500 text-sm
                   ${formData.field_of_study
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -147,17 +153,19 @@ const Education = () => {
               </div><br />
 
               {/* Start and End Dates */}
-              <div className="flex gap-5 mb-2">
+              <div className="flex gap-5 ">
                 <div className="relative flex-1">
                   <input
+                  id='start_date'
                     type="date"
                     name="start_date"
                     placeholder=" "
                     onChange={handleChange}
                     value={formData.start_date}
+                    required
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
-                  <label className={`absolute left-4 transition-all text-gray-500 text-base
+                  <label htmlFor='start_date' className={`absolute left-4 transition-all text-gray-500 text-base
                     ${formData.start_date
                       ? '-top-2 text-sm bg-white px-1'
                       : '-top-2 bg-white px-1 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -167,14 +175,16 @@ const Education = () => {
                 </div>
                 <div className="relative flex-1">
                   <input
+                  id='end_date'
                     type="date"
                     name="end_date"
                     placeholder=" "
                     onChange={handleChange}
                     value={formData.end_date}
+                    required
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
-                  <label className={`absolute left-4 transition-all text-gray-500 text-base
+                  <label htmlFor='end_date' className={`absolute left-4 transition-all text-gray-500 text-base
                     ${formData.end_date
                       ? '-top-2 text-sm bg-white px-1'
                       : '-top-2 bg-white px-1 text-sm  peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
@@ -185,15 +195,17 @@ const Education = () => {
               </div><br />
 
               {/* Achievements */}
-              <div className="relative mb-2">
+              <div className="relative ">
                 <textarea
+                id='achievements'
                   name="achievements"
                   placeholder=" "
                   onChange={handleChange}
                   value={formData.achievements}
+                  required
                   className="w-full p-4 border border-gray-300 text-gray-500 text-sm min-h-[100px] peer focus:outline-none focus:ring-1  focus:ring-[#2c6472]"
                 />
-                <label className={`absolute left-4 transition-all text-gray-500 text-base
+                <label htmlFor='achievements' className={`absolute left-4 transition-all text-gray-500 text-base
                   ${formData.achievements
                     ? '-top-2 text-sm bg-white px-1'
                     : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'

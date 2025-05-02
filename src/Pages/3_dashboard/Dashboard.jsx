@@ -212,7 +212,7 @@ function Dashboard() {
               <div className="flex justify-center">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3">
 
-                  <div data-aos="flip-left" data-aos-duration="400"  data-aos-easing="linear"  className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                  <div data-aos="flip-left" data-aos-duration="600"  data-aos-easing="linear"  className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-3xl font-bold">{profileData?.daily_generatable_coverletter ?? 0}</h3>
                       <p className="text-[13px] font-bold">Daily Generatable Cover Letters</p>
@@ -222,7 +222,7 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  <div  data-aos="flip-left" data-aos-duration="1000" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                  <div  data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-3xl font-bold ">{profileData?.total_jobs_available ?? 0}</h3>
                       <p className="text-[13px] font-bold">Total Jobs Available</p>
@@ -242,7 +242,7 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  <div  data-aos="flip-left" data-aos-duration="800" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#FAD0C5] to-[#FED0FC] h-[120px] w-[250px] text-black p-4 rounded-xl  ">
+                  <div  data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#FAD0C5] to-[#FED0FC] h-[120px] w-[250px] text-black p-4 rounded-xl  ">
                     <div className="absolute top-12 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-xl font-bold">{experienceFormatted}</h3>
                       <p className="text-[13px] font-bold">Total Experience</p>
@@ -256,7 +256,7 @@ function Dashboard() {
               </div>
 
               {/* Recommended Jobs */}
-              <div data-aos="flip-down" data-aos-duration="600" className="bg-white rounded-xl p-5 pb-0 shadow">
+              <div data-aos="flip-down" data-aos-duration="800" className="bg-white rounded-xl p-5 pb-0 shadow">
                 <div className="flex justify-between items-center">
                   <h3 className="text-base font-semibold text-gray-700">Recommended Jobs for you</h3>
                   <a href="#" className="text-sm font-semibold text-indigo-800 hover:underline">Show all</a>

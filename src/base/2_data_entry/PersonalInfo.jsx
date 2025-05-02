@@ -36,11 +36,6 @@ const PersonalInfo = () => {
       newErrors.first_name = 'First name is required';
     }
 
-    if (!formData.second_name.trim()) {
-      newErrors.second_name = 'Last name is required';
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.second_name)) {
-      newErrors.second_name = 'Last name is invalid';
-    }
 
     if (!formData.date_of_birth) {
       newErrors.date_of_birth = 'Date of birth is required';
@@ -119,17 +114,22 @@ const PersonalInfo = () => {
                   />
                   {field.name === 'date_of_birth' && (
                     <span className="absolute left-4 -top-1  text-xs text-gray-500 bg-white px-1 z-10">
-                      DOB
+                      DOB <span className='text-red-500'>*</span>
                     </span>
                   )}
                   {field.name !== 'date_of_birth' && (
                     <label htmlFor={field.name}
-                      className={`absolute left-4 transition-all text-gray-500 text-sm ${formData[field.name]
+                      className={`absolute flex left-4 transition-all text-gray-500 text-sm ${formData[field.name]
                           ? '-top-2 text-sm bg-white px-1'
                           : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
                         }`}
                     >
                       {field.label}
+                      <label className="block text-gray-700 font-medium mb-1 ms-1">
+                        {field.name !== 'second_name' && (
+                      <span className="text-red-500">*</span>
+                        )}
+                  </label>
                     </label>
                   )}
                   {errors[field.name] && (

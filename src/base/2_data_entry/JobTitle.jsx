@@ -179,16 +179,18 @@ const JobTitle = () => {
                     className={`w-full h-full px-4 py-3  border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
                       } rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
                   >
-                    <option value="" disabled>Select {field.label}</option>
+                      <label className="block text-gray-700 font-medium mb-1 ms-1">
+                   
+                  </label>
+                    <option value="" disabled>Select {field.label} 
+                       {field.name === 'primary_title' && (
+                      <span className="text-red-500">*</span>
+                    )}  </option>
                     {field.options.map((option) => (
                       <option key={option} value={option}>{option}</option>
                     ))}
                   </select>
-                  <label className="block text-gray-700 font-medium mb-1 ms-1">
-                    {field.name === 'primary_title' && (
-                      <span className="text-red-500">*</span>
-                    )}
-                  </label>
+                
 
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>

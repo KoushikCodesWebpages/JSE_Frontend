@@ -42,6 +42,7 @@ function App() {
   
         const fetchedJobs = response.data.jobs || []; // Ensure jobs is always an array
         const fetchedPagination = response.data.pagination || {}; // Ensure pagination is always an object
+        console.log("Fetched jobs:", response.data.pagination); // 
         setJobs(fetchedJobs);
         setPagination(fetchedPagination); // Set pagination data
         sessionStorage.setItem("jobsData", JSON.stringify(fetchedJobs));

@@ -45,7 +45,6 @@ const Savedjob = () => {
       if (!response.ok) throw new Error('Failed to fetch selected jobs');
       
       const data = await response.json();
-      console.log('Fetched data:', data); // Log response data
   
       // Ensure that the data contains 'selected_jobs' and it is an array
       if (Array.isArray(data.jobs)) {
@@ -246,7 +245,7 @@ const Savedjob = () => {
                     <div className="flex flex-col gap-2">
                       <p className="font-semibold text-bas">Expected Salary</p>
                       <p className="text-[#a09f9f] font-medium text-[14px]">
-                        ₹{job.expected_salary.min} - ₹{job.expected_salary.max}
+                        {job.expected_salary.min} - {job.expected_salary.max}
                       </p>
                     </div>
                   </div>

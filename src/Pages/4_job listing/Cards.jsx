@@ -85,7 +85,7 @@ function Cards(props) {
               },
             }
           );
-          console.log("Job saved successfully:", response.data);
+          const data = response.data;
         } catch (error) {
           console.error("Error saving job:", error);
         }
@@ -117,8 +117,7 @@ function Cards(props) {
 
         axiosInstance.post("/selected-jobs", jobPayload)
           .then((response) => {
-            console.log("Job saved successfully:", response.data);
-          })
+            const data = response.data;})
           .catch((error) => {
             console.error("Error selecting job:", error);
           });

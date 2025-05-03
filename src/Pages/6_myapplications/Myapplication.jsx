@@ -41,7 +41,6 @@ const MyApplication = () => {
 
 
         const fetchedJobs = response.data.selected_jobs || [];
-        console.log(fetchedJobs);
 
 
         const mappedJobs = fetchedJobs.map((job) => ({
@@ -55,7 +54,7 @@ const MyApplication = () => {
           maxSalary: job.max_salary || "?",
           location: job.location || "Location not specified",
           description: `We are looking for a skilled ${job.title} to join ${job.company}.`,
-          roleDescription: job.role_description || "No role description provided.",
+          Description: job.description || "No role description provided.",
           skillData: [
             {
               label: "Required Skills",
@@ -105,7 +104,6 @@ const MyApplication = () => {
     try {
       setIsGenerating(true); // Show animation
       setGenerateCV("cv");
-      console.log("Generating CV for job ID:", jobId);
 
       const response = await axios.post(
         "https://raasbackend-production.up.railway.app/generate-resume",
@@ -295,15 +293,15 @@ const MyApplication = () => {
                     </button>
                   </div><br />
 
-                  <div className="space-y-3">
+                  <div className="">
                     <div>
                       <h4 className="text-lg font-semibold text-gray-800">About</h4><br />
                       <p className="text-sm text-justify text-gray-700">{selectedJob.description}</p>
                     </div><br />
 
                     <div>
-                      <h4 className="text-lg font-semibold text-gray-800">Role Description</h4><br />
-                      <p className="text-sm text-gray-700">{selectedJob.roleDescription}</p>
+                      <h4 className="text-lg font-semibold text-gray-800">Description</h4><br />
+                      <p className="text-sm text-gray-700">{selectedJob.Description}</p>
                     </div>
 
                     <div><br />

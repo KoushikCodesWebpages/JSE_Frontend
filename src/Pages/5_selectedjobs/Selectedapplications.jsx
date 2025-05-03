@@ -40,7 +40,6 @@ function SelectedApplications() {
       try {
         const response = await axiosInstance.get("/selected-jobs");
         const fetchedJobs = response.data.selected_jobs || [];
-        console.log(fetchedJobs);
 
         const mappedJobs = fetchedJobs.map((job) => ({
           id: job.job_id, // use job_id directly
@@ -52,7 +51,7 @@ function SelectedApplications() {
           skillData: [
             { label: "Required Skills", value: job.skills || "Not specified" },
             { label: "Your Skills", value: Array.isArray(job.user_skills) ? job.user_skills.join(", ") : job.user_skills },
-            { label: "Expected Salary", value: job.expected_salary ? `₹${job.expected_salary.min} - ₹${job.expected_salary.max}` : "Not specified" },
+            { label: "Expected Salary", value: job.expected_salary ? `${job.expected_salary.min} - ${job.expected_salary.max}` : "Not specified" },
           ],
           matchValue: job.match_score,
           selected: job.selected,
@@ -94,7 +93,14 @@ function SelectedApplications() {
       });
 
       const url = window.URL.createObjectURL(blob);
-      setCVBlobUrl(url);
+      const cvLink = document.createElement("a");
+      cvLink.href = url;
+      cvLink.setAttribute("download", `CV_${jobId}.docx`);
+      document.body.appendChild(cvLink);
+      cvLink.click();
+      cvLink.remove();
+      window.URL.revokeObjectURL(url); // optional cleanup
+      setCVBlobUrl(url); // Store the blob URL for later use
 
       alert("CV generated successfully!");
     } catch (error) {
@@ -134,7 +140,14 @@ function SelectedApplications() {
       });
 
       const url = window.URL.createObjectURL(blob);
-      setCLBlobUrl(url);
+      const clLink = document.createElement("a");
+      clLink.href = url;
+      clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+      document.body.appendChild(clLink);
+      clLink.click();
+      clLink.remove();
+      window.URL.revokeObjectURL(url);
+      setCLBlobUrl(url); // Store the blob URL for later use
 
       alert("Cover Letter generated successfully!");
     } catch (error) {

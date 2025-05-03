@@ -11,6 +11,8 @@ const MyApplication = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [generateCV, setGenerateCV] = useState(null);
+    const [isGenerating, setIsGenerating] = useState(false);
   const hasFetched = useRef(false);
 
   const token = sessionStorage.getItem("authToken");
@@ -37,9 +39,13 @@ const MyApplication = () => {
           }
         );
 
+
         const fetchedJobs = response.data.selected_jobs || [];
+        console.log(fetchedJobs);
+
 
         const mappedJobs = fetchedJobs.map((job) => ({
+          id: job.job_id, 
           title: job.title,
           jobTitle: job.title,
           company: job.company,
@@ -94,6 +100,90 @@ const MyApplication = () => {
     fetchSelectedJobs();
   }, [token]);
 
+
+  const handleGenerateCV = async (jobId) => {
+    try {
+      setIsGenerating(true); // Show animation
+      setGenerateCV("cv");
+      console.log("Generating CV for job ID:", jobId);
+
+      const response = await axios.post(
+        "https://raasbackend-production.up.railway.app/generate-resume",
+        { job_id: jobId }, // <-- This is the request body (data)
+        {
+          responseType: "blob", // Important for downloading Word files
+          headers: {
+            Authorization: `Bearer ${token}`, // <-- Replace this with actual token variable
+          },
+        }
+      );
+
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const cvLink = document.createElement("a");
+      cvLink.href = url;
+      cvLink.setAttribute("download", `CV_${jobId}.docx`);
+      document.body.appendChild(cvLink);
+      cvLink.click();
+      cvLink.remove();
+      window.URL.revokeObjectURL(url); // optional cleanup
+      alert("CV generated successfully!");
+    } catch (error) {
+      console.error("Error generating CV:", error);
+      if (error.response) {
+        console.log("Server responded with:", error.response.data);
+      }
+      alert("Failed to generate CV. Please try again.");
+    } finally {
+      setIsGenerating(false); // Hide animation
+    }
+  };
+
+
+
+
+
+
+  const handleGenerateCoverLetter = async (jobId) => {
+    try {
+      setIsGenerating(true);
+      setGenerateCV("cl");
+      const response = await axios.post(
+        "https://raasbackend-production.up.railway.app/generate-cover-letter",
+        { job_id: jobId }, // <-- This is the request body (data)
+        {
+          responseType: "blob", // Important for downloading Word files
+          headers: {
+            Authorization: `Bearer ${token}`, // <-- Replace this with actual token variable
+          },
+        }
+      );
+
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const clLink = document.createElement("a");
+      clLink.href = url;
+      clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+      document.body.appendChild(clLink);
+      clLink.click();
+      clLink.remove();
+      window.URL.revokeObjectURL(url); // optional cleanup
+      alert("Cover Letter generated successfully!");
+    } catch (error) {
+      console.error("Error generating Cover Letter:", error);
+      alert("Failed to generate Cover Letter. Please try again.");
+    } finally {
+      setIsGenerating(false); // Hide animation
+    }
+  };
+
+  
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -197,10 +287,10 @@ const MyApplication = () => {
                   </div><br />
 
                   <div className="flex mx-auto pb-5 gap-5"><br />
-                    <button className="px-5 py-2 border text-sm font-medium border-[#2C6472] bg-[#2C6472] w-[200px] h-[47px] text-white items-center justify-center rounded transition-transform duration-200 ease-linear hover:bg-white hover:text-[#2C6472] hover:scale-105">
+                    <button onClick={() => handleGenerateCV(selectedJob.id)} className="px-5 py-2 border text-sm font-medium border-[#2C6472] bg-[#2C6472] w-[200px] h-[47px] text-white items-center justify-center rounded transition-transform duration-200 ease-linear hover:bg-white hover:text-[#2C6472] hover:scale-105">
                       Generate CV
                     </button>
-                    <button className="px-5 py-2 border text-sm font-medium border-[#2C6472] bg-[#2C6472] h-[47px] text-white rounded transition-transform duration-200 ease-linear hover:bg-white hover:text-[#2C6472] hover:scale-105">
+                    <button onClick={() => handleGenerateCoverLetter(selectedJob.id)} className="px-5 py-2 border text-sm font-medium border-[#2C6472] bg-[#2C6472] h-[47px] text-white rounded transition-transform duration-200 ease-linear hover:bg-white hover:text-[#2C6472] hover:scale-105">
                       Generate Cover Letter
                     </button>
                   </div><br />
@@ -251,6 +341,27 @@ const MyApplication = () => {
           </div>
         </div>
       </div>
+      {isGenerating && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="flex w-[300px] h-[320px] rounded border-b-8 border-[#2C6472] bg-white flex-col items-center justify-center">
+
+        
+        <div className="relative flex justify-center items-center w-[130px] h-[200px] border mt-7 mb-5 bg-black/30 shadow-lg overflow-hidden">
+
+          {/* Scan line animation */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2C6472] to-transparent animate-scan"></div>
+
+          {/* Typewriter Text */}
+         
+        </div>
+        <div className="">
+            <h3 className="text-base font-semibold  text-gray-800 mb-4">  AI is generating {generateCV === 'cv' ? 'CV' : 'Cover Letter'}...
+            </h3>
+          </div>
+        </div>
+      </div>
+      )}
+
     </div>
   );
 };

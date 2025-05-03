@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { MoreVertical } from "lucide-react"; // or your icon library
 import Loader from "../../base/loader/Loader.jsx";
-import defaultJobImg from "../../assets/default-job.svg";
 import Location_Icon from "../../assets/location-icon.svg";
 import download_icon from '../../assets/download-icon.svg'
 import link_icon from '../../assets/link-icon.svg'
@@ -13,6 +12,10 @@ function SelectedApplications() {
   const [userProfile, setUserProfile] = useState({});
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [cvBlobUrl, setCVBlobUrl] = useState(null);
+  const [clBlobUrl, setCLBlobUrl] = useState(null);
+  const [generateCV, setGenerateCV] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const hasFetched = useRef(false);
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ function SelectedApplications() {
     },
   });
 
-  
+
 
 
   useEffect(() => {
@@ -57,7 +60,7 @@ function SelectedApplications() {
           coverLetterGenerated: job.cover_letter_generated,
           viewLink: job.view_link === true ? null : job.view_link, // if true, treat as null for now
         }));
-        
+
 
         setSelectedJobs(mappedJobs);
       } catch (error) {
@@ -71,11 +74,19 @@ function SelectedApplications() {
 
   const handleGenerateCV = async (jobId) => {
     try {
-      console.log(`Generating CV for Job ID: ${jobId}`);
-      const response = await axiosInstance.post(
-        "/generate-cv",
-        { job_id: jobId }, //this should be changed based on the jobId
-        { responseType: "blob" } // Important for downloading binary data
+      setIsGenerating(true); // Show animation
+      setCVBlobUrl("cv");
+      setGenerateCV("cv");
+
+      const response = await axios.post(
+        "https://raasbackend-production.up.railway.app/generate-resume",
+        { job_id: jobId }, // <-- This is the request body (data)
+        {
+          responseType: "blob", // Important for downloading Word files
+          headers: {
+            Authorization: `Bearer ${token}`, // <-- Replace this with actual token variable
+          },
+        }
       );
 
       const blob = new Blob([response.data], {
@@ -83,29 +94,39 @@ function SelectedApplications() {
       });
 
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `CV_${jobId}.docx`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      setCVBlobUrl(url);
 
-      window.URL.revokeObjectURL(url);
-
-      alert("CV generated and downloaded successfully!");
+      alert("CV generated successfully!");
     } catch (error) {
       console.error("Error generating CV:", error);
+      if (error.response) {
+        console.log("Server responded with:", error.response.data);
+      }
       alert("Failed to generate CV. Please try again.");
+    } finally {
+      setIsGenerating(false); // Hide animation
     }
   };
+
+
+
+
+
 
   const handleGenerateCoverLetter = async (jobId) => {
     try {
-      console.log(`Generating Cover Letter for Job ID: ${jobId}`);
-      const response = await axiosInstance.post(
-        "/generate-cover-letter",
-        { job_id: jobId }, //this should be changed based on the jobId
-        { responseType: "blob" } // <-- Important for downloading files
+      setIsGenerating(true);
+      setCLBlobUrl("cl");
+      setGenerateCV("cl");
+      const response = await axios.post(
+        "https://raasbackend-production.up.railway.app/generate-cover-letter",
+        { job_id: jobId }, // <-- This is the request body (data)
+        {
+          responseType: "blob", // Important for downloading Word files
+          headers: {
+            Authorization: `Bearer ${token}`, // <-- Replace this with actual token variable
+          },
+        }
       );
 
       const blob = new Blob([response.data], {
@@ -113,21 +134,43 @@ function SelectedApplications() {
       });
 
       const url = window.URL.createObjectURL(blob);
+      setCLBlobUrl(url);
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `Cover_Letter_${jobId}.docx`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      window.URL.revokeObjectURL(url);
-      alert("Cover Letter generated and downloaded successfully!");
+      alert("Cover Letter generated successfully!");
     } catch (error) {
       console.error("Error generating Cover Letter:", error);
       alert("Failed to generate Cover Letter. Please try again.");
+    } finally {
+      setIsGenerating(false); // Hide animation
     }
   };
+
+  const handleDownloadAllDocs = (cvBlobUrl, clBlobUrl, jobId) => {
+    if (!cvBlobUrl || !clBlobUrl) {
+      alert("Please generate both the CV and Cover Letter first.");
+      return;
+    }
+
+    // Download CV
+    const cvLink = document.createElement("a");
+    cvLink.href = cvBlobUrl;
+    cvLink.setAttribute("download", `CV_${jobId}.docx`);
+    document.body.appendChild(cvLink);
+    cvLink.click();
+    cvLink.remove();
+    window.URL.revokeObjectURL(cvBlobUrl); // optional cleanup
+
+    // Download Cover Letter
+    const clLink = document.createElement("a");
+    clLink.href = clBlobUrl;
+    clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+    document.body.appendChild(clLink);
+    clLink.click();
+    clLink.remove();
+    window.URL.revokeObjectURL(clBlobUrl); // optional cleanup
+  };
+
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -142,7 +185,7 @@ function SelectedApplications() {
     try {
       const token = sessionStorage.getItem("authToken") || "your-fallback-token";
       console.log("Token I'm sending 👉", token);
-  
+
       const response = await axios.post(
         "https://raasbackend-production.up.railway.app/provide-link",
         { job_id: job_id },
@@ -152,9 +195,9 @@ function SelectedApplications() {
           },
         }
       );
-  
+
       console.log("🔥 Full Response:", response.data); // Always good to check bro!
-  
+
       // SAFE checking 🔥
       if (response.data?.job_link) {
         const jobLink = response.data.job_link;
@@ -166,8 +209,8 @@ function SelectedApplications() {
       console.error("❌ AxiosError:", error);
     }
   };
-  
-  
+
+
 
   const [menuOpenId, setMenuOpenId] = useState(null);
 
@@ -178,31 +221,31 @@ function SelectedApplications() {
       setMenuOpenId(id); // open the clicked one
     }
   };
-  
+
 
   if (loading) return <Loader />;
 
   return (
     <div className="flex flex-col bg-gray-40">
       <main className="p-5">
-          {selectedJobs.length === 0 ? (
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "calc(264px + 40%)", // 250px = sidebar width (adjust if needed)
-                transform: "translate(-50%, -50%)",
-              }}
-              className="text-center"
-            >
-              <h2 className="text-lg font-semibold text-gray-700">No Selected Applications</h2>
-              <p className="text-gray-500">Please check back later.</p>
-            </div>
-          ) : (
-            <div>
-              
-            </div>
-          )}
+        {selectedJobs.length === 0 ? (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "calc(264px + 40%)", // 250px = sidebar width (adjust if needed)
+              transform: "translate(-50%, -50%)",
+            }}
+            className="text-center"
+          >
+            <h2 className="text-lg font-semibold text-gray-700">No Selected Applications</h2>
+            <p className="text-gray-500">Please check back later.</p>
+          </div>
+        ) : (
+          <div>
+
+          </div>
+        )}
 
         <h2 className="text-base font-semibold">
           Selected {selectedJobs.length} Application(s)
@@ -214,23 +257,23 @@ function SelectedApplications() {
             {selectedJobs.map((job) => (
               <div key={job.id} className=" relative bg-white h-fit shadow rounded-lg flex justify-between">
                 {/* Top-right 3-dots menu */}
-                  <div className="absolute top-4 right-4">
-                    <button
-                      type="button"
-                      onClick={() => toggleMenu(job.id)}
-                      className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                      aria-label="More options"
-                    >
-                      <MoreVertical size={20} />
-                    </button>
+                <div className="absolute top-4 right-4">
+                  <button
+                    type="button"
+                    onClick={() => toggleMenu(job.id)}
+                    className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    aria-label="More options"
+                  >
+                    <MoreVertical size={20} />
+                  </button>
 
-                    {menuOpenId === job.id && (
-                      <div className="absolute top-8 right-0 bg-white border rounded-md shadow-lg p-2 z-10">
-                        <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Edit</button>
-                        <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Delete</button>
-                      </div>
-                    )}
-                  </div>
+                  {menuOpenId === job.id && (
+                    <div className="absolute top-8 right-0 bg-white border rounded-md shadow-lg p-2 z-10">
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Edit</button>
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Delete</button>
+                    </div>
+                  )}
+                </div>
                 <div className="flex p-6 gap-6 w-1/2">
                   {/* <div className="pr-5 bg-gray-200 items-center justify-center rounded-md text-lg font-bold text-center">{job.company}</div> */}
                   {/* <div className="pr-3">
@@ -311,7 +354,7 @@ function SelectedApplications() {
                         />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-800">
-                      {job.matchValue}%
+                        {job.matchValue}%
                       </div>
                     </div>
                     <p className="text-sm text-gray-600">Profile Match</p>
@@ -339,7 +382,9 @@ function SelectedApplications() {
                       Generate Cover Letter
                     </button>
                     {/* Keeping your original download button handler untouched */}
-                    <button className="flex justify-center gap-2 px-5 py-2 text-[13px] ml-auto font-semibold w-fit border hover:border-[#2C6472] bg-gray-200 text-black rounded transition-transform hover:bg-white hover:text-[#2C6472] hover:scale-105">
+                    <button onClick={() =>
+                      handleDownloadAllDocs(cvBlobUrl, clBlobUrl, job.job_id)
+                    } className="flex justify-center gap-2 px-5 py-2 text-[13px] ml-auto font-semibold w-fit border hover:border-[#2C6472] bg-gray-200 text-black rounded transition-transform hover:bg-white hover:text-[#2C6472] hover:scale-105">
                       Download All
                       <img src={download_icon} alt="" />
                     </button>
@@ -350,6 +395,29 @@ function SelectedApplications() {
           </div>
         </div>
       </main>
+
+      
+      {isGenerating && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div className="flex w-[300px] h-[320px] rounded border-b-8 border-[#2C6472] bg-white flex-col items-center justify-center">
+
+        
+        <div className="relative flex justify-center items-center w-[130px] h-[200px] border mt-7 mb-5 bg-black/30 shadow-lg overflow-hidden">
+
+          {/* Scan line animation */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2C6472] to-transparent animate-scan"></div>
+
+          {/* Typewriter Text */}
+         
+        </div>
+        <div className="">
+            <h3 className="text-base font-semibold  text-gray-800 mb-4">  AI is generating {generateCV === 'cv' ? 'CV' : 'Cover Letter'}...
+            </h3>
+          </div>
+        </div>
+      </div>
+      )}
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import arrow_down from "../../assets/down-arrow.svg";
+import profile from "../../assets/profile1.png";
 
 const Navbar = () => {
   const [firstName, setFirstName] = useState('User');
@@ -63,7 +64,7 @@ const Navbar = () => {
         <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
         <div className="flex items-center space-x-3 relative">
           <img
-            src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
+            src={profile}
             alt="Profile"
             className="w-9 h-9 rounded-full"
           />

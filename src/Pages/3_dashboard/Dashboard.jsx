@@ -6,6 +6,7 @@ import generate_cover_icon from "../../assets/generate-cover.svg"
 import jobs_available_icon from "../../assets/jobs-available.svg"
 import selectable_jobs_icon from '../../assets/selectable-jobs.svg'
 import total_experience_icon from '../../assets/total-experience.svg'
+import profile from "../../assets/profile1.png"
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -105,9 +106,9 @@ function Dashboard() {
                   {/* Image + Name/Title */}
                   <div className="flex items-center space-x-4">
                     <img
-                      src="https://storage.googleapis.com/tagjs-prod.appspot.com/v1/6dk1eHyuy1/3rmomsul_expires_30_days.png"
+                      src={profile}
                       alt={fullName}
-                      className="w-14 h-14 rounded-full"
+                      className="w-14 h-14 rounded-full bg-white object-cover  "
                     />
                     <div className="flex flex-col">
                       <h3 className="text-[15px] font-bold">{fullName}</h3>

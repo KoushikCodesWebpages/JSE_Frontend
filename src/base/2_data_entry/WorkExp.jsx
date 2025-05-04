@@ -8,7 +8,7 @@ import joblogo from "./../../assets/joblogo.png";
 
 const WorkExp = () => {
   const navigate = useNavigate();
-  const apiUrl = "https://raasbackend-production.up.railway.app/work-experience";
+  const apiUrl = "https://arshan.digital/work-experience";
   const sessionKey = "token"; // Assuming this is the key used to store the token
 
   const [formData, setFormData] = useState({
@@ -57,7 +57,6 @@ const WorkExp = () => {
       end_date: formatDateForAPI(formData.end_date),
     };
 
-    console.log("Sending request to API with data:", requestData); // Log data
 
     try {
       const response = await axios.post(apiUrl, requestData, {

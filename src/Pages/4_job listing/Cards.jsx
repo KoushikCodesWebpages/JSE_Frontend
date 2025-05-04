@@ -56,7 +56,7 @@ function Cards(props) {
 
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
   const axiosInstance = axios.create({
-    baseURL: "https://raasbackend-production.up.railway.app/api",
+    baseURL: "https://arshan.digital/api",
 
     headers: {
       Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ function Cards(props) {
 
         try {
           const response = await axios.post(
-            "https://raasbackend-production.up.railway.app/saved-jobs",
+            "https://arshan.digital/saved-jobs",
             { job_id: props.job_id },
             {
               headers: {

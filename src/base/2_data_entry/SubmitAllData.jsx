@@ -32,12 +32,12 @@ const SubmitAllData = () => {
       };
 
       const endpoints = {
-        personalInfo: 'https://raasbackend-production.up.railway.app/personal-info',
-        summary: 'https://raasbackend-production.up.railway.app/professional-summary',
-        experience: 'https://raasbackend-production.up.railway.app/work-experience',
-        education: 'https://raasbackend-production.up.railway.app/education',
-        certificates: 'https://raasbackend-production.up.railway.app/certificates',
-        languages: 'https://raasbackend-production.up.railway.app/languages',
+        personalInfo: 'https://arshan.digital/personal-info',
+        summary: 'https://arshan.digital/professional-summary',
+        experience: 'https://arshan.digital/work-experience',
+        education: 'https://arshan.digital/education',
+        certificates: 'https://arshan.digital/certificates',
+        languages: 'https://arshan.digital/languages',
       };
 
       try {

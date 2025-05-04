@@ -70,7 +70,7 @@ const ProfessionalSummary = () => {
     };
 
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/professional-summary', {
+      const response = await fetch('https://arshan.digital/professional-summary', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

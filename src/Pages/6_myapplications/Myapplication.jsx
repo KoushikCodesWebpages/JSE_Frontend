@@ -31,7 +31,7 @@ const MyApplication = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "https://raasbackend-production.up.railway.app/api/selected-jobs",
+          "https://arshan.digital/api/selected-jobs",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ const MyApplication = () => {
       setGenerateCV("cv");
 
       const response = await axios.post(
-        "https://raasbackend-production.up.railway.app/generate-resume",
+        "https://arshan.digital/generate-resume",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files
@@ -150,7 +150,7 @@ const MyApplication = () => {
       setIsGenerating(true);
       setGenerateCV("cl");
       const response = await axios.post(
-        "https://raasbackend-production.up.railway.app/generate-cover-letter",
+        "https://arshan.digital/generate-cover-letter",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files

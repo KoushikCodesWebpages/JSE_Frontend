@@ -46,7 +46,7 @@ function Dashboard() {
       const headers = { Authorization: `Bearer ${token}` };
 
       axios
-        .get("https://raasbackend-production.up.railway.app/profile", { headers })
+        .get("https://arshan.digital/profile", { headers })
         .then((res) => {
           setProfileData(res.data);
           sessionStorage.setItem("profileData", JSON.stringify(res.data));

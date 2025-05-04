@@ -13,7 +13,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchUserSettings = async () => {
       try {
-        const response = await fetch("https://raasbackend-production.up.railway.app/profile");
+        const response = await fetch("https://arshan.digital/profile");
         const data = await response.json();
         setUser(data);
       } catch (error) {

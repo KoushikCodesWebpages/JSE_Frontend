@@ -9,7 +9,7 @@ import joblogo from "./../../assets/joblogo.png";
 const Education = () => {
   const navigate = useNavigate();
   const sessionKey = 'education-token'; // Key to fetch the token
-  const apiUrl = 'https://raasbackend-production.up.railway.app/education';
+  const apiUrl = 'https://arshan.digital/education';
 
   const [formData, setFormData] = useState({
     degree: '',

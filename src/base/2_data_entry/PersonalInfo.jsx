@@ -52,7 +52,7 @@ const PersonalInfo = () => {
     const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
 
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/personal-info', {
+      const response = await fetch('https://arshan.digital/personal-info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,6 @@ const PersonalInfo = () => {
         const errorData = await response.json();
         console.error('❌ Error uploading data:', errorData);
       } else {
-        console.log('✅ Form data uploaded successfully:', formData);
         navigate('/user/onboarding/professional-summary');
       }
     } catch (error) {

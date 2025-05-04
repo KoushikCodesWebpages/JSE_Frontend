@@ -74,7 +74,7 @@ const Language = () => {
         formDataToSend.append('file', certificateFile); // ✅ Only if selected
       }
 
-      const response = await fetch('https://raasbackend-production.up.railway.app/languages', {
+      const response = await fetch('https://arshan.digital/languages', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

@@ -36,7 +36,7 @@ const Savedjob = () => {
   
   const fetchSelectedJobs = async () => {
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/saved-jobs', {
+      const response = await fetch('https://arshan.digital/saved-jobs', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

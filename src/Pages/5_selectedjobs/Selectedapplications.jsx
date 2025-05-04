@@ -22,7 +22,7 @@ function SelectedApplications() {
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
 
   const axiosInstance = axios.create({
-    baseURL: "https://raasbackend-production.up.railway.app/api",
+    baseURL: "https://arshan.digital/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -78,7 +78,7 @@ function SelectedApplications() {
       setGenerateCV("cv");
 
       const response = await axios.post(
-        "https://raasbackend-production.up.railway.app/generate-resume",
+        "https://arshan.digital/generate-resume",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files
@@ -125,7 +125,7 @@ function SelectedApplications() {
       setCLBlobUrl("cl");
       setGenerateCV("cl");
       const response = await axios.post(
-        "https://raasbackend-production.up.railway.app/generate-cover-letter",
+        "https://arshan.digital/generate-cover-letter",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files
@@ -200,7 +200,7 @@ function SelectedApplications() {
       console.log("Token I'm sending 👉", token);
 
       const response = await axios.post(
-        "https://raasbackend-production.up.railway.app/provide-link",
+        "https://arshan.digital/provide-link",
         { job_id: job_id },
         {
           headers: {

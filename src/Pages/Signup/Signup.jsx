@@ -55,7 +55,7 @@ const Signup = () => {
       setLoading(true);
 
       const response = await axios.post(
-        'https://raasbackend-production.up.railway.app/auth/signup',
+        'https://arshan.digital/auth/signup',
         signupData, // Request body as the second argument
         {
           headers: {

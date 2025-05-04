@@ -36,7 +36,7 @@ const ApplicationTracker = () => {
     const fetchApplications = async () => {
       try {
         const response = await axios.get(
-          "https://raasbackend-production.up.railway.app/selected-jobs",
+          "https://arshan.digital/selected-jobs",
           {
             headers: {
               Authorization: `Bearer ${token}`,

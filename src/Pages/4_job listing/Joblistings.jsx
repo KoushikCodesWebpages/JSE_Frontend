@@ -31,7 +31,7 @@ function App() {
       const token = sessionStorage.getItem("authToken");
       if (token) {
         const response = await axios.get(
-          "https://raasbackend-production.up.railway.app/api/jobs",
+          "https://arshan.digital/api/jobs",
           {
             headers: {
               Authorization: `Bearer ${token}`,

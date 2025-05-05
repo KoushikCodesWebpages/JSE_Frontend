@@ -101,7 +101,47 @@ const JobTitle = () => {
         "Sports Marketing Manager",
         "Business Development Manager",
         "Sponsorship Manager",
-        "Business Analyst"
+        "Business Analyst",
+        "Mechanical Engineer", "Design Engineer", "Manufacturing Engineer", "Automation Engineer",
+        "Electrical Engineer", "Power Engineer", "Control Systems Engineer", "Electronics Engineer",
+        "Civil Engineer", "Structural Engineer", "Construction Manager", "Transportation Engineer",
+        "Software Developer", "Frontend Developer", "Backend Developer", "Full Stack Developer",
+        "Data Scientist", "Data Engineer", "Machine Learning Engineer", "Data Analyst",
+        "Cybersecurity Specialist", "Network Security Engineer", "Penetration Tester", "Incident Response Analyst",
+        "AI/ML Engineer", "Machine Learning Engineer", "AI Research Scientist", "Natural Language Processing Engineer",
+        "Automotive Engineer", "Automotive Systems Engineer", "Vehicle Integration Engineer", "Testing Engineer",
+        "Robotics Engineer", "Robotic Systems Designer", "Robot Programmer", "Automation Engineer",
+        "Environmental Engineer", "Water Resources Engineer", "Waste Management Engineer", "Sustainability Engineer",
+        "Chemical Engineer", "Process Engineer", "Materials Engineer", "Biochemical Engineer",
+        "Industrial Engineer", "Operations Research Analyst", "Manufacturing Engineer", "Supply Chain Engineer",
+        "Construction Engineer", "Site Engineer", "Cost Engineer", "Health & Safety Engineer",
+        "HVAC Engineer", "Heating Engineer", "Ventilation Engineer", "Air Conditioning Engineer",
+        "Mechatronics Engineer", "Automation Engineer", "Control Systems Engineer", "Embedded Systems Engineer",
+        "Telecommunications Engineer", "Network Engineer", "Radio Frequency (RF) Engineer", "Telecom Systems Engineer",
+        "Aerospace Engineer", "Aircraft Systems Engineer", "Spacecraft Engineer", "Flight Test Engineer",
+        "Marine Engineer", "Ship Design Engineer", "Marine Systems Engineer", "Naval Architect",
+        "Geotechnical Engineer", "Soil Engineer", "Rock Mechanics Engineer", "Foundation Engineer",
+        "Nuclear Engineer", "Radiation Protection Engineer", "Reactor Engineer", "Nuclear Safety Engineer",
+        "Project Manager", "IT Project Manager", "Construction Project Manager", "Agile Project Manager",
+        "Product Manager", "Digital Product Manager", "Mobile Product Manager", "E-commerce Product Manager",
+        "Operations Manager", "Supply Chain Operations Manager", "Manufacturing Operations Manager", "Facility Operations Manager",
+        "Supply Chain Manager", "Logistics Manager", "Inventory Manager", "Procurement Manager",
+        "HR Manager", "Talent Acquisition Manager", "Employee Relations Manager", "Compensation and Benefits Manager",
+        "Financial Manager", "Risk Manager", "Treasury Manager", "Compliance Manager",
+        "Marketing Manager", "Brand Manager", "Content Marketing Manager", "Social Media Manager",
+        "Sales Manager", "Regional Sales Manager", "Inside Sales Manager", "Key Account Manager",
+        "IT Manager", "Systems Manager", "Network Manager", "Security Manager",
+        "Business Development Manager", "Partnerships Manager", "Sales Development Manager", "Market Development Manager",
+        "Risk Manager", "Insurance Risk Manager", "Operational Risk Manager", "Credit Risk Manager",
+        "Legal Manager", "Contract Manager", "Compliance Manager", "Corporate Counsel",
+        "Quality Assurance Manager", "Test Manager", "Process Improvement Manager", "Auditing Manager",
+        "Customer Service Manager", "Call Center Manager", "Client Relations Manager", "Technical Support Manager",
+        "Procurement Manager", "Sourcing Manager", "Vendor Manager", "Purchasing Manager",
+        "Compliance Manager", "Regulatory Affairs Manager", "Internal Auditor", "Environmental Compliance Manager",
+        "Change Manager", "Organizational Development Manager", "Transition Manager", "Change Communication Manager",
+        "Corporate Strategy Manager", "Strategic Planning Manager", "Business Analyst", "Mergers and Acquisitions Manager",
+        "Training and Development Manager", "Learning and Development Specialist", "Employee Engagement Manager", "Leadership Development Manager",
+        "Facility Manager", "Building Operations Manager", "Maintenance Manager", "Space Planner",
       ]
     },
     {
@@ -129,7 +169,47 @@ const JobTitle = () => {
         "Sports Marketing Manager",
         "Business Development Manager",
         "Sponsorship Manager",
-        "Business Analyst"
+        "Business Analyst",
+        "Mechanical Engineer", "Design Engineer", "Manufacturing Engineer", "Automation Engineer",
+        "Electrical Engineer", "Power Engineer", "Control Systems Engineer", "Electronics Engineer",
+        "Civil Engineer", "Structural Engineer", "Construction Manager", "Transportation Engineer",
+        "Software Developer", "Frontend Developer", "Backend Developer", "Full Stack Developer",
+        "Data Scientist", "Data Engineer", "Machine Learning Engineer", "Data Analyst",
+        "Cybersecurity Specialist", "Network Security Engineer", "Penetration Tester", "Incident Response Analyst",
+        "AI/ML Engineer", "Machine Learning Engineer", "AI Research Scientist", "Natural Language Processing Engineer",
+        "Automotive Engineer", "Automotive Systems Engineer", "Vehicle Integration Engineer", "Testing Engineer",
+        "Robotics Engineer", "Robotic Systems Designer", "Robot Programmer", "Automation Engineer",
+        "Environmental Engineer", "Water Resources Engineer", "Waste Management Engineer", "Sustainability Engineer",
+        "Chemical Engineer", "Process Engineer", "Materials Engineer", "Biochemical Engineer",
+        "Industrial Engineer", "Operations Research Analyst", "Manufacturing Engineer", "Supply Chain Engineer",
+        "Construction Engineer", "Site Engineer", "Cost Engineer", "Health & Safety Engineer",
+        "HVAC Engineer", "Heating Engineer", "Ventilation Engineer", "Air Conditioning Engineer",
+        "Mechatronics Engineer", "Automation Engineer", "Control Systems Engineer", "Embedded Systems Engineer",
+        "Telecommunications Engineer", "Network Engineer", "Radio Frequency (RF) Engineer", "Telecom Systems Engineer",
+        "Aerospace Engineer", "Aircraft Systems Engineer", "Spacecraft Engineer", "Flight Test Engineer",
+        "Marine Engineer", "Ship Design Engineer", "Marine Systems Engineer", "Naval Architect",
+        "Geotechnical Engineer", "Soil Engineer", "Rock Mechanics Engineer", "Foundation Engineer",
+        "Nuclear Engineer", "Radiation Protection Engineer", "Reactor Engineer", "Nuclear Safety Engineer",
+        "Project Manager", "IT Project Manager", "Construction Project Manager", "Agile Project Manager",
+        "Product Manager", "Digital Product Manager", "Mobile Product Manager", "E-commerce Product Manager",
+        "Operations Manager", "Supply Chain Operations Manager", "Manufacturing Operations Manager", "Facility Operations Manager",
+        "Supply Chain Manager", "Logistics Manager", "Inventory Manager", "Procurement Manager",
+        "HR Manager", "Talent Acquisition Manager", "Employee Relations Manager", "Compensation and Benefits Manager",
+        "Financial Manager", "Risk Manager", "Treasury Manager", "Compliance Manager",
+        "Marketing Manager", "Brand Manager", "Content Marketing Manager", "Social Media Manager",
+        "Sales Manager", "Regional Sales Manager", "Inside Sales Manager", "Key Account Manager",
+        "IT Manager", "Systems Manager", "Network Manager", "Security Manager",
+        "Business Development Manager", "Partnerships Manager", "Sales Development Manager", "Market Development Manager",
+        "Risk Manager", "Insurance Risk Manager", "Operational Risk Manager", "Credit Risk Manager",
+        "Legal Manager", "Contract Manager", "Compliance Manager", "Corporate Counsel",
+        "Quality Assurance Manager", "Test Manager", "Process Improvement Manager", "Auditing Manager",
+        "Customer Service Manager", "Call Center Manager", "Client Relations Manager", "Technical Support Manager",
+        "Procurement Manager", "Sourcing Manager", "Vendor Manager", "Purchasing Manager",
+        "Compliance Manager", "Regulatory Affairs Manager", "Internal Auditor", "Environmental Compliance Manager",
+        "Change Manager", "Organizational Development Manager", "Transition Manager", "Change Communication Manager",
+        "Corporate Strategy Manager", "Strategic Planning Manager", "Business Analyst", "Mergers and Acquisitions Manager",
+        "Training and Development Manager", "Learning and Development Specialist", "Employee Engagement Manager", "Leadership Development Manager",
+        "Facility Manager", "Building Operations Manager", "Maintenance Manager", "Space Planner",
       ]
     },
     {
@@ -157,7 +237,47 @@ const JobTitle = () => {
         "Sports Marketing Manager",
         "Business Development Manager",
         "Sponsorship Manager",
-        "Business Analyst"
+        "Business Analyst",
+        "Mechanical Engineer", "Design Engineer", "Manufacturing Engineer", "Automation Engineer",
+        "Electrical Engineer", "Power Engineer", "Control Systems Engineer", "Electronics Engineer",
+        "Civil Engineer", "Structural Engineer", "Construction Manager", "Transportation Engineer",
+        "Software Developer", "Frontend Developer", "Backend Developer", "Full Stack Developer",
+        "Data Scientist", "Data Engineer", "Machine Learning Engineer", "Data Analyst",
+        "Cybersecurity Specialist", "Network Security Engineer", "Penetration Tester", "Incident Response Analyst",
+        "AI/ML Engineer", "Machine Learning Engineer", "AI Research Scientist", "Natural Language Processing Engineer",
+        "Automotive Engineer", "Automotive Systems Engineer", "Vehicle Integration Engineer", "Testing Engineer",
+        "Robotics Engineer", "Robotic Systems Designer", "Robot Programmer", "Automation Engineer",
+        "Environmental Engineer", "Water Resources Engineer", "Waste Management Engineer", "Sustainability Engineer",
+        "Chemical Engineer", "Process Engineer", "Materials Engineer", "Biochemical Engineer",
+        "Industrial Engineer", "Operations Research Analyst", "Manufacturing Engineer", "Supply Chain Engineer",
+        "Construction Engineer", "Site Engineer", "Cost Engineer", "Health & Safety Engineer",
+        "HVAC Engineer", "Heating Engineer", "Ventilation Engineer", "Air Conditioning Engineer",
+        "Mechatronics Engineer", "Automation Engineer", "Control Systems Engineer", "Embedded Systems Engineer",
+        "Telecommunications Engineer", "Network Engineer", "Radio Frequency (RF) Engineer", "Telecom Systems Engineer",
+        "Aerospace Engineer", "Aircraft Systems Engineer", "Spacecraft Engineer", "Flight Test Engineer",
+        "Marine Engineer", "Ship Design Engineer", "Marine Systems Engineer", "Naval Architect",
+        "Geotechnical Engineer", "Soil Engineer", "Rock Mechanics Engineer", "Foundation Engineer",
+        "Nuclear Engineer", "Radiation Protection Engineer", "Reactor Engineer", "Nuclear Safety Engineer",
+        "Project Manager", "IT Project Manager", "Construction Project Manager", "Agile Project Manager",
+        "Product Manager", "Digital Product Manager", "Mobile Product Manager", "E-commerce Product Manager",
+        "Operations Manager", "Supply Chain Operations Manager", "Manufacturing Operations Manager", "Facility Operations Manager",
+        "Supply Chain Manager", "Logistics Manager", "Inventory Manager", "Procurement Manager",
+        "HR Manager", "Talent Acquisition Manager", "Employee Relations Manager", "Compensation and Benefits Manager",
+        "Financial Manager", "Risk Manager", "Treasury Manager", "Compliance Manager",
+        "Marketing Manager", "Brand Manager", "Content Marketing Manager", "Social Media Manager",
+        "Sales Manager", "Regional Sales Manager", "Inside Sales Manager", "Key Account Manager",
+        "IT Manager", "Systems Manager", "Network Manager", "Security Manager",
+        "Business Development Manager", "Partnerships Manager", "Sales Development Manager", "Market Development Manager",
+        "Risk Manager", "Insurance Risk Manager", "Operational Risk Manager", "Credit Risk Manager",
+        "Legal Manager", "Contract Manager", "Compliance Manager", "Corporate Counsel",
+        "Quality Assurance Manager", "Test Manager", "Process Improvement Manager", "Auditing Manager",
+        "Customer Service Manager", "Call Center Manager", "Client Relations Manager", "Technical Support Manager",
+        "Procurement Manager", "Sourcing Manager", "Vendor Manager", "Purchasing Manager",
+        "Compliance Manager", "Regulatory Affairs Manager", "Internal Auditor", "Environmental Compliance Manager",
+        "Change Manager", "Organizational Development Manager", "Transition Manager", "Change Communication Manager",
+        "Corporate Strategy Manager", "Strategic Planning Manager", "Business Analyst", "Mergers and Acquisitions Manager",
+        "Training and Development Manager", "Learning and Development Specialist", "Employee Engagement Manager", "Leadership Development Manager",
+        "Facility Manager", "Building Operations Manager", "Maintenance Manager", "Space Planner",
       ]
     }
   ];
@@ -179,18 +299,18 @@ const JobTitle = () => {
                     className={`w-full h-full px-4 py-3  border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
                       } rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
                   >
-                      <label className="block text-gray-700 font-medium mb-1 ms-1">
-                   
-                  </label>
-                    <option value="" disabled>Select {field.label} 
-                       {field.name === 'primary_title' && (
-                      <span className="text-red-500">*</span>
-                    )}  </option>
+                    <label className="block text-gray-700 font-medium mb-1 ms-1">
+
+                    </label>
+                    <option value="" disabled>Select {field.label}
+                      {field.name === 'primary_title' && (
+                        <span className="text-red-500">*</span>
+                      )}  </option>
                     {field.options.map((option) => (
                       <option key={option} value={option}>{option}</option>
                     ))}
                   </select>
-                
+
 
                   {errors[field.name] && (
                     <div className="text-red-500 text-sm mt-1">{errors[field.name]}</div>

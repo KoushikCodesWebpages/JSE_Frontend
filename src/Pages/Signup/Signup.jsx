@@ -4,6 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from "../../assets/Animation - 1745282599914.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import axios from 'axios';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google from "./../../assets/Google.png";
 import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
@@ -115,7 +116,7 @@ const Signup = () => {
             {/* email Field */}
             <div className="relative ">
               <input
-              id='email'
+                id='email'
                 type="email"
                 name="email"
                 placeholder=" "
@@ -136,7 +137,7 @@ const Signup = () => {
             {/* Phone Number Field */}
             <div className="relative  ">
               <input
-              id='phoneNumber'
+                id='phoneNumber'
                 type="tel"
                 name="phoneNumber"
                 placeholder=" "
@@ -153,8 +154,8 @@ const Signup = () => {
                 Phone Number
               </label>
               {formData.phoneNumber && (formData.phoneNumber.length < 10 || formData.phoneNumber.length > 11) && (
-  <p className="text-[10px] text-red-500 mt-1">(Phone number must be 10 to 11 digits)</p>
-)}
+                <p className="text-[10px] text-red-500 mt-1">(Phone number must be 10 to 11 digits)</p>
+              )}
 
             </div><br />
 
@@ -163,7 +164,7 @@ const Signup = () => {
               {/* Create Password */}
               <div className="relative w-1/2">
                 <input
-                id='password'
+                  id='password'
                   type={showPassword.password ? "text" : "password"}
                   name="password"
                   placeholder=" "
@@ -180,10 +181,10 @@ const Signup = () => {
                   Create Password
                 </label>
                 <span
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-1/3 transform -translate-y-1/3 text-gray-600 cursor-pointer"
                   onClick={() => toggleShowPassword('password')}
                 >
-                  {/* {showPassword.password ? <FaEyeSlash size={18} /> : <FaEye size={18} />} */}
+                   {showPassword.password ? <FaEyeSlash size={18} /> : <FaEye size={18} />} 
                 </span>
                 <p className='text-[10px] mt-1'>( password should contain atleast 8 characters )</p>
               </div>
@@ -191,7 +192,7 @@ const Signup = () => {
               {/* Confirm Password */}
               <div className="relative w-1/2">
                 <input
-                id='confirmPassword'
+                  id='confirmPassword'
                   type={showPassword.confirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   placeholder=" "
@@ -208,10 +209,10 @@ const Signup = () => {
                   Confirm Password
                 </label>
                 <span
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-1/3 transform -translate-y-1/3 text-gray-600 cursor-pointer"
                   onClick={() => toggleShowPassword('confirmPassword')}
                 >
-                  {/* {showPassword.confirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />} */}
+                  {showPassword.confirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                 </span>
               </div><br />
             </div><br />
@@ -267,7 +268,7 @@ const Signup = () => {
             <p className="text-gray-700 ">We've sent you a verification link. Please verify before login!</p>
           </div>
         </div>
-       )} 
+      )}
 
 
       {/* Fullscreen Overlay with Animation */}

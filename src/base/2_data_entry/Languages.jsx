@@ -57,8 +57,7 @@ const Language = () => {
   const handleAddCertificate = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    if (hasFetched.current) return;
-    hasFetched.current = true;
+
     const token = sessionStorage.getItem('authToken');
     if (!token) {
       alert('You are not authenticated. Please log in.');
@@ -176,7 +175,7 @@ const Language = () => {
 
               {/* Proficiency */}
               <div className="mb-2">
-                <p className="mb-2 text-sm text-gray-600">Proficiency</p>
+                <p className="mb-2 text-sm text-gray-600">Proficiency<span className='text-red-500 ms-1'>*</span></p>
                 <div className="flex flex-col gap-2">
                   {['Native', 'Fluent', 'Intermediate', 'Beginner'].map((level) => (
                     <label key={level} className="flex items-center cursor-pointer text-gray-500 text-xs">
@@ -232,7 +231,7 @@ const Language = () => {
           </div>
           <h3 className="text-center mt-4 ms-4 mb-4 text-lg font-medium">Language</h3>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
-            <img src={frame} alt="" className='relative object-cover ' />
+            <img src={frame} alt="" className='relative object-cover' />
             <DotLottieReact
               src="https://lottie.host/cdc14b06-4b17-4d74-b646-3d50a86bbc47/KdXX0nPLeL.lottie"
               loop

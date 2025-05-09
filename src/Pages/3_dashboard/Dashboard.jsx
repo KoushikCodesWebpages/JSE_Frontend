@@ -20,14 +20,14 @@ function Dashboard() {
 
 
   useEffect(() => {
-      AOS.init({
-        duration: 800,
-        once: true,
-        easing: 'ease-in-out', // add this for smoothness
-      });
-  
-      AOS.refresh(); // This is key when rendering conditionally
-    }, []);
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-in-out', // add this for smoothness
+    });
+
+    AOS.refresh(); // This is key when rendering conditionally
+  }, []);
 
   useEffect(() => {
     if (!token) {
@@ -151,9 +151,20 @@ function Dashboard() {
 
                 {/* Update Button */}
                 <div className="flex justify-center ">
-                  <button className="bg-black text-[12px] text-white mt-3 mb-5 h-[35px] w-[160px] px-5 py-2 rounded-full font-medium hover:bg-gray-800 transition">
-                    Update Profile
-                  </button>
+                  <div className="relative group w-fit">
+                    <button
+
+                      className="bg-black text-[12px] text-white mt-3 mb-5 h-[35px] w-[160px] px-5 py-2 rounded-full font-medium transition cursor-not-allowed ease-linear duration-200"
+                    >
+                      Update Profile
+                    </button>
+
+                    {/* Tooltip */}
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-[38%] bg-black text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition ease-linear duration-200 cursor-not-allowed pointer-events-none z-10 whitespace-nowrap">
+                      🚧 Coming Soon
+                    </div>
+                  </div>
+
                 </div>
 
                 {/* Skills Section */}
@@ -213,7 +224,7 @@ function Dashboard() {
               <div className="flex justify-center">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3">
 
-                  <div data-aos="flip-left" data-aos-duration="600"  data-aos-easing="linear"  className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                  <div data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#FFC2B0] to-[#FF9AA2] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-3xl font-bold">{profileData?.daily_generatable_coverletter ?? 0}</h3>
                       <p className="text-[13px] font-bold">Daily Generatable Cover Letters</p>
@@ -223,7 +234,7 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  <div  data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                  <div data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#A1C4FD] to-[#C2E9FB] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-3xl font-bold ">{profileData?.total_jobs_available ?? 0}</h3>
                       <p className="text-[13px] font-bold">Total Jobs Available</p>
@@ -233,7 +244,7 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  <div  data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#88D3C6] to-[#A6F1C7] h-[120px] w-[250px] text-black p-4 rounded-xl">
+                  <div data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#88D3C6] to-[#A6F1C7] h-[120px] w-[250px] text-black p-4 rounded-xl">
                     <div className="absolute top-10 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-3xl font-bold">{profileData?.daily_selectable_jobs_count ?? 0}</h3>
                       <p className="text-[13px] font-bold">Daily Selectable Jobs</p>
@@ -243,7 +254,7 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  <div  data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#FAD0C5] to-[#FED0FC] h-[120px] w-[250px] text-black p-4 rounded-xl  ">
+                  <div data-aos="flip-left" data-aos-duration="600" data-aos-easing="linear" className="relative bg-gradient-to-br from-[#FAD0C5] to-[#FED0FC] h-[120px] w-[250px] text-black p-4 rounded-xl  ">
                     <div className="absolute top-12 flex flex-col justify-start items-start gap-3">
                       <h3 className="text-xl font-bold">{experienceFormatted}</h3>
                       <p className="text-[13px] font-bold">Total Experience</p>

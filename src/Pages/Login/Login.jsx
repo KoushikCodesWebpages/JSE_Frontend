@@ -4,6 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from "../../assets/Animation - 1745282599914.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import google from "./../../assets/Google.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
 
@@ -146,8 +147,9 @@ const Login = () => {
                 </label>
                 <span
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
-                  onClick={toggleShowPassword}
+                  onClick={() => toggleShowPassword('password')}
                 >
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                 </span>
               </div>
 

@@ -17,6 +17,7 @@ function Cards(props) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showSavePopup, setShowSavePopup] = useState(false);
   const [showSelectPopup, setShowSelectPopup] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
 
   useEffect(() => {
@@ -100,36 +101,59 @@ function Cards(props) {
   };
 
   const onSelect = async () => {
+    const today = new Date().toLocaleDateString();
+    let storedData = JSON.parse(localStorage.getItem("selectedJobs") || "{}");
+  
+    if (!storedData.date || storedData.date !== today) {
+      storedData = { date: today, count: 0 };
+    }
+  
+    if (storedData.count >= 10) {
+      setShowErrorPopup(true);
+      setTimeout(() => setShowErrorPopup(false), 2000);
+      return;
+    }
+  
     try {
       setIsSelected(true);
-      setIsFadingOut(true); // trigger fade-out animation
-      setShowSelectPopup(true); // Show the select popup
-
-      setTimeout(() => {
-        setShowCard(false); // Hide the card after fade-out
-
+      setIsFadingOut(true);
+      setShowSelectPopup(true);
+  
+      setTimeout(async () => {
+        setShowCard(false);
+  
         const jobPayload = {
           ...props,
           match_score: props.match_score,
           matchValue: props.match_score,
         };
-
-
-        axiosInstance.post("/selected-jobs", jobPayload)
-          .then((response) => {
-            const data = response.data;})
-          .catch((error) => {
-            console.error("Error selecting job:", error);
-          });
-
-        setTimeout(() => setShowSelectPopup(false), 1500); // Hide the select popup after 1.5 seconds
-
-      }, 2000); // Wait for fade-out animation to complete (2s)
-
+  
+        try {
+          await axiosInstance.post("/selected-jobs", jobPayload);
+  
+          // ✅ Only update localStorage if the API call succeeds
+          storedData.count += 1;
+          localStorage.setItem("selectedJobs", JSON.stringify(storedData));
+        } catch (error) {
+          console.error("Error selecting job:", error);
+  
+          // ❌ Roll back UI if error
+          setIsSelected(false);
+          setIsFadingOut(false);
+          setShowCard(true);
+          setShowErrorPopup(true);
+          setTimeout(() => setShowErrorPopup(false), 2000);
+        }
+  
+        setTimeout(() => setShowSelectPopup(false), 1500);
+      }, 2000);
     } catch (error) {
       console.error("Error in onSelect:", error);
     }
   };
+  
+  
+
 
   return (
     <div className="flex flex-wrap">
@@ -306,6 +330,20 @@ function Cards(props) {
           </div>
         </div>
       )}
+
+      {showErrorPopup && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-white border-b-4 border-red-600 text-black rounded-md shadow-lg transform transition-all duration-500 ease-in-out animate-toast-in">
+          <div className="relative px-3 py-1">
+            <span>❌ Your daily job selection limit is over for today!
+            </span>
+            <div className="absolute bottom-0 left-0 h-[3px] bg-white animate-progress w-full" />
+          </div>
+        </div>
+      )}
+
+
+
+  
 
 
 

@@ -198,6 +198,14 @@ const MyApplication = () => {
 
       <div className="flex flex-col w-full min-h-screen bg-gray-40">
         <br />
+        {selectedJobs.length === 0 ? (
+        <div className="absolute top-1/2 left-[calc(264px+40%)] transform -translate-x-1/2 -translate-y-1/2 text-center">
+          <h2 className="text-2xl font-bold text-gray-700 mb-2">
+            No Selected Applications
+          </h2>
+          <p className="text-gray-500">Please check back later.</p>
+        </div>
+      ) : (
         <div className="flex flex-1 gap-5">
           <div className="w-[700px]  mb-5 -space-y-6 rounded-xl bg-white border border-gray-400/20 "><br />
             <div className="h-[720px] overflow-x-hidden  overflow-y-auto scrollbar-custom">
@@ -338,7 +346,10 @@ const MyApplication = () => {
             </div>
           </div>
         </div>
+        
+    )}
       </div>
+            
       {isGenerating && (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
         <div className="flex w-[300px] h-[320px] rounded border-b-8 border-[#2C6472] bg-white flex-col items-center justify-center">

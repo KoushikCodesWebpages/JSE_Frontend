@@ -29,7 +29,7 @@ const WorkExp = () => {
   };
 
   const isFormValid = () => {
-    return formData.job_title && formData.company_name && formData.start_date && formData.end_date;
+    return formData.job_title && formData.company_name && formData.start_date && formData.end_date && formData.key_responsibilities;
   };
 
 

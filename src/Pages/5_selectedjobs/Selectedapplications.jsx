@@ -184,20 +184,12 @@ function SelectedApplications() {
   };
 
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
 
-  const handleLogout = () => {
-    console.log("User logged out");
-    navigate("/user/login");
-    // Add logout functionality here
-  };
+
 
   const handleGetJobURL = async (job_id) => {
     try {
       const token = sessionStorage.getItem("authToken") || "your-fallback-token";
-      console.log("Token I'm sending 👉", token);
 
       const response = await axios.post(
         "https://arshan.digital/provide-link",
@@ -209,7 +201,6 @@ function SelectedApplications() {
         }
       );
 
-      console.log("🔥 Full Response:", response.data); // Always good to check bro!
 
       // SAFE checking 🔥
       if (response.data?.job_link) {
@@ -251,7 +242,7 @@ function SelectedApplications() {
             }}
             className="text-center"
           >
-            <h2 className="text-lg font-semibold text-gray-700">No Selected Applications</h2>
+            <h2 className="text-2xl font-bold text-gray-700 mb-2">No Selected Applications</h2>
             <p className="text-gray-500">Please check back later.</p>
           </div>
         ) : (

@@ -30,6 +30,9 @@ import application_tracker_active_icon from '../../assets/application-tracker-ac
 import saved_jobs_icon from '../../assets/saved-jobs-icon.svg'
 import saved_jobs_active_icon from '../../assets/saved-jobs-active-icon.svg'
 
+import profile_icon from '../../assets/profile-icon.svg'
+import profile_active_icon from '../../assets/profile-active-icon.svg'
+
 const Sidebar = () => {
   const { pathname } = useLocation();
 
@@ -105,6 +108,26 @@ const Sidebar = () => {
       </div>
 
       <div>
+        {/* Profile */}
+        <ul className="space-y-2 pl-2 text-lg text-gray-400">
+          <li>
+            <Link
+              to="/user/profile"
+              className={`flex items-center gap-4 px-4 py-2 rounded-md transition ${
+                pathname === "/user/profile" ? "text-[#2c6472] bg-gray-100" : "text-gray-400"
+              }`}
+            >
+            <img
+              src={pathname === "/user/profile" ? profile_active_icon : profile_icon}
+              alt="Profile"
+              className="w-5 h-5"
+            />
+              <span className="text-[15px] font-semibold text-[rgba(0, 0, 0, 0.25)]">Profile</span>
+            </Link>
+          </li>
+        </ul>
+
+        {/* Settings */}
         <ul className="space-y-2 pl-2 text-lg text-gray-400">
           <li>
             <Link

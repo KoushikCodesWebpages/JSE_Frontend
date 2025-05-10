@@ -19,6 +19,7 @@ import "./App.css"
 import './index.css';
 import Landing from './base/Landing.jsx';
 import DataEntryPages from './Pages/DataEntry/DataEntryPages.jsx'; // not used right now
+import Profile from './Pages/Profile/Profile.jsx';
 
 const AppRoutes = () => {
     const location = useLocation();
@@ -56,6 +57,7 @@ const AppRoutes = () => {
                                 <Route path="/user/settings" element={<Setting />} />
                                 <Route path="/test1" element={<Test1 />} />
                                 <Route path="/verification" element={<VerificationPage />} />
+                                <Route path="/user/profile" element={<Profile />} />
                             </Routes>
                         </div>
                     </div>

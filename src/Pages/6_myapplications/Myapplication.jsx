@@ -90,7 +90,6 @@ const MyApplication = () => {
       } catch (error) {
         const errMsg =
           error.response?.data?.message || "⚠ Failed to load applications.";
-        alert(errMsg);
         setError(errMsg);
         setLoading(false);
       }

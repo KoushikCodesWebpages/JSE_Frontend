@@ -12,23 +12,6 @@ import ProfessionalSumUpdateForm from '../../UpdateProfile/ProfessionalSumUpdate
 
 const Profile = () => {
 
-   const languages = ["Tamil", "English", "Germany"];
-  const certificates = [
-    "Product Designer Course - Zoho",
-    "Advanced UI Design - Coursera"
-  ];
-  const workExperience = [
-    {
-      role: "UI/UX Designer",
-      company: "Accenture",
-      duration: "2 June 2024 - 18 September 2025"
-    },
-    {
-      role: "Product Designer",
-      company: "Zoho",
-      duration: "1 January 2023 - 30 May 2024"
-    }
-  ];
   const token = sessionStorage.getItem("authToken");
 
   const [animatedScore, setAnimatedScore] = useState(0);
@@ -43,29 +26,32 @@ const Profile = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const storedProfile = sessionStorage.getItem("profileData");
+  const storedProfile = sessionStorage.getItem("profileData");
 
-    if (storedProfile && storedProfile !== "undefined") {
-      setProfileData(JSON.parse(storedProfile));
-      setLoading(false);
-    } else {
-      const headers = { Authorization: `Bearer ${token}` };
+  if (storedProfile && storedProfile !== "undefined") {
+    setProfileData(JSON.parse(storedProfile));
+    setLoading(false);
+  } else {
+    const fetchProfile = async () => {
+      try {
+        const headers = { Authorization: `Bearer ${token}` };
+        const res = await axios.get("https://arshan.digital/seeker", { headers });
 
-      axios
-        .get("https://arshan.digital/profile", { headers })
-        .then((res) => {
-          setProfileData(res.data);
-          sessionStorage.setItem("profileData", JSON.stringify(res.data));
-          setLoading(false);
-        })
-        .catch((err) => {
-          const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
-          alert(errorMessage);
-          setError(errorMessage);
-          setLoading(false);
-        });
-    }
-  }, [token]);
+        setProfileData(res.data);
+        sessionStorage.setItem("profileData", JSON.stringify(res.data));
+        setLoading(false);
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
+        alert(errorMessage);
+        setError(errorMessage);
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }
+}, [token]);
+
 
   useEffect(() => {
     if (!profileData?.profile_completion) return;
@@ -91,8 +77,39 @@ const Profile = () => {
   if (loading) return <Loader />;
   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
 
-  const fullName = `${profileData?.first_name || ""} ${profileData?.second_name || ""}`.trim();
-  const preferredJobTitle = profileData?.preferred_job_title;
+// Full Name
+const fullName = `${profileData?.personal_info?.first_name || ""} ${profileData?.personal_info?.second_name || ""}`.trim();
+
+// Address
+const address = profileData?.personal_info?.address || "";
+
+// Date of Birth
+const dateOfBirth = profileData?.personal_info?.date_of_birth || "";
+
+// LinkedIn
+const linkedin = profileData?.personal_info?.linkedin_profile || "";
+
+// Professional Summary
+const about = profileData?.professional_summary?.about || "";
+const annualIncome = profileData?.professional_summary?.annual_income || 0;
+const skills = profileData?.professional_summary?.skills || [];
+
+// Work Experiences
+const workExperiences = profileData?.work_experiences || [];
+
+// Education
+const education = profileData?.education || [];
+
+// Certificates
+const certificates = profileData?.certificates || [];
+
+// Languages
+const languages = profileData?.languages || [];
+
+// Titles
+const primaryTitle = profileData?.primary_title || "";
+const secondaryTitle = profileData?.secondary_title || "";
+const tertiaryTitle = profileData?.tertiary_title || "";
 
   const handleClose = () => {
     setWorkPopup(false);
@@ -117,7 +134,7 @@ const Profile = () => {
           <img src={profile} className="w-14 h-14 rounded-full object-cover" alt="Profile" />
           <div>
             <h2 className='font-bold'>{fullName}</h2>
-            <p className='font-semibold text-xs mt-2'>{preferredJobTitle}</p>
+            <p className='font-semibold text-xs mt-2'>{primaryTitle}</p>
           </div>
         </div>
         <div className="flex flex-col items-center">
@@ -149,10 +166,10 @@ const Profile = () => {
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
         <div className='flex flex-col gap-3'>
           <h2 className="text-sm font-bold">Personal Information</h2>
-          <p className='text-sm font-medium text-gray-500'>Name: Steve</p>
-          <p className='text-sm font-medium text-gray-500'>Date of Birth: 05 May 1998</p>
-          <p className='text-sm font-medium text-gray-500'>Email: steve@gmail.com</p>
-          <p className='text-sm font-medium text-gray-500'>LinkedIn: <span className='underline cursor-pointer'>linkedin/steve</span></p>
+          <p className='text-sm font-medium text-gray-500'>Name: {fullName}</p>
+          <p className='text-sm font-medium text-gray-500'>Date of Birth: {dateOfBirth}</p>
+          <p className='text-sm font-medium text-gray-500'>Address: {address}</p>
+          <p className='text-sm font-medium text-gray-500'>LinkedIn: <span className='underline cursor-pointer'>{linkedin}</span></p>
         </div>
         <div onClick={handlePersonalInfoPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">
           <img src={edit} alt="" />
@@ -163,7 +180,7 @@ const Profile = () => {
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
         <div className='flex flex-col gap-3 w-11/12'>
           <h2 className="text-sm font-bold">Professional Summary</h2>
-          <p className='text-sm font-medium text-gray-500'>Creative UI/UX Designer with 5+ years of experience crafting intuitive and user-friendly digital experiences, skilled in Figma,Adobe XD, and responsive design.</p>
+          <p className='text-sm font-medium text-gray-500'>{about}</p>
         </div>
         <div onClick={handleProfessionalSummaryPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">
           <img src={edit} alt="" />
@@ -172,26 +189,28 @@ const Profile = () => {
 
       {/* Education */}
       <div className=" flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
-        <div className='flex flex-col gap-1'>
+        {education.map((edu, index) => (
+        <div key={index} className='flex flex-col gap-1'>
           <h2 className="text-sm font-bold">Education</h2>
           <div className='w-full flex gap-2 mt-2'>
             <p className='text-sm font-medium text-gray-500'>Degree Title :</p>
-            <p className='text-sm font-medium text-gray-500'>Bachelor of Engineering</p>
+            <p className='text-sm font-medium text-gray-500'>{edu.degree}</p>
           </div>
           <div className='flex gap-2 mt-1'>
             <p className='text-sm font-medium text-gray-500'>Instution Name :</p>
-            <p className='text-sm font-medium text-gray-500'>Francis Xavier Engineering College</p>
+            <p className='text-sm font-medium text-gray-500'>{edu.institution}</p>
           </div>
           <div className='flex gap-2 mt-1'>
             <p className='text-sm font-medium text-gray-500'>Field of Study :</p>
-            <p className='text-sm font-medium text-gray-500'>Artificial Intelligence And Data Science</p>
+            <p className='text-sm font-medium text-gray-500'>{field_of_study}</p>
           </div>
           <div className='flex gap-2 mt-1'>
-            <p className='text-sm font-medium text-gray-500'>22 November 2022</p>
+            <p className='text-sm font-medium text-gray-500'>{new Date(edu.start_date.time).toLocaleDateString()}</p>
             <span className='-mt-1 text-gray-500'>-</span>
-            <p className='text-sm font-medium text-gray-500'> 12 April 2026</p>
+            <p className='text-sm font-medium text-gray-500'> {new Date(edu.end_date.time).toLocaleDateString()}</p>
           </div>
         </div>
+        ))}
         <div onClick={handleEducationPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">
           <img src={edit} alt="Edit" />
         </div>
@@ -202,12 +221,12 @@ const Profile = () => {
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
         <div className='flex flex-col gap-3'>
           <h2 className="text-sm font-bold">Work Experience</h2>
-          {workExperience.map((work, index) => (
+          {workExperiences.map((work, index) => (
             <div key={index}>
-              <p className='text-sm font-semibold text-gray-500'>{work.role}</p>
+              <p className='text-sm font-semibold text-gray-500'>{work.job_title}</p>
               <div className='flex gap-16 mt-1'>
-                <p className='text-sm font-medium w-20 text-gray-500'>{work.company}</p>
-                <p className='text-sm font-medium text-gray-500'>{work.duration}</p>
+                <p className='text-sm font-medium w-20 text-gray-500'>{work.company_name}</p>
+                <p className='text-sm font-medium text-gray-500'>{new Date(work.start_date.time).toLocaleDateString()} - {new Date(work.end_date.time).toLocaleDateString()}</p>
               </div>
             </div>
           ))}

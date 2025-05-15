@@ -81,21 +81,21 @@ function SelectedApplications() {
         "https://arshan.digital/generate-resume",
         { job_id: jobId }, // <-- This is the request body (data)
         {
-          responseType: "blob", // Important for downloading Word files
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`, // <-- Replace this with actual token variable
           },
         }
       );
 
       const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        type: "application/pdf",
       });
 
       const url = window.URL.createObjectURL(blob);
       const cvLink = document.createElement("a");
       cvLink.href = url;
-      cvLink.setAttribute("download", `CV_${jobId}.docx`);
+      cvLink.setAttribute("download", `CV_${jobId}.pdf`);
       document.body.appendChild(cvLink);
       cvLink.click();
       cvLink.remove();
@@ -105,11 +105,25 @@ function SelectedApplications() {
       alert("CV generated successfully!");
     } catch (error) {
       console.error("Error generating CV:", error);
-      if (error.response) {
-        console.log("Server responded with:", error.response.data);
+
+      if (error.response && error.response.status === 500) {
+        // Try to read the Blob as text (it's likely JSON with the error)
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const json = JSON.parse(reader.result);
+            console.error("Server error message:", json?.message || json);
+            alert(`CV generation failed: ${json?.message || 'Server Error'}`);
+          } catch (e) {
+            alert("Failed to generate CV. Server returned invalid response.");
+          }
+        };
+        reader.readAsText(error.response.data);
+      } else {
+        alert("Failed to generate CV. Please try again.");
       }
-      alert("Failed to generate CV. Please try again.");
-    } finally {
+    }
+    finally {
       setIsGenerating(false); // Hide animation
     }
   };
@@ -400,26 +414,26 @@ function SelectedApplications() {
         </div>
       </main>
 
-      
+
       {isGenerating && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-        <div className="flex w-[300px] h-[320px] rounded border-b-8 border-[#2C6472] bg-white flex-col items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="flex w-[300px] h-[320px] rounded border-b-8 border-[#2C6472] bg-white flex-col items-center justify-center">
 
-        
-        <div className="relative flex justify-center items-center w-[130px] h-[200px] border mt-7 mb-5 bg-black/30 shadow-lg overflow-hidden">
 
-          {/* Scan line animation */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2C6472] to-transparent animate-scan"></div>
+            <div className="relative flex justify-center items-center w-[130px] h-[200px] border mt-7 mb-5 bg-black/30 shadow-lg overflow-hidden">
 
-          {/* Typewriter Text */}
-         
-        </div>
-        <div className="">
-            <h3 className="text-base font-semibold  text-gray-800 mb-4">  AI is generating {generateCV === 'cv' ? 'CV' : 'Cover Letter'}...
-            </h3>
+              {/* Scan line animation */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2C6472] to-transparent animate-scan"></div>
+
+              {/* Typewriter Text */}
+
+            </div>
+            <div className="">
+              <h3 className="text-base font-semibold  text-gray-800 mb-4">  AI is generating {generateCV === 'cv' ? 'CV' : 'Cover Letter'}...
+              </h3>
+            </div>
           </div>
         </div>
-      </div>
       )}
 
     </div>

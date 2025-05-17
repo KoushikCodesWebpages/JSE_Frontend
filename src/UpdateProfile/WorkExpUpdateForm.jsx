@@ -19,7 +19,7 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
 
     const isFormValid = () => {
-        return formData.job_title && formData.company_name && formData.start_date && formData.end_date && formData.key_responsibilities;
+        return formData.job_title && formData.company_name && formData.start_date && formData.key_responsibilities;
     };
 
     const sendData = async () => {
@@ -38,8 +38,9 @@ const WorkExpUpdateForm = ({ onclose }) => {
         const requestData = {
             ...formData,
             start_date: formatDateForAPI(formData.start_date),
-            end_date: formatDateForAPI(formData.end_date),
+            ...(formData.end_date && { end_date: formatDateForAPI(formData.end_date) }),
         };
+
 
 
         try {
@@ -60,7 +61,6 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
     const handleAddExperience = async (e) => {
         e.preventDefault();
-        console.log("Clicked Add Experience");
         if (!isFormValid()) {
             alert("Please fill all required fields!");
             return;
@@ -93,16 +93,13 @@ const WorkExpUpdateForm = ({ onclose }) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log("Fetched experiences response:", res.data);
             const rawData = Array.isArray(res.data)
                 ? res.data : Array.isArray(res.data?.work_experiences)
                     ? res.data.work_experiences
                     : [];
 
-            console.log("Raw data:", rawData);
             const dataWithId = rawData.map((exp, index) => ({ ...exp, tempId: index + 1 }));
             setExperiences(dataWithId);
-            console.log("experiences", experiences);
 
         } catch (err) {
             console.error("Failed to fetch experiences", err);
@@ -148,9 +145,10 @@ const WorkExpUpdateForm = ({ onclose }) => {
             company_name: formData.company_name,
             employment_type: formData.employment_type,
             start_date: formData.start_date,
-            end_date: formData.end_date,
+            ...(formData.end_date && { end_date: formData.end_date }),
             key_responsibilities: formData.key_responsibilities
         };
+
 
         // Get the experience object that was selected (using tempId as the identifier)
         const selectedExperience = experiences.find(exp => exp.tempId === activeId);
@@ -160,7 +158,6 @@ const WorkExpUpdateForm = ({ onclose }) => {
         }
 
         const experienceIndex = selectedExperience.tempId;  // tempId is used as the index here
-        console.log("Experience Index:", experienceIndex);
 
         try {
             // Send the PUT request for the specific experience using the tempId in the URL
@@ -171,8 +168,7 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
                 },
             });
-            console.log("Response data:", res.data);  // Log the response from the API
-            console.log("Response status:", res.status);  // Log the response status
+     
 
             if (res.status === 200) {
                 // After successful update, update the local state with the updated experience
@@ -193,7 +189,6 @@ const WorkExpUpdateForm = ({ onclose }) => {
     };
 
     const handleDeleteExperience = async () => {
-        console.log("Clicked Delete Experience");
         if (!activeId) return alert("Please select an experience to delete!");
 
         const selectedExperience = experiences.find(exp => exp.tempId === activeId);
@@ -228,15 +223,15 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
     return (
         <div className='fixed inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center'>
-            <div className='w-[700px] h-[620px] bg-white flex flex-col shadow rounded-xl px-10 py-5'>
+            <div className='w-[700px] h-[650px] bg-white flex flex-col shadow rounded-xl px-10 py-5'>
 
-                <div className="flex justify-between w-full mt-3">
+                <div className="flex justify-between w-full mb-7 mt-3">
                     <h3 className='text-lg font-semibold'>Work Experience</h3>
                     <p onClick={onclose} className='text-lg font-semibold cursor-pointer hover:scale-95'>X</p>
                 </div>
 
                 {experiences && experiences.length > 0 && (
-                    <div className="expereince-title flex gap-4 mt-7 mb-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
+                    <div className="expereince-title flex gap-4  mb-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
                         {experiences.map((exp) => (
                             <div
                                 key={exp.tempId}
@@ -253,35 +248,38 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
                 <div className="form-fields flex flex-col gap-4">
                     <div className="flex flex-col w-full gap-2">
-                        <label htmlFor="job_title" className='text-[15px] text-gray-500'>Job Title</label>
+                        <label htmlFor="job_title" className='text-[15px] text-gray-500'>Job Title <span className="text-red-500">*</span></label>
                         <input
                             type="text"
                             name="job_title"
                             value={formData.job_title}
                             onChange={handleChange}
+                            required
                             className='border border-gray-500/30 px-4 py-2 rounded outline-none'
                         />
                     </div>
 
                     <div className='flex gap-4'>
                         <div className="flex flex-col w-1/2 gap-2">
-                            <label htmlFor="company_name" className='text-[15px] text-gray-500'>Company Name</label>
+                            <label htmlFor="company_name" className='text-[15px] text-gray-500'>Company Name <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
                                 name="company_name"
                                 value={formData.company_name}
                                 onChange={handleChange}
+                                required
                                 className='border border-gray-500/30 px-4 py-2 rounded outline-none'
                             />
                         </div>
 
                         <div className="flex flex-col w-1/2 gap-2">
-                            <label htmlFor="employment_type" className='text-[15px] text-gray-500'>Employee Type</label>
+                            <label htmlFor="employment_type" className='text-[15px] text-gray-500'>Employee Type <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
                                 name="employment_type"
                                 value={formData.employment_type}
                                 onChange={handleChange}
+                                required
                                 className='border border-gray-500/30 px-4 py-2 rounded outline-none'
                             />
                         </div>
@@ -289,12 +287,13 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
                     <div className='flex gap-4'>
                         <div className="flex flex-col w-1/2 gap-2">
-                            <label htmlFor="start_date" className='text-[15px] text-gray-500'>Start Date</label>
+                            <label htmlFor="start_date" className='text-[15px] text-gray-500'>Start Date <span className="text-red-500">*</span></label>
                             <input
                                 type="date"
                                 name="start_date"
                                 value={formData.start_date}
                                 onChange={handleChange}
+                                required
                                 className='border border-gray-500/30 px-4 py-2 rounded outline-none'
                             />
                         </div>
@@ -312,19 +311,23 @@ const WorkExpUpdateForm = ({ onclose }) => {
                     </div>
 
                     <div className="flex flex-col w-full gap-2">
-                        <label htmlFor="key_responsibilities" className='text-[15px] text-gray-500'>Key Responsibilities</label>
-                        <input
-                            type="text"
+                        <label htmlFor="key_responsibilities" className='text-[15px] text-gray-500'>Key Responsibilities <span className="text-red-500">*</span></label>
+                        <textarea
                             name="key_responsibilities"
                             value={formData.key_responsibilities}
                             onChange={handleChange}
+                            required
                             className='border border-gray-500/30 px-4 py-2 rounded outline-none'
                         />
                     </div>
 
                     <div className="flex justify-between w-full mt-2">
-                        <button onClick={handleAddExperience} className={`text-sm ${activeId !== null ? 'text-gray-500/60' : 'text-[#2c6472]' } font-medium hover:scale-95`}>+ Add More Experience</button>
-                        <button onClick={handleDeleteExperience} className={`text-sm flex ${activeId !== null ? 'text-red-500' : 'text-gray-500/60' } font-medium hover:scale-95`}>
+                        <button onClick={activeId === null ? handleAddExperience : null}
+                            disabled={activeId !== null}
+                            className={`text-sm ${activeId !== null ? 'text-gray-500/60 cursor-not-allowed' : 'text-[#2c6472]'} font-medium hover:scale-95`}>+ Add More Experience</button>
+                        <button onClick={activeId !== null ? handleDeleteExperience : null}
+                            disabled={activeId === null}
+                            className={`text-sm flex ${activeId !== null ? 'text-red-500' : 'text-gray-500/60 cursor-not-allowed'} font-medium hover:scale-95`}>
                             <img src={trash} alt="trash icon" className="w-4 h-3.5 mt-0.5 me-1 object-contain" />
                             Remove
                         </button>
@@ -332,8 +335,9 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
                     <div className='flex justify-center items-center gap-4 mt-3'>
                         <button
-                            className={` ${activeId !== null ? 'bg-[#2c6472] text-white' : 'bg-gray-500/20'} w-32 text-sm px-2 py-2 rounded-xl hover:scale-95 transition`}
-                            onClick={handleSave}
+                            className={` ${activeId !== null ? 'bg-[#2c6472] text-white' : 'bg-gray-500/20 cursor-not-allowed'} w-32 text-sm px-2 py-2 rounded-xl hover:scale-95 transition`}
+                            onClick={activeId !== null ? handleSave : null}
+                            disabled={activeId === null}
                         >
                             Save Changes
                         </button>

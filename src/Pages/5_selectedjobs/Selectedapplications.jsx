@@ -285,12 +285,12 @@ function SelectedApplications() {
                     <MoreVertical size={20} />
                   </button>
 
-                  {menuOpenId === job.id && (
+                  {/* {menuOpenId === job.id && (
                     <div className="absolute top-8 right-0 bg-white border rounded-md shadow-lg p-2 z-10">
                       <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Edit</button>
                       <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">Delete</button>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div className="flex p-6 gap-6 w-1/2">
                   {/* <div className="pr-5 bg-gray-200 items-center justify-center rounded-md text-lg font-bold text-center">{job.company}</div> */}

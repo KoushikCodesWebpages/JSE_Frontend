@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
+import logo from "./../../assets/logo.png";
 
 const JobTitle = () => {
   const navigate = useNavigate();
@@ -291,7 +291,13 @@ const JobTitle = () => {
           <div className="max-w-lg w-full">
             <form className="grid gap-y-4" onSubmit={handleNext}>
               {fields.map((field) => (
-                <div key={field.name} className="flex relative h-15 mb-5">
+                <div key={field.name} className="flex flex-col relative h-15 mb-5">
+                  <label className="text-gray-500 text-sm mb-1 ms-3 ">
+                    {field.label}
+                    {field.name === "primary_title" && (
+                      <span className='text-red-500 ms-1'> *</span>
+                    )}
+                  </label>
                   <select
                     name={field.name}
                     value={formData[field.name]}
@@ -303,9 +309,7 @@ const JobTitle = () => {
 
                     </label>
                     <option value="" disabled>Select {field.label}
-                      {field.name === 'primary_title' && (
-                        <span className="text-red-500">*</span>
-                      )}  </option>
+                    </option>
                     {field.options.map((option) => (
                       <option key={option} value={option}>{option}</option>
                     ))}
@@ -340,11 +344,14 @@ const JobTitle = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
-          <div className="flex justify-center items-center gap-2">
-            <img src={joblogo} className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <div className="text-center mt-4">
+          <div className="text-center ">
             <h3 className="text-white text-lg font-medium ms-4 mb-4">Job Preferences</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import trash from "../assets/trash2.png"
+import axios from 'axios';
 
 const skillOptions = [
     "API Development",
@@ -141,8 +142,11 @@ const skillOptions = [
 
 
 const ProfessionalSumUpdateForm = ({ onclose }) => {
+
+
     const [searchTerm, setSearchTerm] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+    const [backendSkills, setBackendSkills] = useState([]); // skills from DB
     const dropdownRef = useRef(null);
 
     const [formData, setFormData] = useState({
@@ -151,6 +155,71 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
         newSkill: '',
         annual_income: ''
     });
+
+    const apiUrl = "https://arshan.digital/professional-summary";
+    const token = sessionStorage.getItem("authToken");
+
+    const fetchProfessionalsummaryInfo = async () => {
+        try {
+            const res = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+
+
+            let info = {};
+
+            if (Array.isArray(res.data)) {
+                info = res.data[0] || {};
+            } else if (Array.isArray(res.data?.professional_summary)) {
+                info = res.data.professional_summary[0] || {};
+            } else if (typeof res.data?.professional_summary === 'object') {
+                info = res.data.professional_summary;
+            } else if (typeof res.data === 'object') {
+                info = res.data;
+            }
+
+
+            setFormData({
+                about: info.about || "",
+                annual_income: info.annual_income || "",
+                skills: [],
+            });
+
+            setBackendSkills(info.skills || []);
+        } catch (err) {
+            console.error("Failed to fetch personal info", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchProfessionalsummaryInfo();
+    }, []);
+
+    const handleSubmit = async () => {
+        const payload = {
+            about: formData.about?.trim() || "",
+            skills: [...backendSkills, ...formData.skills].filter(Boolean),
+            annual_income: Number(formData.annual_income)
+        };
+
+
+        try {
+            const res = await axios.put(`${apiUrl}`, payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            alert("Personal info updated successfully ✅");
+            onclose();
+        } catch (err) {
+            console.error("Update failed", err);
+            alert("Update failed ❌");
+        }
+    };
 
     const filteredSkills = skillOptions.filter(skill =>
         skill.toLowerCase().includes(searchTerm.toLowerCase())
@@ -162,23 +231,36 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
         setShowDropdown(false);
     };
 
-    const addSkill = () => {
-        if (formData.newSkill.trim() && !formData.skills.includes(formData.newSkill.trim())) {
-            setFormData((prev) => ({
-                ...prev,
-                skills: [...prev.skills, prev.newSkill.trim()],
-                newSkill: '',
-            }));
-            setSearchTerm('');
-        }
+  const addSkill = () => {
+    const trimmedSkill = formData.newSkill.trim();
+    const isDuplicate = [...formData.skills, ...backendSkills].some(skill =>
+        skill.toLowerCase() === trimmedSkill.toLowerCase()
+    );
+
+    if (trimmedSkill && !isDuplicate) {
+        setFormData(prev => ({
+            ...prev,
+            skills: [...prev.skills, trimmedSkill],
+            newSkill: '',
+        }));
+        setSearchTerm('');
+    } else if (isDuplicate) {
+        alert("This skill is already added!");
+    }
+};
+
+
+    const removeSkill = (skillToRemove) => {
+        setFormData(prev => ({
+            ...prev,
+            skills: prev.skills.filter(skill => skill !== skillToRemove),
+        }));
+
+        setBackendSkills(prev => prev.filter(skill => skill !== skillToRemove));
     };
 
-    const removeSkill = (index) => {
-        setFormData((prev) => ({
-            ...prev,
-            skills: prev.skills.filter((_, i) => i !== index),
-        }));
-    };
+
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -204,12 +286,15 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
 
                 <div className="form-fields flex flex-col gap-4 mt-5">
                     <div className="flex flex-col w-full gap-3">
-                        <label htmlFor="jobtitle" className='text-[15px] text-gray-500'>About</label>
-                        <textarea className='border border-gray-500/30 px-4 py-2 rounded outline-none' />
+                        <label htmlFor="about" className='text-[15px] text-gray-500'>Summary  <span className="text-red-500">*</span></label>
+                        <textarea
+                            value={formData.about}
+                            onChange={(e) => setFormData({ ...formData, about: e.target.value })}
+                            className='border h-20 border-gray-500/30 px-4 py-1 rounded outline-none' />
                     </div>
 
                     <div className="flex flex-col w-full gap-3">
-                        <label htmlFor="jobtitle" className='text-[15px] text-gray-500'>Skills</label>
+                        <label htmlFor="jobtitle" className='text-[15px] text-gray-500'>Skills  <span className="text-red-500">*</span></label>
                         <div className="relative flex items-center mb-2" ref={dropdownRef}>
                             <input
                                 type="text"
@@ -248,7 +333,7 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
                             </button>
                         </div>
 
-                        <div className="flex flex-wrap gap-2 h-[80px]  overflow-y-auto p-2 rounded ">
+                        <div className="selectedskills flex flex-wrap gap-2 h-[80px]  overflow-y-auto p-2 rounded ">
                             {formData.skills.map((skill, index) => (
                                 <div
                                     key={index}
@@ -257,7 +342,7 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
                                     <span className="mr-2">{skill}</span>
                                     <button
                                         type="button"
-                                        onClick={() => removeSkill(index)}
+                                        onClick={() => removeSkill(skill)}
                                         className="text-gray-500 hover:text-red-500 focus:outline-none"
                                     >
                                         &times;
@@ -265,21 +350,40 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
                                 </div>
                             ))}
                         </div>
+
+                        <div className="Data_from_backend flex gap-4 mt-7 mb-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
+                            {backendSkills.map((skill, index) => (
+                                <div
+                                    key={index}
+                                    className='flex-shrink-0  h-8 px-3  text-sm rounded snap-start cursor-pointer 
+                                bg-[#2c6472] text-white transition-all duration-200'
+                                >
+                                    {skill}
+                                    <span
+                                        onClick={() => removeSkill(skill)}
+                                        className='ms-2 text-red-500 font-bold text-xl hover:font-medium '>x</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     <div className="flex flex-col w-full gap-3">
-                        <label htmlFor="jobtitle" className='text-[15px] text-gray-500'>Desired Income</label>
-                        <input type="text" className='border border-gray-500/30 px-4 py-2 rounded outline-none' />
+                        <label htmlFor="annual_income" className='text-[15px] text-gray-500'>Desired Income (Annual)  <span className="text-red-500">*</span></label>
+                        <input
+                            type="text"
+                            value={formData.annual_income}
+                            onChange={(e) => setFormData({ ...formData, annual_income: e.target.value })}
+                            className='border border-gray-500/30 px-4 py-2 rounded outline-none' />
                     </div>
 
 
-                    <div className="flex justify-end w-full mt-2">
+                    {/* <div className="flex justify-end w-full mt-2">
                         <button className='text-sm flex text-red-500 font-medium hover:scale-95 transform ease-in-out duration-200 '> <img src={trash} alt="trash icon" className="w-4 h-3.5 mt-0.5 text-red-500 me-1 object-contain " />
                             Remove</button>
-                    </div>
+                    </div> */}
 
                     <div className='flex justify-center items-center gap-4 mt-1 mb-2'>
-                        <button className='bg-[#2c6472] w-32 text-sm text-white px-2 py-2 rounded-xl'>Save Changes</button>
+                        <button onClick={handleSubmit} className='bg-[#2c6472] w-32 text-sm text-white px-2 py-2 rounded-xl hover:scale-95'>Save Changes</button>
                     </div>
 
                 </div>

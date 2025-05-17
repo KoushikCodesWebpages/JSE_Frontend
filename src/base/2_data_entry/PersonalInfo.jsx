@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
+import logo from "./../../assets/logo.png";
+import axios from 'axios';
 
 
 const PersonalInfo = () => {
@@ -16,7 +17,52 @@ const PersonalInfo = () => {
     linkedin_profile: '',
   });
 
+  const apiUrl = 'https://arshan.digital/personal-info';
+
+      const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
+
+
   const [errors, setErrors] = useState({});
+
+   const fetchProfileInfo = async () => {
+        try {
+            const res = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log("Fetched response ✅", res.data); // <-- ADD THIS
+
+
+            let info = {};
+
+            if (Array.isArray(res.data)) {
+                info = res.data[0] || {};
+            } else if (Array.isArray(res.data?.personal_info)) {
+                info = res.data.personal_info[0] || {};
+            } else if (typeof res.data?.personal_info === 'object') {
+                info = res.data.personal_info;
+            } else if (typeof res.data === 'object') {
+                info = res.data;
+            }
+
+
+            setFormData({
+                first_name: (info.first_name || "").trim(),
+                second_name: (info.second_name || "").trim(),
+                date_of_birth: info.date_of_birth || "",
+                address: info.address || "",
+                linkedin_profile: info.linkedin_profile || ""
+            });
+        } catch (err) {
+            console.error("Failed to fetch personal info", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchProfileInfo();
+    }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,10 +95,9 @@ const PersonalInfo = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
 
     try {
-      const response = await fetch('https://arshan.digital/personal-info', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +120,7 @@ const PersonalInfo = () => {
   const fields = [
     { label: 'First Name', name: 'first_name', type: 'text' },
     { label: 'Last Name', name: 'second_name', type: 'text' },
-    { label: ' ', name: 'date_of_birth', type: 'date' },
+    { label: 'Date of Birth ', name: 'date_of_birth', type: 'date' },
     { label: 'Current address', name: 'address', type: 'text' },
     { label: 'Linkedin Profile', name: 'linkedin_profile', type: 'text' },
   ];
@@ -88,52 +133,25 @@ const PersonalInfo = () => {
           <div className="max-w-lg w-full">
             <form className="grid gap-y-6" onSubmit={handleNext}>
               {fields.map((field) => (
-                <div key={field.name} className="relative h-15">
+                <div key={field.name} className="relative h-15 flex flex-col ">
+                                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    {field.label}
+                    <label className=" text-gray-700 font-medium mb-1 ms-1">
+                      {field.name !== 'second_name' && field.name !== 'linkedin_profile' && (
+                        <span className="text-red-500">*</span>
+                      )}
+                    </label>
+                  </label>
                   <input
                     id={field.name}
                     type={field.type}
                     name={field.name}
                     placeholder=" "
-                    value={formData[field.name] || " "}
+                    value={formData[field.name]}
                     onChange={handleChange}
-                    className={` peer  w-full h-full px-4 py-4 border text-gray-500 ${errors[field.name] ? 'border-red-500' : 'border-gray-300'
-                      } rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]`}
-                    onFocus={(e) => {
-                      const label = e.target.nextSibling;
-                      label.classList.add('-top-2.5', 'text-sm', 'bg-white', 'px-1');
-                      label.classList.remove('top-3', 'text-base');
-                    }}
-                    onBlur={(e) => {
-                      const label = e.target.nextSibling;
-                      if (!e.target.value) {
-                        label.classList.remove('-top-2.5', 'text-sm', 'bg-white', 'px-1');
-                        label.classList.add('top-3', 'text-base');
-                      }
-                    }}
+                    required={field.name !== 'second_name' && field.name !== 'linkedin_profile'}
+                    className="  w-full h-full px-4 py-4   border text-gray-500 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
-                  {field.name === 'date_of_birth' && (
-                    <span className="absolute left-4 -top-1  text-xs text-gray-500 bg-white px-1 z-10">
-                      DOB <span className='text-red-500'>*</span>
-                    </span>
-                  )}
-                  {field.name !== 'date_of_birth' && (
-                    <label htmlFor={field.name}
-                      className={`absolute flex left-4 transition-all text-gray-500 text-sm ${formData[field.name]
-                          ? '-top-2 text-sm bg-white px-1'
-                          : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                        }`}
-                    >
-                      {field.label}
-                      <label className="block text-gray-700 font-medium mb-1 ms-1">
-                        {field.name !== 'second_name' && (
-                      <span className="text-red-500">*</span>
-                        )}
-                  </label>
-                    </label>
-                  )}
-                  {errors[field.name] && (
-                    <div className="text-red-500 text-sm -my-3 bg-white mx-1">{errors[field.name]}</div>
-                  )}
                 </div>
               ))}
 
@@ -159,11 +177,14 @@ const PersonalInfo = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
-          <div className="flex justify-center items-center gap-2">
-            <img src={joblogo} className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
+          <div className="flex items-center ms-1 mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <div className="text-center mt-4">
+          <div className="text-center ">
             <h3 className="text-white ms-4 text-lg font-medium mb-4">Personal Info</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>

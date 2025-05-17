@@ -5,6 +5,7 @@ import animationData from '../assets/Animation - 1745282599914.json';
 import { useNavigate, Link } from 'react-router-dom';
 import joblogo from '../assets/joblogo.png';
 import frame from '../assets/Frame.png';
+import logo from "../assets/logo.png"
 
 
 const Landing = ({ footerLinks = [] }) => {
@@ -25,7 +26,11 @@ const Landing = ({ footerLinks = [] }) => {
       <div style={{ display: 'flex', flex: 1 }}>
         {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white">
-          <div className="max-w-lg w-full text-center">
+          <div className="max-w-lg w-full text-center flex flex-col justify-center items-center ">
+            <div className="logo w-28 h-28  -mt-4 ">
+              <img src={logo} alt="" />
+            </div>
+
             <h1 className="text-4xl font-bold text-[#2c6472] ">Welcome to JSE AI</h1><br />
             <p className="text-gray-600 mb-7 text-lg">
               Your personalized job search assistant. Create your profile, track your applications, and land your dream job.
@@ -51,11 +56,11 @@ const Landing = ({ footerLinks = [] }) => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white">
-          <div className="flex justify-center items-center gap-2">
-            <img src={joblogo} className="h-7 w-7 "  />
-            <h3 className="text-[#ff9a67] text-2xl m-0">JSE AI</h3>
+          <div className="flex justify-center items-center ms-1">
+            <img src={logo} className="h-8 w-8 "  />
+            <h3 className="text-black  font-medium text-xl m-0">JSE AI</h3>
           </div>
-          <div className="text-center mt-4 ml-4">
+          <div className="text-center mt-2 ml-4">
             <h3 className="text-white text-xl font-medium mb-5">Welcome</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>

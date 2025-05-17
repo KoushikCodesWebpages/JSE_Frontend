@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
+import logo from "./../../assets/logo.png";
 
 
 const Language = () => {
@@ -42,17 +42,17 @@ const Language = () => {
     if (!formData.ProficiencyLevel) {
       newErrors.ProficiencyLevel = 'Proficiency level is required';
     }
-  
+
     setErrors(newErrors);
-  
+
     if (Object.keys(newErrors).length > 0) {
       alert("Please fill all the fields before adding data");
       return false;
     }
-  
+
     return true;
   };
-  
+
 
   const handleAddCertificate = async (e) => {
     e.preventDefault();
@@ -93,7 +93,7 @@ const Language = () => {
         ProficiencyLevel: ''
       });
       setCertificateFile(null);
-  
+
     } catch (err) {
       console.error('Error uploading language:', err);
       alert('Failed to upload language data.');
@@ -109,7 +109,7 @@ const Language = () => {
     setLoading(false);
   };
 
- 
+
 
 
   return (
@@ -121,8 +121,11 @@ const Language = () => {
             <form className="flex flex-col" onSubmit={handleAddCertificate}>
               {/* Language Input */}
               <div className="relative ">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Language <span className='text-red-500 ms-1'>*</span>
+                </label>
                 <input
-                id='LanguageName'
+                  id='LanguageName'
                   type="text"
                   name="LanguageName" // Fixed name attribute
                   placeholder=" "
@@ -132,20 +135,12 @@ const Language = () => {
 
                   className="w-full h-[52px] px-4 py-4 border border-gray-300 text-gray-500 text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label
-                htmlFor='LanguageName'
-                  className={`absolute left-4 transition-all text-gray-500 text-sm ${formData.LanguageName
-                      ? '-top-2 text-sm bg-white px-1'
-                      : 'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                    }`}
-                >
-                  Language
-                </label>
+
               </div><br />
 
               {/* Certificate Upload */}
               <div className="">
-                <p className="mb-2 text-sm text-gray-600">Completion Certificate (optional) </p>
+                <p className="mb-1 ms-3 text-sm text-gray-500">Completion Certificate (optional) </p>
                 <div className="border-2 border-gray-300  p-6 text-center bg-gray-100">
                   <input
                     type="file"
@@ -174,8 +169,8 @@ const Language = () => {
               </div><br />
 
               {/* Proficiency */}
-              <div className="mb-2">
-                <p className="mb-2 text-sm text-gray-600">Proficiency<span className='text-red-500 ms-1'>*</span></p>
+              <div className="mb-2 ms-1">
+                <p className="mb-1  text-sm text-gray-500">Proficiency <span className='text-red-500 ms-1'>*</span></p>
                 <div className="flex flex-col gap-2">
                   {['Native', 'Fluent', 'Intermediate', 'Beginner'].map((level) => (
                     <label key={level} className="flex items-center cursor-pointer text-gray-500 text-xs">
@@ -225,11 +220,14 @@ const Language = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
-          <div className="flex items-center gap-2">
-            <img src={joblogo} className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <h3 className="text-center mt-4 ms-4 mb-4 text-lg font-medium">Language</h3>
+          <h3 className="text-center ms-2 mb-4 text-lg font-medium">Language</h3>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
             <img src={frame} alt="" className='relative object-cover' />
             <DotLottieReact

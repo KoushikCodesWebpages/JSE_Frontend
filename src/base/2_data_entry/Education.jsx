@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
+import logo from "./../../assets/logo.png";
 
 
 const Education = () => {
@@ -33,16 +33,18 @@ const Education = () => {
     const formatDateToISO = (date) => {
       const localDate = new Date(date);
       // Format to YYYY-MM-DD, or adjust to the format your backend expects
-      return localDate.toISOString().split('T')[0];    };
+      return localDate.toISOString().split('T')[0];
+    };
 
     const updatedFormData = {
       degree: e.target.degree.value,
       institution: e.target.institution.value,
       field_of_study: e.target.field_of_study.value,
-      start_date: formatDateToISO(e.target.start_date.value), // Transforming to ISO 8601
-      end_date: formatDateToISO(e.target.end_date.value),     // Transforming to ISO 8601
+      start_date: formatDateToISO(e.target.start_date.value),
+      end_date: formatDateToISO(e.target.end_date.value),
       achievements: e.target.achievements.value
     };
+
 
 
     try {
@@ -88,11 +90,14 @@ const Education = () => {
         {/* Left Panel */}
         <div className="flex flex-1 justify-center items-center p-8 bg-white rounded-s-xl">
           <div className="w-full max-w-md">
-            <form className="flex flex-col" onSubmit={handleAddEducation}>
+            <form className="flex flex-col -space-y-2" onSubmit={handleAddEducation}>
               {/* Degree Title */}
               <div className="relative ">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Degree Title <span className="text-red-500">*</span>
+                </label>
                 <input
-                id='degree'
+                  id='degree'
                   type="text"
                   name="degree"
                   placeholder=" "
@@ -101,19 +106,16 @@ const Education = () => {
                   required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label htmlFor='degree' className={`absolute left-4 transition-all text-gray-500 text-sm
-                  ${formData.degree
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                    Degree Title
-                </label>
+
               </div><br />
 
               {/* Institution Name */}
               <div className="relative ">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Institution Name <span className="text-red-500">*</span>
+                </label>
                 <input
-                id='institution'
+                  id='institution'
                   type="text"
                   name="institution"
                   placeholder="  "
@@ -122,19 +124,16 @@ const Education = () => {
                   required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500  text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label htmlFor='institution' className={`absolute left-4 transition-all text-gray-500 text-sm
-                  ${formData.institution
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-sm peer-focus:-top-2 text-gray-500 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                    Institution Name
-                </label>
+
               </div><br />
 
               {/* Field of Study */}
               <div className="relative ">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Field of Study <span className="text-red-500">*</span>
+                </label>
                 <input
-                id='field_of_study'
+                  id='field_of_study'
                   type="text"
                   name="field_of_study"
                   placeholder=" "
@@ -143,20 +142,17 @@ const Education = () => {
                   required
                   className="w-full h-[52px] px-4 py-3 border border-gray-300 text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                 />
-                <label htmlFor='field_of_study' className={`absolute left-4 transition-all text-gray-500 text-sm
-                  ${formData.field_of_study
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                    Field of Study
-                </label>
+
               </div><br />
 
               {/* Start and End Dates */}
               <div className="flex gap-5 ">
                 <div className="relative flex-1">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    Start Date <span className="text-red-500">*</span>
+                  </label>
                   <input
-                  id='start_date'
+                    id='start_date'
                     type="date"
                     name="start_date"
                     placeholder=" "
@@ -165,17 +161,14 @@ const Education = () => {
                     required
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
-                  <label htmlFor='start_date' className={`absolute left-4 transition-all text-gray-500 text-base
-                    ${formData.start_date
-                      ? '-top-2 text-sm bg-white px-1'
-                      : '-top-2 bg-white px-1 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                    }`}>
-                      Start Date
-                  </label>
+
                 </div>
                 <div className="relative flex-1">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    End Date <span className="text-red-500">*</span>
+                  </label>
                   <input
-                  id='end_date'
+                    id='end_date'
                     type="date"
                     name="end_date"
                     placeholder=" "
@@ -184,20 +177,17 @@ const Education = () => {
                     required
                     className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   />
-                  <label htmlFor='end_date' className={`absolute left-4 transition-all text-gray-500 text-base
-                    ${formData.end_date
-                      ? '-top-2 text-sm bg-white px-1'
-                      : '-top-2 bg-white px-1 text-sm  peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                    }`}>
-                      End Date
-                  </label>
+
                 </div>
               </div><br />
 
               {/* Achievements */}
               <div className="relative ">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Achievements <span className="text-red-500">*</span>
+                </label>
                 <textarea
-                id='achievements'
+                  id='achievements'
                   name="achievements"
                   placeholder=" "
                   onChange={handleChange}
@@ -205,13 +195,7 @@ const Education = () => {
                   required
                   className="w-full p-4 border border-gray-300 text-gray-500 text-sm min-h-[100px] peer focus:outline-none focus:ring-1  focus:ring-[#2c6472]"
                 />
-                <label htmlFor='achievements' className={`absolute left-4 transition-all text-gray-500 text-base
-                  ${formData.achievements
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-sm text-gray-500 peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                    Achievements
-                </label>
+
               </div><br />
 
               {/* Buttons */}
@@ -241,12 +225,15 @@ const Education = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-4 text-white rounded-e-xl">
-          <div className="flex justify-center items-center gap-2">
-            <img src={joblogo} className="h-6 w-6" />
-            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <div className="text-center mt-4">
-            <h3 className="text-white ms-2 text-lg font-medium mb-4">Education</h3>
+          <div className="text-center ">
+            <h3 className="text-white ms-4 text-lg font-medium mb-4">Education</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
             <img src={frame} alt="" className='relative object-cover ' />

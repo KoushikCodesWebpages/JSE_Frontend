@@ -5,8 +5,9 @@ import animationData from "../../assets/Animation - 1745282599914.json";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import google from "./../../assets/Google.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
+import logo from "../../assets/logo.png"
+
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -106,9 +107,13 @@ const Login = () => {
             </div><br />
 
             <form onSubmit={handleSubmit} className="grid gap-y-3">
-              <div className="relative">
+              <div className="relative -mt-5">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+
+                  Email
+                </label>
                 <input
-                    id="email"
+                  id="email"
                   type="email"
                   name="email"
                   value={formData.email}
@@ -117,19 +122,17 @@ const Login = () => {
                   className="w-full h-[52px] px-4 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
                   placeholder=" "
                 />
-                <label   htmlFor="email" className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.email
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                  Email
-                </label>
+
               </div>
 
               {/* Password Input */}
               <div className="relative">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+
+                  Password
+                </label>
                 <input
-                id='password'
+                  id='password'
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
@@ -138,18 +141,12 @@ const Login = () => {
                   className="w-full h-[52px]  ps-4 pe-3 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer pr-10"
                   placeholder=" "
                 />
-                <label htmlFor='password' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.password
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                  Password
-                </label>
+
                 <span
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-12 transform -translate-y-1/2 text-gray-600 cursor-pointer"
                   onClick={() => toggleShowPassword('password')}
                 >
-                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                 </span>
               </div>
 
@@ -179,14 +176,14 @@ const Login = () => {
 
         {/* Right Panel */}
         <div className="flex flex-1 flex-col justify-center items-center bg-[#2c6472] text-white p-8">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center mb-2">
             <img
-              src={joblogo}
-              className="h-6 w-6"
+              src={logo}
+              className="h-8 w-8"
             />
-            <h3 className="text-orange-300 text-xl">JSE AI</h3>
+            <h3 className="text-black font-medium text-xl">JSE AI</h3>
           </div>
-          <h3 className="text-center text-xl ms-3 font-medium mb-8">Welcome Back!</h3>
+          <h3 className="text-center text-xl ms-4 font-medium mb-6">Welcome Back!</h3>
           <div className='relative mb-5 flex justify-center items-center ms-4'>
             <img src={frame} alt="" className='relative object-cover ' />
             <DotLottieReact

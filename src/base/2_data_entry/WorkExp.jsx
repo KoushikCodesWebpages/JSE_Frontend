@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import axios from "axios";
 import frame from "./../../assets/Frame.png";
-import joblogo from "./../../assets/joblogo.png";
+import logo from "./../../assets/logo.png";
 
 
 const WorkExp = () => {
@@ -29,7 +29,7 @@ const WorkExp = () => {
   };
 
   const isFormValid = () => {
-    return formData.job_title && formData.company_name && formData.start_date && formData.end_date && formData.key_responsibilities;
+    return formData.job_title && formData.company_name && formData.start_date && formData.key_responsibilities;
   };
 
 
@@ -51,11 +51,16 @@ const WorkExp = () => {
       return date.toISOString().split('T')[0];
     };
 
+    // Build requestData dynamically
     const requestData = {
       ...formData,
       start_date: formatDateForAPI(formData.start_date),
-      end_date: formatDateForAPI(formData.end_date),
     };
+
+    // Only add end_date if it has a value
+    if (formData.end_date) {
+      requestData.end_date = formatDateForAPI(formData.end_date);
+    }
 
 
     try {
@@ -110,8 +115,11 @@ const WorkExp = () => {
             <form className="grid gap-y-8">
               {/* Job Title */}
               <div className="relative">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Job Title    <span className="text-red-500">*</span>
+                </label>
                 <input
-                id="job_title"
+                  id="job_title"
                   type="text"
                   name="job_title"
                   placeholder=" "
@@ -119,21 +127,18 @@ const WorkExp = () => {
                   onChange={handleChange}
                   className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500 text-sm  focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
-                <label
-                htmlFor="job_title"
-                  className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.job_title ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
-                  `}>
-                  Job Title
-                </label>
+
               </div>
 
 
               {/* Company Name and Employee Type */}
               <div className="flex gap-5">
                 <div className="relative flex-1">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    Company Name      <span className="text-red-500">*</span>
+                  </label>
                   <input
-                  id="company_name"
+                    id="company_name"
                     type="text"
                     name="company_name"
                     placeholder=" "
@@ -141,18 +146,15 @@ const WorkExp = () => {
                     onChange={handleChange}
                     className="peer w-full p-4 border border-gray-300 h-[41px]  text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
-                  <label
-                  htmlFor="company_name"
-                    className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.company_name ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
-                  `}>
-                    Company Name
-                  </label>
+
                 </div>
 
                 <div className="relative flex-1">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    Employer Type     <span className="text-red-500">*</span>
+                  </label>
                   <input
-                  id="employment_type"
+                    id="employment_type"
                     type="text"
                     name="employment_type"
                     placeholder=" "
@@ -160,19 +162,16 @@ const WorkExp = () => {
                     onChange={handleChange}
                     className="peer w-full p-4 border border-gray-300 h-[41px] text-gray-500  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                   />
-                  <label
-                  htmlFor="employment_type"
-                    className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.employment_type ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
-                  `}>
-                    Employer Type
-                  </label>
+
                 </div>
               </div>
 
               {/* Date Inputs */}
               <div className="flex gap-5">
                 <div className="flex-1 relative">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    Start Date     <span className="text-red-500">*</span>
+                  </label>
                   <input
                     id="start_date"
                     type="date"
@@ -182,18 +181,15 @@ const WorkExp = () => {
                     className="peer w-full p-3 px-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                     placeholder=" "
                   />
-                  <label
-                    htmlFor="start_date"
-                    className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                   *:   ${formData.start_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs peer-focus:-top-2 peer-focus:text-xs"}
-                   *: `}>
-                    Start Date & Time
-                  </label>
+
                 </div>
 
                 <div className="flex-1 relative">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                    End Date
+                  </label>
                   <input
-                  id="end_date"
+                    id="end_date"
                     type="date"
                     name="end_date"
                     value={formatForDateTimeLocal(formData.end_date)}
@@ -201,34 +197,26 @@ const WorkExp = () => {
                     className="peer w-full p-3 px-4 border border-gray-300 text-gray-500 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                     placeholder=" "
                   />
-                  <label
-                  htmlFor="end_date"
-                    className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                      ${formData.end_date ? "-top-2 text-xs" : "-top-2 bg-white px-1  text-xs  peer-focus:-top-2 peer-focus:text-xs"}
-                    `}>
-                    End Date & Time
-                  </label>
+
                 </div>
               </div>
 
 
               {/* Key Responsibilities */}
               <div className="relative">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Key Responsibilities  <span className="text-red-500">*</span>
+
+                </label>
                 <textarea
-                id="key_responsibilities"
+                  id="key_responsibilities"
                   name="key_responsibilities"
                   placeholder=" "
                   value={formData.key_responsibilities}
                   onChange={handleChange}
-                  className="peer w-full p-4 border border-gray-300 h-44 text-gray-500  text-sm min-h-[100px] focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
+                  className="peer w-full p-4 border border-gray-300 h-28 text-gray-500  text-sm min-h-[100px] focus:outline-none focus:ring-1 focus:ring-[#2c6472]"
                 />
-                <label
-                htmlFor="key_responsibilities"
-                  className={`absolute left-4 px-1 bg-white text-gray-500 transition-all duration-200
-                  ${formData.key_responsibilities ? "-top-2 text-xs" : "top-2.5 text-sm peer-focus:-top-2 peer-focus:text-xs"}
-                  `}>
-                  Key Responsibilities
-                </label>
+
               </div>
 
               {/* Buttons */}
@@ -261,11 +249,14 @@ const WorkExp = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-8 text-white rounded-e-xl">
-          <div className="flex justify-center items-center gap-2">
-            <img src={joblogo} className="h-7 w-7" />
-            <h3 className="text-[#ff9a67] text-xl font-medium ">JSE AI</h3>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <div className="text-center mt-2">
+          <div className="text-center">
             <h3 className="text-white text-lg font-medium mb-4 ms-2">Work Experience</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>

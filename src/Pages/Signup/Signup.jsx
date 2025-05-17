@@ -6,8 +6,8 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google from "./../../assets/Google.png";
-import joblogo from "./../../assets/joblogo.png";
 import frame from "./../../assets/Frame.png";
+import logo from "../../assets/logo.png"
 
 
 const Signup = () => {
@@ -112,9 +112,12 @@ const Signup = () => {
           </div><br />
 
           {/* Signup Form */}
-          <form onSubmit={handleSignUp}>
+          <form onSubmit={handleSignUp} className='-space-y-3'>
             {/* email Field */}
-            <div className="relative ">
+            <div className="relative -mt-5">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                Email
+              </label>
               <input
                 id='email'
                 type="email"
@@ -125,34 +128,27 @@ const Signup = () => {
                 onChange={handleChange}
                 required
               />
-              <label htmlFor='email' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.email
-                  ? '-top-2 text-sm bg-white px-1'
-                  : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                }`}>
-                Email
-              </label>
+
             </div><br />
 
             {/* Phone Number Field */}
             <div className="relative  ">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                Phone Number
+              </label>
+                <span className="absolute left-3 top-1/2 text-base">+49</span>
               <input
                 id='phoneNumber'
                 type="tel"
                 name="phoneNumber"
                 placeholder=" "
-                className="w-full h-[52px] px-4 py-4 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
+                className="w-full pl-14 h-[52px] px-4 py-3.5 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-[#2c6472] peer"
                 value={formData.phoneNumber}
                 onChange={handleChange}
+                
                 required
               />
-              <label htmlFor='phoneNumber' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.phoneNumber
-                  ? '-top-2 text-sm bg-white px-1'
-                  : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                }`}>
-                Phone Number
-              </label>
+
               {formData.phoneNumber && (formData.phoneNumber.length < 10 || formData.phoneNumber.length > 11) && (
                 <p className="text-[10px] text-red-500 mt-1">(Phone number must be 10 to 11 digits)</p>
               )}
@@ -163,6 +159,9 @@ const Signup = () => {
             <div className="flex space-x-2 ">
               {/* Create Password */}
               <div className="relative w-1/2">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Create Password
+                </label>
                 <input
                   id='password'
                   type={showPassword.password ? "text" : "password"}
@@ -173,24 +172,21 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                 />
-                <label htmlFor='password' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.password
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                  Create Password
-                </label>
+
                 <span
-                  className="absolute right-3 top-1/3 transform -translate-y-1/3 text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/3 text-gray-600 cursor-pointer"
                   onClick={() => toggleShowPassword('password')}
                 >
-                   {showPassword.password ? <FaEyeSlash size={18} /> : <FaEye size={18} />} 
+                  {showPassword.password ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                 </span>
                 <p className='text-[10px] mt-1'>( password should contain atleast 8 characters )</p>
               </div>
 
               {/* Confirm Password */}
               <div className="relative w-1/2">
+               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  Confirm Password
+                </label>
                 <input
                   id='confirmPassword'
                   type={showPassword.confirmPassword ? "text" : "password"}
@@ -201,15 +197,9 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                 />
-                <label htmlFor='confirmPassword' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.confirmPassword
-                    ? '-top-2 text-sm bg-white px-1'
-                    : 'top-4 text-base peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'
-                  }`}>
-                  Confirm Password
-                </label>
+
                 <span
-                  className="absolute right-3 top-1/3 transform -translate-y-1/3 text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/3 text-gray-600 cursor-pointer"
                   onClick={() => toggleShowPassword('confirmPassword')}
                 >
                   {showPassword.confirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
@@ -220,7 +210,7 @@ const Signup = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="teal-button w-full h-[50px] bg-[#2c6472] text-white py-3  rounded-md"
+              className="teal-button w-full h-[50px] bg-[#2c6472] hover:bg-[#24525f] text-white py-3  rounded-md"
             >
               Sign Up
             </button>
@@ -238,13 +228,13 @@ const Signup = () => {
 
       {/* Right Panel */}
       <div className="hidden md:flex w-1/2 flex-col items-center justify-center bg-[#2c6472] text-white px-8">
-        <h1 className="text-3xl font-semibold mb-2 ms-4 text-center">Welcome to</h1>
-        <div className="flex items-center gap-2 mb-4">
+        <h1 className="text-xl font-medium mb-3 ms-2 text-center">Welcome to</h1>
+        <div className="flex items-center mb-4 -ms-2">
           <img
-            src={joblogo}
-            className="h-6 w-6"
+            src={logo}
+            className="h-8 w-8"
           />
-          <h3 className="text-orange-300 text-xl font-bold">JSE AI</h3>
+          <h3 className="text-black text-xl font-medium">JSE AI</h3>
         </div>
         <div className='relative mb-5 flex justify-center items-center ms-4'>
           <img src={frame} alt="" className='relative object-cover ' />

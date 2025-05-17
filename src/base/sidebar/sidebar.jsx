@@ -10,7 +10,7 @@ import {
   Bookmark,
   Settings as SettingsIcon,
 } from "lucide-react";
-import logo from '../../assets/joblogo.png'
+import logo from '../../assets/logo.png'
 
 import dashboard_icon from '../../assets/dashboard-icon.svg'
 import dashboard_active_icon from '../../assets/dashboard-active-icon.svg'
@@ -79,8 +79,8 @@ const Sidebar = () => {
   return (
     <aside className="fixed top-0 w-[264px] h-screen bg-white border-r flex flex-col"><br/>
       <div className="flex justify-center items-center mt-[-7px] mr-5">
-        <img className="w-8 h-8" src={logo} alt="" />
-        <span className="text-[18px] font-bold text-stone-600]">JobFusion</span>
+        <img className="w-9 h-9" src={logo} alt="" />
+        <span className="text-[18px] font-bold text-stone-600]"><Link to="/user/dashboard">JSE AI</Link></span>
       </div><br/><br/>
 
       <hr className="transform -translate-y-[34px] border-gray-200"/>

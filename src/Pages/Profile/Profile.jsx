@@ -24,34 +24,44 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+
 
   useEffect(() => {
-  const storedProfile = sessionStorage.getItem("profileData");
+    let isMounted = true;
 
-  if (storedProfile && storedProfile !== "undefined") {
-    setProfileData(JSON.parse(storedProfile));
-    setLoading(false);
-  } else {
     const fetchProfile = async () => {
       try {
         const headers = { Authorization: `Bearer ${token}` };
         const res = await axios.get("https://arshan.digital/seeker", { headers });
+        console.log("Fetched Profile Data:", res.data);
 
-        setProfileData(res.data);
-        sessionStorage.setItem("profileData", JSON.stringify(res.data));
-        setLoading(false);
+        if (isMounted) {
+          setProfileData(res.data);
+          console.log(profileData);
+          setLoading(false);
+        }
       } catch (err) {
         const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
-        alert(errorMessage);
-        setError(errorMessage);
-        setLoading(false);
+        if (isMounted) {
+          setError(errorMessage);
+          setLoading(false);
+        }
       }
     };
 
-    fetchProfile();
-  }
-}, [token]);
+    if (token) fetchProfile();
 
+    return () => {
+      isMounted = false;
+    };
+  }, [token, refreshTrigger]); // ✅ include token as a dependency
+
+  useEffect(() => {
+    if (profileData) {
+      console.log("profileData updated:", profileData);
+    }
+  }, [profileData]);
 
   useEffect(() => {
     if (!profileData?.profile_completion) return;
@@ -77,39 +87,38 @@ const Profile = () => {
   if (loading) return <Loader />;
   if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
 
-// Full Name
-const fullName = `${profileData?.personal_info?.first_name || ""} ${profileData?.personal_info?.second_name || ""}`.trim();
+  // Full Name
+  const fullName = `${profileData?.seeker?.personal_info?.first_name || ""} ${profileData?.seeker?.personal_info?.second_name || ""}`.trim();
 
-// Address
-const address = profileData?.personal_info?.address || "";
+  // Address
+  const address = profileData?.seeker?.personal_info?.address || "";
 
-// Date of Birth
-const dateOfBirth = profileData?.personal_info?.date_of_birth || "";
+  // Date of Birth
+  const dateOfBirth = profileData?.seeker?.personal_info?.date_of_birth || "";
 
-// LinkedIn
-const linkedin = profileData?.personal_info?.linkedin_profile || "";
+  // LinkedIn
+  const linkedin = profileData?.seeker?.personal_info?.linkedin_profile || "";
 
-// Professional Summary
-const about = profileData?.professional_summary?.about || "";
-const annualIncome = profileData?.professional_summary?.annual_income || 0;
-const skills = profileData?.professional_summary?.skills || [];
+  // Professional Summary
+  const about = profileData?.seeker?.professional_summary?.about || "";
+  const annualIncome = profileData?.professional_summary?.annual_income || 0;
+  const skills = profileData?.professional_summary?.skills || [];
 
-// Work Experiences
-const workExperiences = profileData?.work_experiences || [];
+  // Work Experiences
+  const workExperiences = profileData?.seeker?.work_experiences || [];
 
-// Education
-const education = profileData?.education || [];
+  // Education
+  const education = profileData?.seeker?.education || [];
 
-// Certificates
-const certificates = profileData?.certificates || [];
+  // Certificates
+  const certificates = profileData?.seeker?.certificates || [];
 
-// Languages
-const languages = profileData?.languages || [];
+  // Languages
+  const languages = profileData?.seeker?.languages || [];
 
-// Titles
-const primaryTitle = profileData?.primary_title || "";
-const secondaryTitle = profileData?.secondary_title || "";
-const tertiaryTitle = profileData?.tertiary_title || "";
+  // Titles
+  const primaryTitle = profileData?.seeker?.primary_title || "";
+
 
   const handleClose = () => {
     setWorkPopup(false);
@@ -118,6 +127,8 @@ const tertiaryTitle = profileData?.tertiary_title || "";
     setLanguagesPopup(false);
     setPersonalInfoPopup(false);
     setProfessionalSummaryPopup(false);
+    setRefreshTrigger(prev => !prev); // 🔄 this will re-fetch the profile data
+
   };
 
   const handleWorkPopup = () => setWorkPopup(true);
@@ -162,7 +173,7 @@ const tertiaryTitle = profileData?.tertiary_title || "";
         </div>
       </div>
 
- {/* Personal Information */}
+      {/* Personal Information */}
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
         <div className='flex flex-col gap-3'>
           <h2 className="text-sm font-bold">Personal Information</h2>
@@ -188,29 +199,33 @@ const tertiaryTitle = profileData?.tertiary_title || "";
       </div>
 
       {/* Education */}
-      <div className=" flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
-        {education.map((edu, index) => (
-        <div key={index} className='flex flex-col gap-1'>
+      <div className=" flex  justify-between items-center py-5 px-6 w-full bg-white rounded-md  ">
+        <div className=' flex flex-col h-[200px] overflow-y-auto hide-scrollbar'>
           <h2 className="text-sm font-bold">Education</h2>
-          <div className='w-full flex gap-2 mt-2'>
-            <p className='text-sm font-medium text-gray-500'>Degree Title :</p>
-            <p className='text-sm font-medium text-gray-500'>{edu.degree}</p>
-          </div>
-          <div className='flex gap-2 mt-1'>
-            <p className='text-sm font-medium text-gray-500'>Instution Name :</p>
-            <p className='text-sm font-medium text-gray-500'>{edu.institution}</p>
-          </div>
-          <div className='flex gap-2 mt-1'>
-            <p className='text-sm font-medium text-gray-500'>Field of Study :</p>
-            <p className='text-sm font-medium text-gray-500'>{field_of_study}</p>
-          </div>
-          <div className='flex gap-2 mt-1'>
-            <p className='text-sm font-medium text-gray-500'>{new Date(edu.start_date.time).toLocaleDateString()}</p>
-            <span className='-mt-1 text-gray-500'>-</span>
-            <p className='text-sm font-medium text-gray-500'> {new Date(edu.end_date.time).toLocaleDateString()}</p>
-          </div>
+          {education.map((edu, index) => (
+            <div key={index} className='flex flex-col gap-2 '>
+              <div className='w-full flex gap-2 mt-2'>
+                <p className='text-sm font-medium text-gray-500'>Degree Title :</p>
+                <p className='text-sm font-medium text-gray-500'>{edu.degree}</p>
+              </div>
+              <div className='flex gap-2 mt-1'>
+                <p className='text-sm font-medium text-gray-500'>Instution Name :</p>
+                <p className='text-sm font-medium text-gray-500'>{edu.institution}</p>
+              </div>
+              <div className='flex gap-2 mt-1'>
+                <p className='text-sm font-medium text-gray-500'>Field of Study :</p>
+                <p className='text-sm font-medium text-gray-500'>{edu.field_of_study}</p>
+              </div>
+              <div className='flex gap-2 mt-1'>
+                <p className='text-sm font-medium text-gray-500'>{new Date(edu.start_date.time).toLocaleDateString()}</p>
+                <span className='-mt-1 text-gray-500'>-</span>
+                <p className='text-sm font-medium text-gray-500'> {new Date(edu.end_date.time).toLocaleDateString()}</p>
+              </div>
+              <hr className='my-1' />
+            </div>
+
+          ))}
         </div>
-        ))}
         <div onClick={handleEducationPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">
           <img src={edit} alt="Edit" />
         </div>
@@ -219,15 +234,17 @@ const tertiaryTitle = profileData?.tertiary_title || "";
 
       {/* Work Experience */}
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
-        <div className='flex flex-col gap-3'>
-          <h2 className="text-sm font-bold">Work Experience</h2>
+        <div className='flex flex-col gap-2 h-[200px] overflow-y-auto hide-scrollbar'>
+          <h2 className="text-sm font-bold mb-1">Work Experience</h2>
           {workExperiences.map((work, index) => (
             <div key={index}>
-              <p className='text-sm font-semibold text-gray-500'>{work.job_title}</p>
-              <div className='flex gap-16 mt-1'>
+              <p className='text-sm font-semibold mb-1 text-gray-500'>{work.job_title}</p>
+              <div className='flex gap-16 '>
                 <p className='text-sm font-medium w-20 text-gray-500'>{work.company_name}</p>
                 <p className='text-sm font-medium text-gray-500'>{new Date(work.start_date.time).toLocaleDateString()} - {new Date(work.end_date.time).toLocaleDateString()}</p>
               </div>
+              <hr className='my-2' />
+
             </div>
           ))}
         </div>
@@ -238,10 +255,10 @@ const tertiaryTitle = profileData?.tertiary_title || "";
 
       {/* Certificates and Courses */}
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
-        <div className='flex flex-col gap-3'>
+        <div className='flex flex-col h-24 gap-3 overflow-y-auto hide-scrollbar'>
           <h2 className="text-sm font-bold">Certificates & Courses</h2>
           {certificates.map((cert, index) => (
-            <p key={index} className='text-sm font-medium text-gray-500'>• {cert}</p>
+            <p key={index} className='text-sm font-medium text-gray-500'>• {cert.certificate_name}</p>
           ))}
         </div>
         <div onClick={handleCertificatesPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">
@@ -251,10 +268,10 @@ const tertiaryTitle = profileData?.tertiary_title || "";
 
       {/* Languages */}
       <div className="flex justify-between items-center py-5 px-6 w-full bg-white rounded-md">
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 h-[130px] overflow-y-auto hide-scrollbar'>
           <h2 className="text-sm font-bold">Languages</h2>
           {languages.map((lang, index) => (
-            <p key={index} className='text-sm font-medium text-gray-500'>• {lang}</p>
+            <p key={index} className='text-sm font-medium text-gray-500'>• {lang.language}</p>
           ))}
         </div>
         <div onClick={handleLanguagesPopup} className="flex justify-center items-center h-fit p-3 rounded-full hover:bg-slate-300 cursor-pointer">

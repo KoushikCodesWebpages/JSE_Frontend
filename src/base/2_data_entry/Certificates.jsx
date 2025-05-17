@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from './../../assets/Frame.png';
-import joblogo from './../../assets/joblogo.png';
+import logo from './../../assets/logo.png';
 
 const Certificate = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Certificate = () => {
   const handleAddCertificate = async (e) => {
     e.preventDefault();
 
-    if (!formData.certificate_name || !formData.certificate_number || !certificateFile) {
+    if (!formData.certificate_name || !certificateFile) {
       alert('Please fill all fields and upload a certificate file.');
       return;
     }
@@ -45,7 +45,7 @@ const Certificate = () => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("certificate_name", formData.certificate_name);
-      formDataToSend.append("certificate_number", formData.certificate_number);
+      formDataToSend.append("certificate_number", formData.certificate_number || "N/A");
       formDataToSend.append("file", certificateFile); // ✅ Raw file here
 
       const response = await fetch("https://arshan.digital/certificates", {
@@ -67,7 +67,7 @@ const Certificate = () => {
         certificate_name: '',
         certificate_number: '',
       });
-      setCertificateFile(null); 
+      setCertificateFile(null);
 
     } catch (error) {
       console.error("Error uploading certificate:", error);
@@ -90,9 +90,12 @@ const Certificate = () => {
         {/* Left Panel */}
         <div className="flex-1 flex justify-center items-center p-8 bg-white rounded-s-xl">
           <form className="max-w-md w-full" onSubmit={handleAddCertificate}>
-            <div className="relative mb-3">
+            <div className="relative ">
+              <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                Certificate/Course Name  <span className="text-red-500">*</span>
+              </label>
               <input
-              id='certificate_name'
+                id='certificate_name'
                 type="text"
                 name="certificate_name"
                 placeholder=" "
@@ -100,15 +103,11 @@ const Certificate = () => {
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
-              <label htmlFor='certificate_name' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.certificate_name ? '-top-2 text-sm bg-white px-1' :
-                  'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
-                Certificate/Course Name
-              </label>
+
             </div><br />
 
-            <div className="mb-3">
-              <p className="mb-2 text-sm text-gray-600">Completion Certificate</p>
+            <div className="">
+              <p className="mb-1 text-sm ms-3 text-gray-500">Completion Certificate <span className="text-red-500">*</span></p>
               <div className="border-2 border-gray-300  p-6 text-center bg-gray-100">
                 <input
                   type="file"
@@ -137,8 +136,11 @@ const Certificate = () => {
             </div><br />
 
             <div className="relative mb-6">
+              <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                Certificate Number
+              </label>
               <input
-              id='certificate_number'
+                id='certificate_number'
                 type="text"
                 name="certificate_number"
                 placeholder=" "
@@ -146,11 +148,7 @@ const Certificate = () => {
                 onChange={handleChange}
                 className="w-full h-[52px] px-4 py-4 border text-gray-500 border-gray-300  text-sm focus:outline-none focus:ring-1 focus:ring-[#2c6472] peer"
               />
-              <label htmlFor='certificate_number' className={`absolute left-4 transition-all text-gray-500 text-base
-                ${formData.certificate_number ? '-top-2 text-sm bg-white px-1' :
-                  'top-4 text-sm peer-focus:-top-2 peer-focus:text-sm peer-focus:bg-white peer-focus:px-1'}`}>
-                Certificate Number
-              </label>
+
             </div><br />
 
             <div className="flex justify-between items-center gap-4">
@@ -164,11 +162,11 @@ const Certificate = () => {
 
 
               <button
-                  type="submit"
-                  className=" px-6  py-2 bg-white text-[#2c6472] border border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200"
-                >
-                  +Add Certificates
-                </button>
+                type="submit"
+                className=" px-6  py-2 bg-white text-[#2c6472] border border-[#2c6472] h-[43px] rounded-full text-sm font-semibold cursor-pointer mt-1 hover:scale-95 transition-transform duration-200"
+              >
+                +Add Certificates
+              </button>
 
               <button
                 type="button"
@@ -183,11 +181,14 @@ const Certificate = () => {
 
         {/* Right Panel */}
         <div className="flex-1 bg-[#2c6472] flex flex-col justify-center items-center p-2 text-white rounded-e-xl">
-          <div className="flex items-center gap-2">
-            <img src={joblogo} className="h-7 w-7" />
-            <h3 className="text-[#ff9a67] text-xl m-0">JSE AI</h3>
+          <div className="flex items-center mb-2">
+            <img
+              src={logo}
+              className="h-8 w-8"
+            />
+            <h3 className="text-black text-xl font-medium">JSE AI</h3>
           </div>
-          <div className="text-center mt-4">
+          <div className="text-center">
             <h3 className="text-white text-lg ms-4 font-medium mb-4">Certifications & Courses</h3>
           </div>
           <div className='relative mb-5 flex justify-center items-center ms-4'>

@@ -30,38 +30,38 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (!token) {
-      navigate("/user/login");
-      setError("No auth token found.");
+  if (!token) {
+    navigate("/user/login");
+    setError("No auth token found.");
+    setLoading(false);
+    return;
+  }
+
+  axios
+    .get("https://arshan.digital/profile", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then((res) => {
+      setProfileData(res.data);
       setLoading(false);
-      return;
-    }
-
-    const storedProfile = sessionStorage.getItem("profileData");
-
-    if (storedProfile && storedProfile !== "undefined") {
-      setProfileData(JSON.parse(storedProfile));
+    })
+    .catch((err) => {
+      const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
+      alert(errorMessage);
+      setError(errorMessage);
       setLoading(false);
-    } else {
-      const headers = { Authorization: `Bearer ${token}` };
+    });
+}, [token]);
 
-      axios
-        .get("https://arshan.digital/profile", { headers })
-        .then((res) => {
-          setProfileData(res.data);
-          sessionStorage.setItem("profileData", JSON.stringify(res.data));
-          setLoading(false);
-        })
-        .catch((err) => {
-          const errorMessage = err.response?.data?.message || "⚠ Failed to load profile data.";
-          alert(errorMessage);
-          setError(errorMessage);
-          setLoading(false);
-        });
-    }
-  }, [token]);
 
   const recommendedData = [];
+
+    const handleClick = () => {
+    // Do your update profile logic here
+
+    // Then navigate to /user/profile
+    navigate('/user/profile');
+  };
 
 
 
@@ -153,16 +153,14 @@ function Dashboard() {
                 <div className="flex justify-center ">
                   <div className="relative group w-fit">
                     <button
+                    onClick={handleClick}
 
-                      className="bg-black text-[12px] text-white mt-3 mb-5 h-[35px] w-[160px] px-5 py-2 rounded-full font-medium transition cursor-not-allowed ease-linear duration-200"
+                      className="bg-black text-[12px] text-white mt-3 mb-5 h-[35px] w-[160px] px-5 py-2 rounded-full font-medium transition ease-linear duration-200"
                     >
                       Update Profile
                     </button>
 
-                    {/* Tooltip */}
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-[38%] bg-black text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition ease-linear duration-200 cursor-not-allowed pointer-events-none z-10 whitespace-nowrap">
-                      🚧 Coming Soon
-                    </div>
+                
                   </div>
 
                 </div>

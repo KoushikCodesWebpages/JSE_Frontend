@@ -4,157 +4,53 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import frame from "./../../assets/Frame.png";
 import logo from "./../../assets/logo.png";
 import axios from 'axios';
+import { jobskills } from '../../assets/data';
 
-const skillOptions = [
-  "API Development",
-  "Accounting Software (Tally, QuickBooks)",
-  "Activation Strategy",
-  "Advanced Excel",
-  "Agile/Scrum Knowledge",
-  "Authentication & Authorization",
-  "Bookkeeping",
-  "Brand Management",
-  "Budget Planning",
-  "Business Intelligence Tools",
-  "Business Process Reengineering",
-  "CAD Software (SolidWorks, AutoCAD)",
-  "CI/CD Pipelines",
-  "CRM Tools (HubSpot, Salesforce)",
-  "Cloud Platforms (AWS/Azure/GCP)",
-  "Communication Skills",
-  "Contract Negotiation",
-  "Cost Accounting",
-  "Cost Reduction Techniques",
-  "Database Management (SQL/MongoDB)",
-  "Data Analysis (Excel, Power BI)",
-  "Demand Forecasting",
-  "Distribution Strategy",
-  "Docker & Kubernetes",
-  "Documentation & Reporting",
-  "Engineering Simulation (FEA/CFD)",
-  "ERP Systems",
-  "ERP Tools (SAP, Oracle)",
-  "Event Planning",
-  "Excel & Google Sheets",
-  "Fan Engagement Strategies",
-  "Financial Controls",
-  "Financial Modeling",
-  "Financial Reporting",
-  "Forecasting & Budgeting",
-  "Forecasting Techniques",
-  "GD&T (Geometric Dimensioning & Tolerancing)",
-  "Infrastructure as Code (Terraform)",
-  "Invoicing & Billing",
-  "Inventory Management",
-  "Inventory Optimization",
-  "Inventory Replenishment",
-  "KPI Development",
-  "KPI Monitoring",
-  "Lean Manufacturing",
-  "Logistics Management",
-  "Logistics Planning",
-  "Market Research",
-  "Material Science",
-  "Mechanical Drafting",
-  "Monitoring & Logging Tools",
-  "Networking & Relationship Building",
-  "Negotiation Skills",
-  "Node.js / Express.js",
-  "Object-Oriented Programming (OOP)",
-  "Operations Planning",
-  "PLC Programming",
-  "Power BI / Tableau",
-  "Process Mapping",
-  "Process Optimization",
-  "Procurement Strategy",
-  "Project Scheduling (Gantt/Timeline Tools)",
-  "Purchase Order Management",
-  "RESTful APIs",
-  "ROI Analysis",
-  "Ratio Analysis",
-  "Requirement Gathering",
-  "Risk Management",
-  "Robotics & Motion Control",
-  "Route Optimization",
-  "SAP/Supply Chain Software",
-  "SCADA Systems",
-  "Scripting (Python, Shell)",
-  "Server-side Architecture",
-  "Shipment Tracking",
-  "Six Sigma",
-  "Social Media Marketing",
-  "Sourcing Strategies",
-  "Stakeholder Coordination",
-  "Strategic Planning",
-  "Supply Chain Modeling",
-  "Supply Chain Planning",
-  "Supply Chain Strategy",
-  "Supply Network Design",
-  "SWOT Analysis",
-  "Sales Strategy",
-  "Sponsorship Activation",
-  "Strategic Thinking",
-  "Task Management Tools (Jira/Trello)",
-  "Team Leadership",
-  "Testing & Debugging",
-  "Version Control (Git/GitHub)",
-  "Vendor Coordination",
-  "Vendor Negotiation",
-  "Workflow Optimization",
-  "CAD software", "SolidWorks", "Thermodynamics", "Material Science",
-  "Circuit Design", "Power Systems", "Signal Processing", "Electromagnetic Fields",
-  "Structural Analysis", "Construction Management", "Material Science", "AutoCAD",
-  "Programming", "Debugging", "Version Control", "Software Design Patterns",
-  "Machine Learning", "Data Analysis", "Python", "Statistics",
-  "Network Security", "Encryption", "Penetration Testing", "Firewall Management",
-  "Machine Learning", "Neural Networks", "Python", "Data Science",
-  "Vehicle Dynamics", "Automotive Systems", "CAD Software", "Powertrain Design",
-  "Robotics", "Control Systems", "Mechanical Design", "C++/Python Programming",
-  "Water Treatment", "Waste Management", "Environmental Impact Assessment", "Sustainability Practices",
-  "Process Engineering", "Chemical Reactions", "Fluid Mechanics", "Heat Transfer",
-  "Supply Chain Optimization", "Lean Manufacturing", "Systems Engineering", "Process Improvement",
-  "Construction Materials", "Project Management", "Structural Analysis", "Cost Estimation",
-  "HVAC Design", "Refrigeration Systems", "Building Energy Efficiency", "Energy Codes",
-  "Automation", "Robotics", "Control Systems", "Embedded Systems",
-  "Telecom Systems", "Network Design", "RF Engineering", "Data Transmission",
-  "Flight Dynamics", "Aerodynamics", "CAD Software", "Propulsion Systems",
-  "Marine Systems", "Ship Design", "Hydrodynamics", "Marine Safety",
-  "Soil Mechanics", "Geotechnical Analysis", "Foundation Design", "Site Investigation",
-  "Radiation Protection", "Nuclear Reactors", "Nuclear Safety", "Power Generation",
-  "Project Scheduling", "Risk Management", "Cost Estimation", "Team Leadership",
-  "Product Development", "Market Research", "Agile Methodologies", "Cross-functional Team Management",
-  "Process Optimization", "Team Leadership", "Supply Chain Management", "Resource Allocation",
-  "Logistics Management", "Inventory Control", "Demand Planning", "Supplier Relations",
-  "Talent Acquisition", "Employee Relations", "Performance Management", "HR Analytics",
-  "Budgeting", "Financial Analysis", "Risk Management", "Investment Strategy",
-  "Brand Management", "Digital Marketing", "Market Research", "Content Strategy",
-  "Sales Strategy", "Lead Generation", "Negotiation Skills", "Customer Relationship Management (CRM)",
-  "Network Management", "Cybersecurity", "System Administration", "Cloud Computing",
-  "Market Analysis", "Strategic Partnerships", "Sales Strategy", "Negotiation Skills",
-  "Risk Assessment", "Risk Mitigation Strategies", "Insurance", "Regulatory Compliance",
-  "Contract Negotiation", "Corporate Governance", "Regulatory Compliance", "Intellectual Property Law",
-  "Test Automation", "Quality Control", "Process Improvement", "Compliance Standards",
-  "Customer Support", "Team Leadership", "Issue Resolution", "Service Excellence",
-  "Supplier Negotiation", "Inventory Management", "Contract Management", "Vendor Relations",
-  "Regulatory Affairs", "Internal Audits", "Risk Management", "Compliance Reporting",
-  "Organizational Development", "Change Management", "Employee Engagement", "Project Management",
-  "Strategic Planning", "Market Analysis", "Business Development", "Financial Modeling",
-  "Employee Training", "Leadership Development", "Performance Management", "Learning Programs",
-  "Facility Maintenance", "Space Planning", "Budget Management", "Vendor Management",
-];
 
 
 const ProfessionalSummary = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [hasExistingData, setHasExistingData] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState('');
   const hasDataRef = useRef(false);
+
+  const jobskill = jobskills.flatMap((job) => job.skills);
+
+  const [dynamicSkills, setDynamicSkills] = useState(jobskill); // fallback to all if nothing selected
+
+
 
   const dropdownRef = useRef(null);
 
   const apiUrl = "https://arshan.digital/professional-summary";
+  const jobtitleapiurl = "https://arshan.digital/jobtitles"
   const token = sessionStorage.getItem("authToken");
+
+  const fetchjobtitle = async () => {
+    try {
+      const res = await axios.get(jobtitleapiurl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setJobTitle(res.data);
+      console.log(res.data);
+    } catch (err) {
+      console.error("Failed to fetch jobtitles info", err);
+    }
+  };
+
+  const jobTitlesArray = [
+    jobTitle.primary_title,
+    jobTitle.secondary_title,
+    jobTitle.tertiary_title,
+  ].filter(Boolean);
+
+
 
   const fetchProfessionalsummaryInfo = async () => {
     try {
@@ -164,7 +60,6 @@ const ProfessionalSummary = () => {
         },
       });
 
-      console.log("Fetched response ✅", res.data); // <-- ADD THIS
 
 
       let info = {};
@@ -179,11 +74,11 @@ const ProfessionalSummary = () => {
         info = res.data;
       }
 
-         const hasData = Object.keys(info).length > 0;
-    hasDataRef.current = hasData;  // <== keep immediate ref update
-    setHasExistingData(hasData);
+      const hasData = Object.keys(info).length > 0;
+      hasDataRef.current = hasData;  // <== keep immediate ref update
+      setHasExistingData(hasData);
 
-    console.log("existingdata", hasDataRef);
+      console.log("existingdata", hasDataRef);
 
 
       setFormData({
@@ -201,15 +96,16 @@ const ProfessionalSummary = () => {
 
   useEffect(() => {
     fetchProfessionalsummaryInfo();
+    fetchjobtitle();
   }, []);
 
   useEffect(() => {
-  console.log("Updated hasExistingData:", hasExistingData);
-}, [hasExistingData]);
+    console.log("Updated hasExistingData:", hasExistingData);
+  }, [hasExistingData]);
 
 
 
-  const filteredSkills = skillOptions.filter(skill =>
+  const filteredSkills = dynamicSkills.filter(skill =>
     skill.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -234,28 +130,28 @@ const ProfessionalSummary = () => {
     }));
   };
 
-const addSkill = () => {
-  const trimmedSkill = formData.newSkill.trim();
+  const addSkill = () => {
+    const trimmedSkill = formData.newSkill.trim();
 
-  if (!trimmedSkill) return;
+    if (!trimmedSkill) return;
 
-  const isDuplicate = formData.skills.some(
-    (skill) => skill.toLowerCase() === trimmedSkill.toLowerCase()
-  );
+    const isDuplicate = formData.skills.some(
+      (skill) => skill.toLowerCase() === trimmedSkill.toLowerCase()
+    );
 
-  if (isDuplicate) {
-    alert("This skill is already added!");
-    return;
-  }
+    if (isDuplicate) {
+      alert("This skill is already added!");
+      return;
+    }
 
-  setFormData((prev) => ({
-    ...prev,
-    skills: [...prev.skills, trimmedSkill],
-    newSkill: '',
-  }));
+    setFormData((prev) => ({
+      ...prev,
+      skills: [...prev.skills, trimmedSkill],
+      newSkill: '',
+    }));
 
-  setSearchTerm('');
-};
+    setSearchTerm('');
+  };
 
 
   const removeSkill = (index) => {
@@ -265,34 +161,34 @@ const addSkill = () => {
     }));
   };
 
-const validateForm = () => {
-  console.log("🔍 Validating form:", formData);
+  const validateForm = () => {
+    console.log("🔍 Validating form:", formData);
 
-  if (!formData.about.trim()) {
-    console.error("❌ About field is empty");
-    return false;
-  }
+    if (!formData.about.trim()) {
+      console.error("❌ About field is empty");
+      return false;
+    }
 
-  if (formData.skills.length === 0) {
-    console.error("❌ No skills selected");
-    return false;
-  }
+    if (formData.skills.length === 0) {
+      console.error("❌ No skills selected");
+      return false;
+    }
 
-  if (!formData.annual_income.trim()) {
-    console.error("❌ Annual income is empty");
-    return false;
-  }
+    if (!formData.annual_income.trim()) {
+      console.error("❌ Annual income is empty");
+      return false;
+    }
 
-  console.log("✅ Form validation passed!");
-  return true;
-};
+    console.log("✅ Form validation passed!");
+    return true;
+  };
 
 
 
   const handleNext = async (e) => {
     e.preventDefault();
-      console.log("handleNext clicked!");
-      console.log("Is form valid?", validateForm());
+    console.log("handleNext clicked!");
+    console.log("Is form valid?", validateForm());
 
 
     if (!validateForm()) return;
@@ -309,9 +205,9 @@ const validateForm = () => {
       annual_income: parseFloat(formData.annual_income),
     };
 
-const method = hasDataRef.current ? 'PUT' : 'POST'; // <-- immediate & accurate
+    const method = hasDataRef.current ? 'PUT' : 'POST'; // <-- immediate & accurate
 
-console.log("method", method);
+    console.log("method", method);
 
     try {
       const response = await fetch('https://arshan.digital/professional-summary', {
@@ -378,6 +274,42 @@ console.log("method", method);
                     Skills    <span className="text-red-500">*</span>
 
                   </label>
+
+                  <div className="expereince-title flex gap-4  mb-5 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
+                    {jobTitlesArray.map((title, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setSelectedTitle(title);
+
+                          // 🔍 Find the selected job title from jobskills and update the dropdown skills
+                          const matchedJob = jobskills.find((job) =>
+                            job.jobTitle.toLowerCase() === title.toLowerCase()
+                          );
+
+                          if (matchedJob) {
+                            setDynamicSkills(matchedJob.skills);
+
+                          } else {
+                            setDynamicSkills([]); // or all skills if not found
+                          }
+
+
+                          setSearchTerm('');           // optional: clear search bar
+                          setShowDropdown(true);
+
+
+
+                        }}
+
+                        className={`flex-shrink-0 h-8 px-3 py-1.5 text-sm rounded snap-start cursor-pointer 
+        ${selectedTitle === title ? 'bg-[#2c6472] text-white' : 'text-white bg-gray-500/40'}
+        hover:bg-[#2c6472] hover:text-white transition-all duration-200`}
+                      >
+                        {title}
+                      </div>
+                    ))}
+                  </div>
                   <div className='flex'>
                     <input
                       type="text"

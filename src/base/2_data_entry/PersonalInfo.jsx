@@ -19,50 +19,50 @@ const PersonalInfo = () => {
 
   const apiUrl = 'https://arshan.digital/personal-info';
 
-      const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
+  const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
 
 
   const [errors, setErrors] = useState({});
 
-   const fetchProfileInfo = async () => {
-        try {
-            const res = await axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+  const fetchProfileInfo = async () => {
+    try {
+      const res = await axios.get(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-            console.log("Fetched response ✅", res.data); // <-- ADD THIS
-
-
-            let info = {};
-
-            if (Array.isArray(res.data)) {
-                info = res.data[0] || {};
-            } else if (Array.isArray(res.data?.personal_info)) {
-                info = res.data.personal_info[0] || {};
-            } else if (typeof res.data?.personal_info === 'object') {
-                info = res.data.personal_info;
-            } else if (typeof res.data === 'object') {
-                info = res.data;
-            }
+      console.log("Fetched response ✅", res.data); // <-- ADD THIS
 
 
-            setFormData({
-                first_name: (info.first_name || "").trim(),
-                second_name: (info.second_name || "").trim(),
-                date_of_birth: info.date_of_birth || "",
-                address: info.address || "",
-                linkedin_profile: info.linkedin_profile || ""
-            });
-        } catch (err) {
-            console.error("Failed to fetch personal info", err);
-        }
-    };
+      let info = {};
 
-    useEffect(() => {
-        fetchProfileInfo();
-    }, []);
+      if (Array.isArray(res.data)) {
+        info = res.data[0] || {};
+      } else if (Array.isArray(res.data?.personal_info)) {
+        info = res.data.personal_info[0] || {};
+      } else if (typeof res.data?.personal_info === 'object') {
+        info = res.data.personal_info;
+      } else if (typeof res.data === 'object') {
+        info = res.data;
+      }
+
+
+      setFormData({
+        first_name: (info.first_name || "").trim(),
+        second_name: (info.second_name || "").trim(),
+        date_of_birth: info.date_of_birth || "",
+        address: info.address || "",
+        linkedin_profile: info.linkedin_profile || ""
+      });
+    } catch (err) {
+      console.error("Failed to fetch personal info", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileInfo();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,7 +110,7 @@ const PersonalInfo = () => {
         const errorData = await response.json();
         console.error('❌ Error uploading data:', errorData);
       } else {
-        navigate('/user/onboarding/professional-summary');
+        navigate("/user/onboarding/jobtitles");  // Only navigate, no data posting here
       }
     } catch (error) {
       console.error('❌ Network error:', error);
@@ -134,7 +134,7 @@ const PersonalInfo = () => {
             <form className="grid gap-y-6" onSubmit={handleNext}>
               {fields.map((field) => (
                 <div key={field.name} className="relative h-15 flex flex-col ">
-                                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                  <label className="mb-1 ms-3 block  text-gray-500 text-sm">
                     {field.label}
                     <label className=" text-gray-700 font-medium mb-1 ms-1">
                       {field.name !== 'second_name' && field.name !== 'linkedin_profile' && (

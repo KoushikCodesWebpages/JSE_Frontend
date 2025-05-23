@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import defaultJobImg from '../../assets/image.svg';
 import axios from "axios";
 import Loader from "../../base/loader/Loader.jsx";
 
@@ -13,90 +12,122 @@ const MyApplication = () => {
   const [error, setError] = useState(null);
   const [generateCV, setGenerateCV] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    per_page: 20,
+    total: 0,
+    next: null,
+    prev: null,
+  });
+  const perPage = pagination.per_page; // or hardcode 10 if it's fixed
   const hasFetched = useRef(false);
 
   const token = sessionStorage.getItem("authToken");
 
-  useEffect(() => {
-    if (!token) {
-      setError("No auth token found.");
-      setLoading(false);
-      return;
-    }
-
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-
-    const fetchSelectedJobs = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          "https://arshan.digital/api/selected-jobs",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
 
 
-        const fetchedJobs = response.data.selected_jobs || [];
-
-
-        const mappedJobs = fetchedJobs.map((job) => ({
-          id: job.job_id,
-          title: job.title,
-          jobTitle: job.title,
-          company: job.company,
-          companyName: job.company,
-          postedDate: job.posted_date || "Not specified",
-          minSalary: job.min_salary || "?",
-          maxSalary: job.max_salary || "?",
-          location: job.location || "Location not specified",
-          description: `We are looking for a skilled ${job.title} to join ${job.company}.`,
-          Description: job.description || "No role description provided.",
-          skillData: [
-            {
-              label: "Required Skills",
-              value: Array.isArray(job.skills)
-                ? job.skills
-                : typeof job.skills === "string"
-                  ? job.skills.split(",").map((s) => s.trim())
-                  : [],
-            },
-            {
-              label: "Your Skills",
-              value: Array.isArray(job.user_skills)
-                ? job.user_skills
-                : typeof job.user_skills === "string"
-                  ? job.user_skills.split(",").map((s) => s.trim())
-                  : [],
-            },
-            {
-              label: "Expected Salary",
-              value: `${job.expected_salary?.min || "?"} - ${job.expected_salary?.max || "?"}`,
-            },
-          ],
-          matchValue: job.match_score || Math.floor(Math.random() * 30) + 70,
-          selected: job.selected,
-          cvGenerated: job.cv_generated,
-          coverLetterGenerated: job.cover_letter_generated,
-          viewLink: job.view_link,
-        }));
-        setSelectedJobs(mappedJobs);
-        setSelectedJob(mappedJobs[0]);
-
-        setLoading(false);
-      } catch (error) {
-        const errMsg =
-          error.response?.data?.message || "⚠ Failed to load applications.";
-        setError(errMsg);
-        setLoading(false);
+  const fetchSelectedJobs = async (customOffset = offset) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "https://arshan.digital/api/my-applications", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          offset: customOffset,
+          limit: perPage,
+        },
       }
-    };
+      );
 
-    fetchSelectedJobs();
-  }, [token]);
+
+      const fetchedJobs = response.data.applications || [];
+      const paginationInfo = response.data.pagination || {};
+
+
+      console.log("Fetched Jobs:", paginationInfo);
+
+      const totalItems = paginationInfo.total || 0;
+      const currentPage = Math.floor(customOffset / perPage) + 1;
+
+
+
+
+
+      const mappedJobs = fetchedJobs.map((job) => ({
+        id: job.job_id,
+        title: job.title,
+        jobTitle: job.title,
+        company: job.company,
+        companyName: job.company,
+        postedDate: job.posted_date || "Not specified",
+        minSalary: job.expected_salary.min || "?",
+        maxSalary: job.expected_salary.max || "?",
+        location: job.location || "Location not specified",
+        description: `We are looking for a skilled ${job.title} to join ${job.company}.`,
+        Description: job.description || "No role description provided.",
+        skillData: [
+          {
+            label: "Required Skills",
+            value: Array.isArray(job.skills)
+              ? job.skills
+              : typeof job.skills === "string"
+                ? job.skills.split(",").map((s) => s.trim())
+                : [],
+          },
+          {
+            label: "Your Skills",
+            value: Array.isArray(job.user_skills)
+              ? job.user_skills
+              : typeof job.user_skills === "string"
+                ? job.user_skills.split(",").map((s) => s.trim())
+                : [],
+          },
+          {
+            label: "Expected Salary",
+            value: `${job.expected_salary?.min || "?"} - ${job.expected_salary?.max || "?"}`,
+          },
+        ],
+        matchValue: job.match_score || Math.floor(Math.random() * 30) + 70,
+        selected: job.selected,
+        cvGenerated: job.cv_generated,
+        coverLetterGenerated: job.cover_letter_generated,
+        viewLink: job.view_link,
+      }));
+      setSelectedJobs(mappedJobs);
+      setSelectedJob(mappedJobs[0]);
+      setPagination({
+        current: currentPage,
+        total: totalItems,
+        per_page: perPage,
+        next: customOffset + perPage < totalItems ? customOffset + perPage : null,
+        prev: customOffset - perPage >= 0 ? customOffset - perPage : null,
+      });
+
+      setOffset(customOffset); setLoading(false);
+    } catch (error) {
+      const errMsg =
+        error.response?.data?.message || "⚠ Failed to load applications.";
+      setError(errMsg);
+      setLoading(false);
+    }
+  };
+
+useEffect(() => {
+  if (!token) {
+    setError("No auth token found.");
+    setLoading(false);
+    return;
+  }
+
+  fetchSelectedJobs(offset); // Use the actual offset value
+}, [token]); // Only run on initial mount or if token changes
+
+
+
+
 
 
   const handleGenerateCV = async (jobId) => {
@@ -232,11 +263,42 @@ const MyApplication = () => {
               </div>
 
               <br />
-              <div className="flex justify-center items-center space-x-2 pt-14">
-                <button className="w-8 h-8 rounded-full bg-gray-200 text-gray-700 text-sm font-semibold">1</button>
-                <button className="w-8 h-8 rounded-full text-gray-500 hover:bg-gray-100">2</button>
-                <button className="w-8 h-8 rounded-full text-gray-500 hover:bg-gray-100">3</button>
+              <div className="flex justify-center items-center gap-2 pt-14 flex-wrap">
+                {/* Prev Button */}
+                <button
+                  onClick={() => fetchSelectedJobs(pagination.prev)}
+                  disabled={pagination.prev === null}
+                  className={`px-3 py-1 rounded-md font-medium text-sm ${pagination.prev !== null
+                    ? "bg-[#2C6472] text-white hover:bg-teal-900"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                >
+                  Prev
+                </button>
+
+                {/* Page Info */}
+                <div className="text-sm text-gray-600">
+                  Page <span className="font-semibold">{pagination.current}</span> of{" "}
+                  <span className="font-semibold">
+                    {Math.ceil(pagination.total / pagination.per_page)}
+                  </span>
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={() => fetchSelectedJobs(pagination.next)}
+                  disabled={pagination.next === null}
+                  className={`px-3 py-1 rounded-md font-medium text-sm ${pagination.next !== null
+                    ? "bg-[#2C6472] text-white hover:bg-teal-900"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                >
+                  Next
+                </button>
               </div>
+
+
+
             </div>
 
             <div className="flex mb-5 py-3 h-[870px] bg-white border border-gray-400/20 rounded-xl"><br />

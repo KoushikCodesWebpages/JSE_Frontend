@@ -63,11 +63,11 @@ const Login = () => {
           const stepToPath = {
             personal_infos: '/user/onboarding/personal-info',
             professional_summaries: '/user/onboarding/professional-summary',
+            preferred_job_titles: '/user/onboarding/jobtitles',
             work_experiences: '/user/onboarding/work-experience',
             educations: '/user/onboarding/education',
             certificates: '/user/onboarding/certificates',
             languages: '/user/onboarding/languages',
-            preferred_job_titles: '/user/onboarding/jobtitles'
           };
           const nextRoute = stepToPath[progress.next_step] || '/user/onboarding/personal-info'; // fallback
           navigate(nextRoute);
@@ -108,7 +108,7 @@ const Login = () => {
 
             <form onSubmit={handleSubmit} className="grid gap-y-3">
               <div className="relative -mt-5">
-               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
 
                   Email
                 </label>
@@ -127,7 +127,7 @@ const Login = () => {
 
               {/* Password Input */}
               <div className="relative">
-               <label className="mb-1 ms-3 block  text-gray-500 text-sm">
+                <label className="mb-1 ms-3 block  text-gray-500 text-sm">
 
                   Password
                 </label>

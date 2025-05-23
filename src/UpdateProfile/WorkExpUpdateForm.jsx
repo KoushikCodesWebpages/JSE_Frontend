@@ -219,8 +219,6 @@ const WorkExpUpdateForm = ({ onclose }) => {
 
 
 
-
-
     return (
         <div className='fixed inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center'>
             <div className='w-[700px] h-[650px] bg-white flex flex-col shadow rounded-xl px-10 py-5'>

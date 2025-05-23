@@ -105,7 +105,8 @@ const Language = () => {
   const handleNext = async (e) => {
     e.preventDefault();
     setLoading(true);
-    navigate("/user/onboarding/jobtitles");  // Only navigate, no data posting here
+    navigate('/user/dashboard');
+    // navigate("/user/onboarding/jobtitles");  // Only navigate, no data posting here
     setLoading(false);
   };
 

@@ -17,7 +17,7 @@ const LanguageUpdateForm = ({ onclose }) => {
 
     const token = sessionStorage.getItem('authToken');
 
-    const apiUrl = "https://arshan.digital/languages";
+    const apiUrl = "https://jse.arshan.digital/b1/languages";
 
 
     const handleChange = (e) => {

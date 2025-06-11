@@ -48,7 +48,7 @@ const Certificate = () => {
       formDataToSend.append("certificate_number", formData.certificate_number || "N/A");
       formDataToSend.append("file", certificateFile); // ✅ Raw file here
 
-      const response = await fetch("https://arshan.digital/certificates", {
+      const response = await fetch("https://jse.arshan.digital/b1/certificates", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`, // ✅ No need to set Content-Type for FormData

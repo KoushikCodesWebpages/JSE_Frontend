@@ -36,7 +36,7 @@ const Savedjob = () => {
   
   const fetchSelectedJobs = async () => {
     try {
-      const response = await fetch('https://arshan.digital/saved-jobs', {
+      const response = await fetch('https://jse.arshan.digital/b1/saved-jobs', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

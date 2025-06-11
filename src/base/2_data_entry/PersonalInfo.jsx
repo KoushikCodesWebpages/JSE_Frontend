@@ -17,7 +17,7 @@ const PersonalInfo = () => {
     linkedin_profile: '',
   });
 
-  const apiUrl = 'https://arshan.digital/personal-info';
+  const apiUrl = 'https://jse.arshan.digital/b1/personal-info';
 
   const token = sessionStorage.getItem('authToken'); // Assuming token is stored as 'token'
 

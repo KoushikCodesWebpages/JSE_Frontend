@@ -4,7 +4,7 @@ import axios from "axios";
 
 const WorkExpUpdateForm = ({ onclose }) => {
 
-    const apiUrl = "https://arshan.digital/work-experience";
+    const apiUrl = "https://jse.arshan.digital/b1/work-experience";
     const [experiences, setExperiences] = useState([]);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({

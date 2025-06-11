@@ -70,7 +70,7 @@ const JobTitle = () => {
     }
 
     try {
-      const response = await fetch('https://arshan.digital/jobtitles', {
+      const response = await fetch('https://jse.arshan.digital/b1/jobtitles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ const BasicSignup = () => {
     };
 
     try {
-      const response = await fetch('https://raasbackend-production.up.railway.app/signup/', {
+      const response = await fetch('https://jse.arshan.digital/b1/auth/signup/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

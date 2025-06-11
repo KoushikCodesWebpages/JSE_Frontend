@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const EducationUpdateForm = ({ onclose }) => {
-    const apiUrl = 'https://arshan.digital/education';
+    const apiUrl = 'https://jse.arshan.digital/b1/education';
     const [education, setEducation] = useState([]);
     const token = sessionStorage.getItem('authToken');
 

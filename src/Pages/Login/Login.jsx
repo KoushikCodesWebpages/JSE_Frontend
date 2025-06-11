@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://arshan.digital/auth/login', {
+      const response = await fetch('https://jse.arshan.digital/b1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -45,7 +45,7 @@ const Login = () => {
   const fetchEntryProgressAndRedirect = async (token) => {
     try {
       setLoading(true);
-      const res = await fetch('https://arshan.digital/user/entry-progress/check', {
+      const res = await fetch('https://jse.arshan.digital/b1/user/entry-progress/check', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

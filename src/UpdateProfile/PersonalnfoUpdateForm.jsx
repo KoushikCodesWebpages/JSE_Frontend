@@ -12,7 +12,7 @@ const PersonalnfoUpdateForm = ({ onclose }) => {
     });
 
 
-    const apiUrl = "https://arshan.digital/personal-info";
+    const apiUrl = "https://jse.arshan.digital/b1/personal-info";
     const token = sessionStorage.getItem("authToken");
 
     const fetchProfileInfo = async () => {

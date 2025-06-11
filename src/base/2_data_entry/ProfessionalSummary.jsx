@@ -25,8 +25,8 @@ const ProfessionalSummary = () => {
 
   const dropdownRef = useRef(null);
 
-  const apiUrl = "https://arshan.digital/professional-summary";
-  const jobtitleapiurl = "https://arshan.digital/jobtitles"
+  const apiUrl = "https://jse.arshan.digital/b1/professional-summary";
+  const jobtitleapiurl = "https://jse.arshan.digital/b1/jobtitles"
   const token = sessionStorage.getItem("authToken");
 
   const fetchjobtitle = async () => {
@@ -210,7 +210,7 @@ const ProfessionalSummary = () => {
     console.log("method", method);
 
     try {
-      const response = await fetch('https://arshan.digital/professional-summary', {
+      const response = await fetch('https://jse.arshan.digital/b1/professional-summary', {
         method,
         headers: {
           'Content-Type': 'application/json',

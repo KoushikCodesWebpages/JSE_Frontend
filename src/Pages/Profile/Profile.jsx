@@ -33,7 +33,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const headers = { Authorization: `Bearer ${token}` };
-        const res = await axios.get("https://arshan.digital/seeker", { headers });
+        const res = await axios.get("https://jse.arshan.digital/b1/seeker", { headers });
         console.log("Fetched Profile Data:", res.data);
 
         if (isMounted) {

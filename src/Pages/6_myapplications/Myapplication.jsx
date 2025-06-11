@@ -31,7 +31,7 @@ const MyApplication = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://arshan.digital/api/my-applications", {
+        "https://jse.arshan.digital/b1/api/my-applications", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -136,7 +136,7 @@ useEffect(() => {
       setGenerateCV("cv");
 
       const response = await axios.post(
-        "https://arshan.digital/generate-resume",
+        "https://jse.arshan.digital/b1/generate-resume",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           headers: {
@@ -180,7 +180,7 @@ useEffect(() => {
       setIsGenerating(true);
       setGenerateCV("cl");
       const response = await axios.post(
-        "https://arshan.digital/generate-cover-letter",
+        "https://jse.arshan.digital/b1/generate-cover-letter",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files
@@ -216,10 +216,7 @@ useEffect(() => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = () => {
-    console.log("User logged out");
-    navigate('/user/login');
-  };
+ 
 
   if (loading) return <Loader />;
 

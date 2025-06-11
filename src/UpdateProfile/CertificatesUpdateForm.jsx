@@ -13,7 +13,7 @@ const CertificatesUpdateForm = ({ onclose }) => {
     });
     const [loading, setLoading] = useState(false);
 
-    const apiUrl = "https://arshan.digital/certificates";
+    const apiUrl = "https://jse.arshan.digital/b1/certificates";
     const token = sessionStorage.getItem('authToken');
 
 

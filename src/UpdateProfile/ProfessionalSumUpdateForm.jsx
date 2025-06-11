@@ -156,7 +156,7 @@ const ProfessionalSumUpdateForm = ({ onclose }) => {
         annual_income: ''
     });
 
-    const apiUrl = "https://arshan.digital/professional-summary";
+    const apiUrl = "https://jse.arshan.digital/b1/professional-summary";
     const token = sessionStorage.getItem("authToken");
 
     const fetchProfessionalsummaryInfo = async () => {

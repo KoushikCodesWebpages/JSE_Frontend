@@ -56,7 +56,7 @@ const Signup = () => {
       setLoading(true);
 
       const response = await axios.post(
-        'https://arshan.digital/auth/signup',
+        'https://jse.arshan.digital/b1/auth/signup',
         signupData, // Request body as the second argument
         {
           headers: {

@@ -8,7 +8,7 @@ import logo from "./../../assets/logo.png";
 
 const WorkExp = () => {
   const navigate = useNavigate();
-  const apiUrl = "https://arshan.digital/work-experience";
+  const apiUrl = "https://jse.arshan.digital/b1/work-experience";
   const sessionKey = "token"; // Assuming this is the key used to store the token
 
   const [formData, setFormData] = useState({

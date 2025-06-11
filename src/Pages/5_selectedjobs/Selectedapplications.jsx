@@ -22,7 +22,7 @@ function SelectedApplications() {
   const token = sessionStorage.getItem("authToken") || "your-fallback-token";
 
   const axiosInstance = axios.create({
-    baseURL: "https://arshan.digital/api",
+    baseURL: "https://jse.arshan.digital/b1/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -78,7 +78,7 @@ function SelectedApplications() {
       setGenerateCV("cv");
 
       const response = await axios.post(
-        "https://arshan.digital/generate-resume",
+        "https://jse.arshan.digital/b1/generate-resume",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           headers: {
@@ -139,7 +139,7 @@ function SelectedApplications() {
       setCLBlobUrl("cl");
       setGenerateCV("cl");
       const response = await axios.post(
-        "https://arshan.digital/generate-cover-letter",
+        "https://jse.arshan.digital/b1/generate-cover-letter",
         { job_id: jobId }, // <-- This is the request body (data)
         {
           responseType: "blob", // Important for downloading Word files
@@ -206,7 +206,7 @@ function SelectedApplications() {
       const token = sessionStorage.getItem("authToken") || "your-fallback-token";
 
       const response = await axios.post(
-        "https://arshan.digital/provide-link",
+        "https://jse.arshan.digital/b1/provide-link",
         { job_id: job_id },
         {
           headers: {

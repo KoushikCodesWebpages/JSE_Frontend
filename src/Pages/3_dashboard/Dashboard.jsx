@@ -38,7 +38,7 @@ function Dashboard() {
   }
 
   axios
-    .get("https://arshan.digital/profile", {
+    .get("https://jse.arshan.digital/b1/profile", {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((res) => {

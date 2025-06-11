@@ -9,7 +9,7 @@ import logo from "./../../assets/logo.png";
 const Education = () => {
   const navigate = useNavigate();
   const sessionKey = 'education-token'; // Key to fetch the token
-  const apiUrl = 'https://arshan.digital/education';
+  const apiUrl = 'https://jse.arshan.digital/b1/education';
 
   const [formData, setFormData] = useState({
     degree: '',

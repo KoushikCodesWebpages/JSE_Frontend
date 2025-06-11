@@ -18,7 +18,7 @@ const Navbar = () => {
     }
 
     try {
-      const response = await fetch('https://arshan.digital/profile', {
+      const response = await fetch('https://jse.arshan.digital/b1/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

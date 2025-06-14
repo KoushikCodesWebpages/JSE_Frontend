@@ -17,9 +17,9 @@ const ProfessionalSummary = () => {
   const [selectedTitle, setSelectedTitle] = useState('');
   const hasDataRef = useRef(false);
 
-  const jobskill = jobskills.flatMap((job) => job.skills);
+  const allSkills = Object.values(jobskills).flatMap(job => job.skills);
+  const [dynamicSkills, setDynamicSkills] = useState(allSkills);
 
-  const [dynamicSkills, setDynamicSkills] = useState(jobskill); // fallback to all if nothing selected
 
 
 
@@ -283,16 +283,14 @@ const ProfessionalSummary = () => {
                           setSelectedTitle(title);
 
                           // 🔍 Find the selected job title from jobskills and update the dropdown skills
-                          const matchedJob = jobskills.find((job) =>
-                            job.jobTitle.toLowerCase() === title.toLowerCase()
-                          );
-
-                          if (matchedJob) {
+                          const matchedJob = jobskills[title];
+                          if (matchedJob && Array.isArray(matchedJob.skills)) {
                             setDynamicSkills(matchedJob.skills);
-
                           } else {
-                            setDynamicSkills([]); // or all skills if not found
-                          }
+                            setDynamicSkills([]); // fallback
+                          };
+
+                        
 
 
                           setSearchTerm('');           // optional: clear search bar

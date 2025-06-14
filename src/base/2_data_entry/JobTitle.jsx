@@ -13,7 +13,10 @@ const JobTitle = () => {
     tertiary_title: useRef(null),
   };
 
-  const sortedJobTitles = [...jobskills.map((j) => j.jobTitle)].sort();
+  // const sortedJobTitles = [...jobskills.map((j) => j.jobTitle)].sort();
+  const sortedJobTitles = Object.keys(jobskills).sort();
+
+
 
   const [formData, setFormData] = useState({
     primary_title: '',
@@ -110,6 +113,8 @@ const JobTitle = () => {
     sortedJobTitles.filter((title) =>
       title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+
 
   return (
     <div className="flex flex-col min-h-[87vh] w-[85%] mx-auto bg-white border mt-2 border-gray-300 rounded-xl shadow-lg shadow-gray-300/60">

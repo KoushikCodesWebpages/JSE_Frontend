@@ -100,7 +100,7 @@ function SelectedApplications() {
       cvLink.click();
       cvLink.remove();
       window.URL.revokeObjectURL(url); // optional cleanup
-      setCVBlobUrl(url); // Store the blob URL for later use
+      setCVBlobUrl(blob); // Store the blob URL for later use
 
       alert("CV generated successfully!");
     } catch (error) {
@@ -150,18 +150,18 @@ function SelectedApplications() {
       );
 
       const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        type: "application/pdf",
       });
 
       const url = window.URL.createObjectURL(blob);
       const clLink = document.createElement("a");
       clLink.href = url;
-      clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+      clLink.setAttribute("download", `Cover_Letter_${jobId}.pdf`);
       document.body.appendChild(clLink);
       clLink.click();
       clLink.remove();
       window.URL.revokeObjectURL(url);
-      setCLBlobUrl(url); // Store the blob URL for later use
+      setCLBlobUrl(blob); // Store the blob URL for later use
 
       alert("Cover Letter generated successfully!");
     } catch (error) {
@@ -178,24 +178,34 @@ function SelectedApplications() {
       return;
     }
 
+      // Create fresh object URLs
+  const cvUrl = window.URL.createObjectURL(cvBlobUrl);
+  const clUrl = window.URL.createObjectURL(clBlobUrl);
+
     // Download CV
     const cvLink = document.createElement("a");
-    cvLink.href = cvBlobUrl;
-    cvLink.setAttribute("download", `CV_${jobId}.docx`);
+    cvLink.href = cvUrl;
+    cvLink.setAttribute("download", `CV_${jobId}.pdf`);
     document.body.appendChild(cvLink);
     cvLink.click();
-    cvLink.remove();
-    window.URL.revokeObjectURL(cvBlobUrl); // optional cleanup
+    document.body.removeChild(cvLink);
+     setTimeout(() => window.URL.revokeObjectURL(cvUrl), 2000);
+
 
     // Download Cover Letter
     const clLink = document.createElement("a");
-    clLink.href = clBlobUrl;
-    clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+    clLink.href = clUrl;
+    clLink.setAttribute("download", `Cover_Letter_${jobId}.pdf`);
     document.body.appendChild(clLink);
     clLink.click();
-    clLink.remove();
-    window.URL.revokeObjectURL(clBlobUrl); // optional cleanup
+    document.body.removeChild(clLink);
+
+    // Delay revoke for CL too
+    setTimeout(() => {
+      window.URL.revokeObjectURL(clUrl);
+    }, 2000);
   };
+
 
 
 

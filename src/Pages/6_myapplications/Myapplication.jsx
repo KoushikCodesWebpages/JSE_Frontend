@@ -191,13 +191,13 @@ useEffect(() => {
       );
 
       const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        type: "application/pdf",
       });
 
       const url = window.URL.createObjectURL(blob);
       const clLink = document.createElement("a");
       clLink.href = url;
-      clLink.setAttribute("download", `Cover_Letter_${jobId}.docx`);
+      clLink.setAttribute("download", `Cover_Letter_${jobId}.pdf`);
       document.body.appendChild(clLink);
       clLink.click();
       clLink.remove();
